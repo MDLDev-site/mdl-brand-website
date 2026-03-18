@@ -1,0 +1,101 @@
+---
+import type { CarouselSection } from '../../types/content';
+
+interface Props {
+  section: CarouselSection;
+}
+
+const { section } = Astro.props;
+---
+
+<section class="bg-grey py-[80px] md:py-[120px]" aria-label={section.heading}>
+  <div class="mx-auto max-w-[1440px]">
+    {/* Header row */}
+    <div class="flex items-end justify-between px-[24px] pb-[48px] md:px-[120px]">
+      <h2 class="max-w-[600px] font-heading text-[40px] font-medium uppercase leading-[0.9] tracking-[-1.8px] text-charcoal-pitch md:text-[60px]">
+        {section.heading}
+      </h2>
+
+      <div class="hidden items-center gap-[12px] md:flex" role="group" aria-label="Carousel navigation">
+        <button
+          class="carousel-prev flex h-[56px] w-[56px] items-center justify-center rounded-full border border-light-football transition-colors hover:bg-light-football"
+          aria-label="Previous slide"
+          type="button"
+        >
+          <svg class="h-[20px] w-[20px] text-charcoal-pitch" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M13 4l-6 6 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <button
+          class="carousel-next flex h-[56px] w-[56px] items-center justify-center rounded-full bg-yellow-tennis transition-colors hover:bg-yellow-tennis/80"
+          aria-label="Next slide"
+          type="button"
+        >
+          <svg class="h-[20px] w-[20px] text-charcoal-pitch" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    {/* Cards track */}
+    <div
+      class="carousel-track flex gap-[24px] overflow-x-auto px-[24px] pb-[8px] scrollbar-hide md:px-[120px]"
+      role="list"
+      style="scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;"
+    >
+      {section.cards.map((card) => (
+        <article
+          class="flex w-[300px] shrink-0 flex-col rounded-[8px] border-t-[8px] border-blue-matchday bg-white shadow-card-lg md:w-[380px]"
+          role="listitem"
+          style="scroll-snap-align: start;"
+        >
+          <div class="flex flex-1 flex-col gap-[16px] px-[32px] pt-[48px] pb-[36px] md:px-[48px] md:pt-[64px] md:pb-[48px]">
+            <h3 class="font-heading text-[36px] font-medium uppercase leading-[1.15] tracking-[-0.5px] text-charcoal-pitch md:text-[50px]">
+              {card.title}
+            </h3>
+            <p class="font-body text-[16px] font-normal leading-[1.4] text-text-primary md:text-[18px]">
+              {card.description}
+            </p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
+<script>
+  function initCarousels() {
+    const tracks = document.querySelectorAll<HTMLElement>('.carousel-track');
+
+    tracks.forEach((track) => {
+      const section = track.closest('section');
+      if (!section) return;
+
+      const prevBtn = section.querySelector<HTMLButtonElement>('.carousel-prev');
+      const nextBtn = section.querySelector<HTMLButtonElement>('.carousel-next');
+      const scrollAmount = 404; // card width + gap
+
+      prevBtn?.addEventListener('click', () => {
+        track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      });
+
+      nextBtn?.addEventListener('click', () => {
+        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initCarousels);
+  initCarousels();
+</script>

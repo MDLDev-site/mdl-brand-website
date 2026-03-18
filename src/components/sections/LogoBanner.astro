@@ -1,0 +1,41 @@
+---
+import type { LogoBannerSection } from '../../types/content';
+
+interface Props {
+  section: LogoBannerSection;
+}
+
+const { section } = Astro.props;
+---
+
+<section class="bg-grey" aria-label="Trusted partners">
+  <div class="mx-auto flex max-w-[1440px] flex-col items-center gap-[32px] px-[24px] pt-[24px] pb-[64px] md:px-[120px]">
+    <h4 class="font-heading-semi text-[24px] font-medium uppercase leading-none tracking-[-0.96px] text-charcoal-pitch md:text-[32px]">
+      {section.heading}
+    </h4>
+
+    <ul class="flex flex-wrap items-center justify-center gap-[24px] md:gap-[40px]" role="list">
+      {section.logos.map((logo) => (
+        <li>
+          {logo.src ? (
+            <img
+              src={logo.src}
+              alt={logo.alt}
+              class="h-[50px] w-[50px] object-contain md:h-[70px] md:w-[70px]"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <div
+              class="flex h-[50px] w-[50px] items-center justify-center rounded-[4px] bg-charcoal-pitch/10 md:h-[70px] md:w-[70px]"
+              role="img"
+              aria-label={logo.alt}
+            >
+              <span class="font-body text-[10px] text-charcoal-pitch/40">Logo</span>
+            </div>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

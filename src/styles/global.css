@@ -1,14 +1,76 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500&family=Barlow+Semi+Condensed:wght@500;600&family=Inter:wght@400;500;600&display=swap');
 
-/*
- * Design tokens will be extracted from Figma before styling begins.
- * Use Figma MCP: mcp__figma-local-mcp__get_variable_defs to populate.
- *
- * Example Tailwind v4 custom theme:
- * @theme {
- *   --color-brand-primary: #???;
- *   --color-brand-secondary: #???;
- *   --font-heading: "???", sans-serif;
- *   --font-body: "???", sans-serif;
- * }
- */
+@theme {
+  /* Brand Colors */
+  --color-orange-basketball: #ff633d;
+  --color-blue-matchday: #1743d7;
+  --color-white-trainer: #f9f5f3;
+  --color-charcoal-pitch: #161d25;
+  --color-yellow-tennis: #e2ff65;
+  --color-grey: #f7f9fc;
+  --color-navy-umpire: #152644;
+  --color-light-football: #f5efe8;
+  --color-light-blue-stadium: #8cc3e1;
+  --color-live: #ff1637;
+
+  /* Text Colors */
+  --color-text-primary: #5b5b5b;
+  --color-text-on-primary: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.8);
+  --color-text-tertiary: rgba(255, 255, 255, 0.6);
+  --color-text-action: #3961ce;
+
+  /* Surface Colors */
+  --color-surface-primary: #ffffff;
+  --color-surface-secondary: #16181e;
+  --color-surface-quaternary: #33353c;
+  --color-surface-action-neutral: #262935;
+  --color-surface-success: #23a36d;
+
+  /* Primary Scale */
+  --color-primary-200: #bfd7ff;
+  --color-primary-400: #1d7afc;
+  --color-primary-500: #3d69e3;
+  --color-primary-600: #173cba;
+  --color-primary-700: #01188a;
+
+  /* Typography - Headings: Barlow Condensed */
+  --font-heading: "Barlow Condensed", sans-serif;
+  --font-subheading: "Barlow Semi Condensed", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  /* Spacing */
+  --spacing-xxxs: 2px;
+  --spacing-xxs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+  --spacing-xxxl: 64px;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-card: 0px 4px 14px 0px rgba(21, 38, 68, 0.1);
+  --shadow-card-lg: 0px 15px 35px 0px rgba(22, 29, 37, 0.1);
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-charcoal-pitch);
+  background-color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

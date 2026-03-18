@@ -1,0 +1,66 @@
+---
+import type { HeroSection } from '../../types/content';
+
+interface Props {
+  section: HeroSection;
+}
+
+const { section } = Astro.props;
+---
+
+<section
+  class="relative overflow-hidden bg-navy-umpire"
+  aria-label="Hero"
+>
+  {/* Background gradients */}
+  <div class="absolute inset-0" aria-hidden="true">
+    <div
+      class="absolute inset-0"
+      style="background: radial-gradient(ellipse 80% 60% at 50% 40%, transparent 0%, var(--color-grey) 100%);"
+    ></div>
+    <div
+      class="absolute inset-0"
+      style="background: linear-gradient(180deg, var(--color-navy-umpire) 0%, transparent 40%, transparent 60%, var(--color-navy-umpire) 100%);"
+    ></div>
+    <div
+      class="absolute inset-0"
+      style="background: linear-gradient(90deg, var(--color-navy-umpire) 0%, transparent 30%, transparent 70%, var(--color-navy-umpire) 100%);"
+    ></div>
+  </div>
+
+  <div class="relative z-10 mx-auto flex max-w-[1440px] flex-col items-center gap-[50px] px-[24px] pt-[140px] pb-[100px] text-center md:px-[120px] md:pt-[180px] md:pb-[140px]">
+    <h1 class="font-heading text-[48px] font-medium uppercase leading-[0.9] tracking-[0.8px] text-white md:text-[80px]">
+      {section.heading.map((line) => (
+        <span class="block">{line}</span>
+      ))}
+    </h1>
+
+    <p class="max-w-[600px] font-body text-[18px] font-normal leading-[1.4] text-white/80 md:text-[20px]">
+      {section.subheading}
+    </p>
+
+    <div class="flex flex-col items-center gap-[16px] sm:flex-row sm:gap-[24px]">
+      <a
+        href={section.cta.primary.link}
+        class="inline-flex items-center rounded-[4px] bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:bg-blue-matchday/90"
+      >
+        {section.cta.primary.text}
+      </a>
+
+      <a
+        href={section.cta.secondary.link}
+        class="group inline-flex items-center gap-[8px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:text-yellow-tennis"
+      >
+        {section.cta.secondary.text}
+        <svg
+          class="h-[16px] w-[16px] transition-transform group-hover:translate-x-[4px]"
+          viewBox="0 0 16 16"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

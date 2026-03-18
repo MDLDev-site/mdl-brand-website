@@ -1,0 +1,152 @@
+---
+import type { CustomerSection } from '../../types/content';
+
+interface Props {
+  section: CustomerSection;
+}
+
+const { section } = Astro.props;
+---
+
+<section class="bg-grey py-[80px] md:py-[120px]" aria-label={section.heading}>
+  <div class="mx-auto max-w-[1440px]">
+    {/* Header row */}
+    <div class="flex items-end justify-between px-[24px] pb-[48px] md:px-[120px]">
+      <h2 class="font-heading text-[40px] font-medium uppercase leading-[0.9] tracking-[-1.8px] text-charcoal-pitch md:text-[60px]">
+        {section.heading}
+      </h2>
+
+      <div class="hidden items-center gap-[12px] md:flex" role="group" aria-label="Case study navigation">
+        <button
+          class="customers-prev flex h-[56px] w-[56px] items-center justify-center rounded-full border border-light-football transition-colors hover:bg-light-football"
+          aria-label="Previous case study"
+          type="button"
+        >
+          <svg class="h-[20px] w-[20px] text-charcoal-pitch" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M13 4l-6 6 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <button
+          class="customers-next flex h-[56px] w-[56px] items-center justify-center rounded-full bg-yellow-tennis transition-colors hover:bg-yellow-tennis/80"
+          aria-label="Next case study"
+          type="button"
+        >
+          <svg class="h-[20px] w-[20px] text-charcoal-pitch" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    {/* Case study cards track */}
+    <div
+      class="customers-track flex gap-[24px] overflow-x-auto px-[24px] pb-[8px] scrollbar-hide md:px-[120px]"
+      role="list"
+      style="scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;"
+    >
+      {section.caseStudies.map((study) => (
+        <article
+          class="relative flex h-[400px] w-[85vw] shrink-0 flex-col justify-between overflow-clip rounded-[16px] p-[32px] md:h-[500px] md:w-[920px] md:p-[64px]"
+          role="listitem"
+          style="scroll-snap-align: start;"
+        >
+          {/* Background */}
+          {study.backgroundImage ? (
+            <img
+              src={study.backgroundImage}
+              alt=""
+              class="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+              decoding="async"
+              aria-hidden="true"
+            />
+          ) : (
+            <div
+              class="absolute inset-0"
+              style={`background-color: ${study.gradientColor || 'var(--color-charcoal-pitch)'};`}
+              aria-hidden="true"
+            ></div>
+          )}
+
+          {/* Gradient overlay */}
+          <div
+            class="absolute inset-0"
+            style={`background: linear-gradient(180deg, ${study.gradientColor || 'rgba(22, 29, 37, 0.4)'} 0%, ${study.gradientColor || 'rgba(22, 29, 37, 0.9)'} 100%);`}
+            aria-hidden="true"
+          ></div>
+
+          {/* Content */}
+          <div class="relative z-10 flex flex-col justify-between h-full">
+            {/* Brand logo */}
+            {study.brandLogo ? (
+              <img
+                src={study.brandLogo}
+                alt={study.brandName}
+                class="h-[60px] w-[60px] object-contain md:h-[100px] md:w-[100px]"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <div
+                class="flex h-[60px] w-[60px] items-center justify-center rounded-[8px] bg-white/20 md:h-[100px] md:w-[100px]"
+                role="img"
+                aria-label={study.brandName}
+              >
+                <span class="font-body text-[10px] text-white/60">Logo</span>
+              </div>
+            )}
+
+            <div class="flex flex-col gap-[24px]">
+              <blockquote class="font-heading text-[28px] font-medium uppercase leading-[1.15] tracking-[-0.5px] text-white md:text-[50px]">
+                {study.quote}
+              </blockquote>
+
+              <a
+                href={study.cta.link}
+                class="inline-flex w-fit items-center rounded-[4px] bg-white px-[32px] py-[16px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-charcoal-pitch transition-colors hover:bg-white/90"
+              >
+                {study.cta.text}
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
+<script>
+  function initCustomerCarousels() {
+    const tracks = document.querySelectorAll<HTMLElement>('.customers-track');
+
+    tracks.forEach((track) => {
+      const section = track.closest('section');
+      if (!section) return;
+
+      const prevBtn = section.querySelector<HTMLButtonElement>('.customers-prev');
+      const nextBtn = section.querySelector<HTMLButtonElement>('.customers-next');
+      const scrollAmount = 944; // card width + gap
+
+      prevBtn?.addEventListener('click', () => {
+        track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      });
+
+      nextBtn?.addEventListener('click', () => {
+        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initCustomerCarousels);
+  initCustomerCarousels();
+</script>

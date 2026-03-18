@@ -1,39 +1,237 @@
 page:
-  title: MatchDayLive — Stream Your Way
-  description: The all-in-one OTT platform for sports content creators and broadcasters.
+  title: MatchDayLive — Become The Broadcaster
+  description: Launch your own branded live-streaming platform with MatchDayLive. The all-in-one OTT solution for sports organisations.
 
 sections:
   - type: hero
-    heading: Stream Your Way
-    subheading: The all-in-one OTT platform for sports content creators and broadcasters.
+    heading:
+      - BECOME THE
+      - BROADCASTER
+    subheading: Launch your own branded live-streaming platform. Take control of your content, grow your fanbase, and unlock new revenue streams with MatchDayLive.
     cta:
       primary:
-        text: Get Started
+        text: Book a Call
+        link: /contact
+      secondary:
+        text: Watch Demo
+        link: /demo
+
+  - type: logo_banner
+    heading: A central hub for all your Live & On-Demand video content
+    logos:
+      - src: /images/logos/partner-1.svg
+        alt: Partner 1
+      - src: /images/logos/partner-2.svg
+        alt: Partner 2
+      - src: /images/logos/partner-3.svg
+        alt: Partner 3
+      - src: /images/logos/partner-4.svg
+        alt: Partner 4
+      - src: /images/logos/partner-5.svg
+        alt: Partner 5
+      - src: /images/logos/partner-6.svg
+        alt: Partner 6
+      - src: /images/logos/partner-7.svg
+        alt: Partner 7
+
+  - type: diagonals
+    variant: white-to-grey
+
+  - type: feature
+    heading: Make it yours
+    description: Launch your own branded OTT platform and give fans a dedicated home for your content. Fully customisable, fully yours.
+    features:
+      - text: Custom-branded apps for iOS, Android, and Smart TV
+      - text: Your logo, your colours, your identity
+      - text: White-label player with no third-party branding
+      - text: Dedicated web, mobile, and connected TV experiences
+    image: /images/features/make-it-yours.webp
+    imageAlt: Custom branded OTT platform interface
+    imagePosition: right
+    cta:
+      primary:
+        text: Book a Call
         link: /contact
       secondary:
         text: Learn More
-        link: "#features"
+        link: /features/branding
 
-  - type: feature_grid
-    heading: Everything You Need
-    description: Built for sports content creators who demand more.
+  - type: feature
+    heading: Turn passion into profit
+    description: Monetise your content with flexible options designed for sports. From subscriptions to pay-per-view, unlock the revenue your content deserves.
     features:
-      - title: Live Streaming
-        description: Broadcast live events with ultra-low latency to fans worldwide.
-        icon: "📡"
-      - title: Video on Demand
-        description: Build your content library with automated encoding and delivery.
-        icon: "🎬"
-      - title: Fan Engagement
-        description: Interactive features that keep your audience coming back.
-        icon: "🏟️"
-      - title: Monetization
-        description: Subscriptions, pay-per-view, and ad integration built in.
-        icon: "💰"
+      - text: Subscription packages with flexible pricing tiers
+      - text: Pay-per-view for premium live events
+      - text: Integrated Stripe payments with global currency support
+      - text: Promo codes, free trials, and bundle deals
+    image: /images/features/turn-passion-into-profit.webp
+    imageAlt: Monetisation dashboard showing revenue streams
+    imagePosition: left
+    cta:
+      primary:
+        text: Book a Call
+        link: /contact
+      secondary:
+        text: Learn More
+        link: /features/monetisation
+
+  - type: feature
+    heading: Understand fans like never before
+    description: Get the insights you need to grow. Track engagement, understand viewing habits, and make data-driven decisions to build your audience.
+    features:
+      - text: Real-time viewership and engagement analytics
+      - text: Subscriber growth and retention dashboards
+      - text: Content performance breakdowns by event, series, or category
+      - text: Exportable reports for sponsors and stakeholders
+    image: /images/features/understand-fans.webp
+    imageAlt: Analytics dashboard showing fan engagement data
+    imagePosition: right
+    cta:
+      primary:
+        text: Book a Call
+        link: /contact
+      secondary:
+        text: Learn More
+        link: /features/analytics
+
+  - type: diagonals
+    variant: grey-to-white
+
+  - type: carousel
+    heading: FOR EVERY LEVEL OF THE GAME
+    cards:
+      - title: For Clubs
+        description: Give your club a professional streaming platform. Broadcast matches, training content, and behind-the-scenes access to grow your fanbase and generate revenue.
+      - title: For Leagues
+        description: Centralise your league's content under one roof. Stream every fixture, manage multiple clubs, and deliver a premium viewing experience to fans across the country.
+      - title: For Federations
+        description: Bring your entire federation together on a single platform. Manage national and regional content, showcase grassroots to elite-level sport, and reach fans worldwide.
+      - title: For Production Companies
+        description: Offer your clients a turnkey streaming solution. White-label the platform, deliver content at scale, and add a powerful new revenue stream to your production services.
+
+  - type: diagonals
+    variant: white-to-grey
+
+  - type: grid
+    heading: PUTTING FANS FIRST
+    description: Every feature is designed to deliver the best possible experience for your viewers — from first click to final whistle.
+    features:
+      - icon: hd
+        title: 1080p HD Streaming
+        description: Crystal-clear video quality for every live event and on-demand replay.
+      - icon: cast
+        title: Smart TV Casting
+        description: Cast content seamlessly to any Smart TV, Chromecast, or AirPlay-enabled device.
+      - icon: vod
+        title: Live to On-Demand
+        description: Every live stream automatically converts to on-demand content — no extra work required.
+      - icon: latency
+        title: Low Latency
+        description: Near real-time streaming so fans never miss a moment of the action.
+      - icon: data
+        title: Data-Friendly
+        description: Adaptive bitrate streaming adjusts to any connection speed for smooth, uninterrupted viewing.
+      - icon: global
+        title: Global Delivery
+        description: Powered by a worldwide CDN to deliver fast, reliable streaming to fans anywhere on the planet.
+    cta:
+      primary:
+        text: Book a Call
+        link: /contact
+      secondary:
+        text: See All Features
+        link: /features
+
+  - type: diagonals
+    variant: grey-to-white
+
+  - type: customers
+    heading: BUILT FOR SPORT
+    caseStudies:
+      - quote: MatchDayLive has transformed how we deliver content to our fans. The platform is reliable, professional, and easy to manage.
+        brandLogo: /images/customers/customer-1-logo.svg
+        brandName: Customer 1
+        backgroundImage: /images/customers/customer-1-bg.webp
+        gradientColor: "#1743d7"
+        cta:
+          text: Read Case Study
+          link: /case-studies/customer-1
+      - quote: We went from zero streaming capability to a fully branded platform in weeks. The monetisation tools have been a game-changer for our revenue.
+        brandLogo: /images/customers/customer-2-logo.svg
+        brandName: Customer 2
+        backgroundImage: /images/customers/customer-2-bg.webp
+        gradientColor: "#ff633d"
+        cta:
+          text: Read Case Study
+          link: /case-studies/customer-2
+      - quote: The analytics and fan engagement features help us understand exactly what our audience wants. We've grown our subscriber base by 300% in the first year.
+        brandLogo: /images/customers/customer-3-logo.svg
+        brandName: Customer 3
+        backgroundImage: /images/customers/customer-3-bg.webp
+        gradientColor: "#152644"
+        cta:
+          text: Read Case Study
+          link: /case-studies/customer-3
+
+  - type: diagonals
+    variant: white-to-grey
+
+  - type: accordion_features
+    heading:
+      - HANDLE THE
+      - BIGGEST OCCASIONS
+    stats:
+      - value: "99.9%"
+        label: Uptime
+      - value: "100%"
+        label: Events Delivered
+      - value: "100%"
+        label: Payments Processed
+      - value: "24/7"
+        label: Fan Support
+    cta:
+      primary:
+        text: Book a Call
+        link: /contact
+      secondary:
+        text: Learn More
+        link: /features/reliability
+    items:
+      - title: DRM+ Content Protection
+        description: Industry-leading digital rights management protects your premium content from piracy and unauthorised redistribution across all devices.
+        learnMoreLink: /features/drm
+        expanded: true
+      - title: Stripe Payments
+        description: Secure, global payment processing powered by Stripe. Accept cards, Apple Pay, Google Pay, and local payment methods in 135+ currencies.
+        learnMoreLink: /features/payments
+      - title: 24/7 Fan Support
+        description: Your fans get round-the-clock support via live chat and email. Our dedicated team ensures every viewer has a seamless experience.
+        learnMoreLink: /features/support
+      - title: Scale Infinitely
+        description: Whether it's 100 viewers or 100,000, the platform scales automatically to handle any audience size without buffering or downtime.
+        learnMoreLink: /features/scale
+      - title: Global CDN
+        description: Content is delivered via a worldwide network of edge servers, ensuring fast load times and reliable streaming for fans anywhere on the planet.
+        learnMoreLink: /features/cdn
+      - title: GDPR & Data Privacy
+        description: Fully GDPR-compliant with robust data protection policies. Your fans' data is stored securely and handled in accordance with international privacy regulations.
+        learnMoreLink: /features/privacy
+
+  - type: diagonals
+    variant: grey-to-white
 
   - type: cta_banner
-    heading: Ready to Launch?
-    description: Join the next generation of sports streaming platforms.
+    heading:
+      - LAUNCH YOUR
+      - CHANNEL
+    description: Ready to take control of your content and build something extraordinary? Get in touch and we'll help you launch your own branded streaming platform.
     button:
-      text: Contact Us
+      text: Book a Call
       link: /contact
+    backgroundImage: /images/cta-banner-bg.webp
+
+  - type: mailing_list
+    heading: STAY UPDATED
+    description: Get the latest news, product updates, and industry insights delivered straight to your inbox.
+    placeholder: Enter your email address
+    buttonText: Subscribe

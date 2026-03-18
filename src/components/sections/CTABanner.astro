@@ -1,0 +1,73 @@
+---
+import type { CTABannerSection } from '../../types/content';
+
+interface Props {
+  section: CTABannerSection;
+}
+
+const { section } = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-navy-umpire" aria-label="Call to action">
+  {/* Top diagonal decorative strip */}
+  <div class="absolute top-0 left-0 right-0 h-[6px] flex" aria-hidden="true">
+    <div class="flex-1 bg-orange-basketball"></div>
+    <div class="flex-1 bg-blue-matchday"></div>
+    <div class="flex-1 bg-yellow-tennis"></div>
+    <div class="flex-1 bg-orange-basketball"></div>
+  </div>
+
+  <div class="mx-auto flex max-w-[1440px] flex-col md:flex-row">
+    {/* Left: content */}
+    <div class="flex flex-col justify-center gap-[32px] px-[24px] pt-[100px] pb-[80px] md:w-[600px] md:shrink-0 md:py-[140px] md:pl-[120px] md:pr-[64px] md:pt-[140px] md:pb-[100px]">
+      <h1 class="font-heading text-[48px] font-medium uppercase leading-[0.9] tracking-[0.8px] text-white md:text-[80px]">
+        {section.heading.map((line) => (
+          <span class="block">{line}</span>
+        ))}
+      </h1>
+
+      <p class="font-body text-[18px] font-normal leading-[1.4] text-white/80">
+        {section.description}
+      </p>
+
+      <div>
+        <a
+          href={section.button.link}
+          class="inline-flex items-center rounded-[4px] bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:bg-blue-matchday/90"
+        >
+          {section.button.text}
+        </a>
+      </div>
+    </div>
+
+    {/* Right: decorative image area */}
+    <div class="relative hidden flex-1 md:block">
+      {section.backgroundImage ? (
+        <img
+          src={section.backgroundImage}
+          alt=""
+          class="h-full w-full object-cover"
+          loading="lazy"
+          decoding="async"
+          aria-hidden="true"
+        />
+      ) : (
+        <div
+          class="flex h-full min-h-[400px] items-center justify-center bg-white/5"
+          role="img"
+          aria-label="Decorative sports imagery"
+        >
+          <span class="font-body text-[14px] text-white/20">Sports Imagery</span>
+        </div>
+      )}
+    </div>
+  </div>
+
+  {/* Bottom diagonal decorative strip */}
+  <div class="absolute bottom-0 left-0 right-0 h-[6px] flex" aria-hidden="true">
+    <div class="flex-1 bg-yellow-tennis"></div>
+    <div class="flex-1 bg-orange-basketball"></div>
+    <div class="flex-1 bg-blue-matchday"></div>
+    <div class="flex-1 bg-yellow-tennis"></div>
+  </div>
+</section>
