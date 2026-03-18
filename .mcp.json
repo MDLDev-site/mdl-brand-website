@@ -1,0 +1,66 @@
+{
+  "mcpServers": {
+    "Context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    },
+    "linear": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.linear.app/mcp"]
+    },
+    "sequentialthinking": {
+      "url": "https://remote.mcpservers.org/sequentialthinking/mcp",
+      "headers": {}
+    },
+    "openmemory": {
+      "command": "npx",
+      "args": ["-y", "openmemory"],
+      "env": {
+        "OPENMEMORY_API_KEY": "om-ci1r8k88j8rgbm768mhii08ag9o1roj1",
+        "CLIENT_NAME": "MDL"
+      }
+    },
+    "figma-local-mcp": {
+      "command": "npx",
+      "args": ["-y", "@figma/mcp-server-figma"]
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"],
+      "env": {}
+    },
+    "serena": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena",
+        "start-mcp-server",
+        "--context",
+        "ide-assistant",
+        "--enable-web-dashboard",
+        "false",
+        "--enable-gui-log-window",
+        "false"
+      ],
+      "env": {}
+    },
+    "chrome-devtools": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"],
+      "env": {}
+    },
+    "docs-rag": {
+      "type": "stdio",
+      "command": "python3",
+      "args": ["mcp_server/rag_server.py"],
+      "env": {}
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "documentPack": {
+    "title": "MDL - Documentation Pack",
+    "version": "0.1",
+    "project": "MDL Project Name",
+    "phase": "",
+    "generatedDate": ""
+  },
+  "sections": [
+    {
+      "title": "Project Overview",
+      "description": "High-level project context and architecture",
+      "files": []
+    },
+    {
+      "title": "Architecture & Design",
+      "description": "System architecture, data models, and design decisions",
+      "files": []
+    },
+    {
+      "title": "API Documentation",
+      "description": "API endpoints, contracts, and integration guides",
+      "files": []
+    },
+    {
+      "title": "Security & Compliance",
+      "description": "Security requirements, auth flows, and compliance",
+      "files": []
+    },
+    {
+      "title": "Testing & Quality",
+      "description": "Testing strategy, coverage targets, and QA processes",
+      "files": []
+    },
+    {
+      "title": "Operations & Deployment",
+      "description": "Infrastructure, CI/CD, monitoring, and runbooks",
+      "files": []
+    }
+  ],
+  "metadata": {
+    "totalSections": 6,
+    "totalDocuments": 0,
+    "excludedFiles": ["WIP/*.md"],
+    "notes": [
+      "Add markdown files to the files arrays as documentation grows",
+      "Mermaid diagrams in markdown will be rendered as SVG during build",
+      "Run: node docs-generator/build.js to generate the HTML pack"
+    ]
+  }
+}

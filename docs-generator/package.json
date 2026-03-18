@@ -1,0 +1,22 @@
+{
+  "name": "mdl-documentation-pack",
+  "version": "1.0.0",
+  "description": "Requirements Documentation Pack",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js",
+    "clean": "rm -rf documentation-pack.html temp-*.mmd temp-*.svg"
+  },
+  "dependencies": {
+    "marked": "^11.1.1",
+    "@mermaid-js/mermaid-cli": "^10.6.1"
+  },
+  "keywords": [
+    "documentation",
+    "requirements",
+    "mdl"
+  ],
+  "author": "MDL",
+  "license": "UNLICENSED",
+  "private": true
+}

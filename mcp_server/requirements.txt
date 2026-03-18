@@ -1,0 +1,17 @@
+# RAG MCP Server Dependencies
+
+# Core RAG components
+chromadb>=0.4.22
+sentence-transformers>=2.3.0
+
+# MCP SDK
+mcp>=0.9.0
+
+# Document processing
+markdown>=3.5.0
+
+# Progress bars
+tqdm>=4.66.0
+
+# Path handling
+pathspec>=0.12.0

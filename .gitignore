@@ -1,0 +1,18 @@
+# Environment
+.env
+
+# GitNexus indexes (local only, not committed)
+.gitnexus/
+
+# Docs-RAG vector store
+.chroma/
+
+# Node
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
