@@ -7,6 +7,9 @@
 # Docs-RAG vector store
 .chroma/
 
+# Astro build output
+dist/
+
 # Node
 node_modules/
 

@@ -1,0 +1,21 @@
+---
+import type { Navigation } from '../../types/content';
+
+interface Props {
+  nav: Navigation;
+}
+
+const { nav } = Astro.props;
+---
+
+<header>
+  <nav>
+    <a href="/">{nav.brand.name}</a>
+    <ul>
+      {nav.links.map((link) => (
+        <li><a href={link.href}>{link.text}</a></li>
+      ))}
+    </ul>
+    <a href={nav.cta.link}>{nav.cta.text}</a>
+  </nav>
+</header>

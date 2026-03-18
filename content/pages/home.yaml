@@ -1,0 +1,39 @@
+page:
+  title: MatchDayLive — Stream Your Way
+  description: The all-in-one OTT platform for sports content creators and broadcasters.
+
+sections:
+  - type: hero
+    heading: Stream Your Way
+    subheading: The all-in-one OTT platform for sports content creators and broadcasters.
+    cta:
+      primary:
+        text: Get Started
+        link: /contact
+      secondary:
+        text: Learn More
+        link: "#features"
+
+  - type: feature_grid
+    heading: Everything You Need
+    description: Built for sports content creators who demand more.
+    features:
+      - title: Live Streaming
+        description: Broadcast live events with ultra-low latency to fans worldwide.
+        icon: "📡"
+      - title: Video on Demand
+        description: Build your content library with automated encoding and delivery.
+        icon: "🎬"
+      - title: Fan Engagement
+        description: Interactive features that keep your audience coming back.
+        icon: "🏟️"
+      - title: Monetization
+        description: Subscriptions, pay-per-view, and ad integration built in.
+        icon: "💰"
+
+  - type: cta_banner
+    heading: Ready to Launch?
+    description: Join the next generation of sports streaming platforms.
+    button:
+      text: Contact Us
+      link: /contact

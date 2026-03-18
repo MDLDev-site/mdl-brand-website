@@ -1,0 +1,15 @@
+---
+interface Props {
+  brand: {
+    name: string;
+    logo: string;
+  };
+}
+
+const { brand } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <p>&copy; {year} {brand.name}. All rights reserved.</p>
+</footer>

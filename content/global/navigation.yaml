@@ -1,0 +1,15 @@
+brand:
+  name: MatchDayLive
+  logo: /logo.svg
+
+links:
+  - text: Features
+    href: "#features"
+  - text: Pricing
+    href: "#pricing"
+  - text: About
+    href: /about
+
+cta:
+  text: Get Started
+  link: /contact

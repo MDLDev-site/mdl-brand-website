@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { loadYaml } from '../lib/yaml-loader';
+import type { PageContent } from '../types/content';
+
+const page = await loadYaml<PageContent>('pages/home.yaml');
+---
+
+<BaseLayout title={page.page.title} description={page.page.description}>
+  {page.sections.map((section) => {
+    if (section.type === 'hero') {
+      return (
+        <section>
+          <h1>{section.heading}</h1>
+          <p>{section.subheading}</p>
+          <div>
+            <a href={section.cta.primary.link}>{section.cta.primary.text}</a>
+            {section.cta.secondary && (
+              <a href={section.cta.secondary.link}>{section.cta.secondary.text}</a>
+            )}
+          </div>
+        </section>
+      );
+    }
+    if (section.type === 'feature_grid') {
+      return (
+        <section>
+          <h2>{section.heading}</h2>
+          {section.description && <p>{section.description}</p>}
+          <div>
+            {section.features.map((feature) => (
+              <div>
+                <span>{feature.icon}</span>
+                <h3>{feature.title}</h3>
+                <p>{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+    }
+    if (section.type === 'cta_banner') {
+      return (
+        <section>
+          <h2>{section.heading}</h2>
+          {section.description && <p>{section.description}</p>}
+          <a href={section.button.link}>{section.button.text}</a>
+        </section>
+      );
+    }
+    return null;
+  })}
+</BaseLayout>

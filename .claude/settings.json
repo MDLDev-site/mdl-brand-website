@@ -31,6 +31,7 @@
       "ReadMcpResourceTool",
       "Bash(grep:*)",
       "Bash(npm run lint:*)",
+      "Bash(npm run claude:*)",
       "Bash(git status:*)",
       "Bash(git diff:*)",
       "Bash(git log:*)",
@@ -57,6 +58,7 @@
       "Bash(npm test:*)",
       "Bash(npm run test:*)",
       "Bash(npx jest:*)",
+      "Bash(npx astro:*)",
       "Bash(ls:*)",
       "Bash(wc:*)",
       "Bash(head:*)",
@@ -90,7 +92,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'MDL Baseline — Session Start' && echo '  Read: CLAUDE.md + .claude/CLAUDE.md (skills library)' && echo '  Memory: Check memory/MEMORY.md for project context' && echo '  Context: mcp__openmemory__search-memories' && echo '  Complex tasks? Use skill-orchestrator' && echo '' && git status --short 2>&1 | head -10 && echo '' && npx gitnexus status 2>/dev/null | head -3 || echo 'GitNexus: not indexed — run: npx gitnexus analyze' && UNTRACKED=$(git ls-files --others --exclude-standard 2>/dev/null | wc -l | tr -d ' ') && [ \"$UNTRACKED\" -gt 20 ] && echo \"Warning: $UNTRACKED untracked files — consider updating .gitignore\" || true",
+            "command": "echo 'MDL Brand Website — Session Start' && echo '  Read: CLAUDE.md + .claude/CLAUDE.md (skills library)' && echo '  Primary skill: astro-specialist' && echo '  Memory: Check memory/MEMORY.md for project context' && echo '  Context: mcp__openmemory__search-memories' && echo '  Figma: Source of truth for all design' && echo '' && git status --short 2>&1 | head -10 && echo '' && npx gitnexus status 2>/dev/null | head -3 || echo 'GitNexus: not indexed — run: npx gitnexus analyze' && UNTRACKED=$(git ls-files --others --exclude-standard 2>/dev/null | wc -l | tr -d ' ') && [ \"$UNTRACKED\" -gt 20 ] && echo \"Warning: $UNTRACKED untracked files — consider updating .gitignore\" || true",
             "timeout": 10000
           }
         ]
@@ -102,7 +104,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Evaluate this user prompt and suggest relevant tools if applicable. Rules: (1) If it mentions debugging/investigating/root cause/why, suggest Sequential Thinking MCP for structured analysis. (2) If it mentions design/figma/mockup/implement UI, suggest Figma MCP tools. (3) If it asks 'how do I' or 'what's the pattern' or 'where is', suggest querying OpenMemory first (mcp__openmemory__search-memories). (4) If the user is correcting Claude ('no that's wrong', 'actually', 'correction', 'instead'), suggest storing the correction in OpenMemory (mcp__openmemory__add-memory). (5) If it's a multi-domain task (implement + test + docs, build + test), suggest using the skill-orchestrator skill to coordinate specialists. (6) If the user mentions a specific MDL project (fan-dev, admin-dev, lambdas, brand-site), suggest loading the relevant memory/projects/*.md file. Reply with a brief suggestion if any rule matches, or just {\"ok\": true} if none apply. Context: $ARGUMENTS"
+            "prompt": "Evaluate this user prompt and suggest relevant tools if applicable. Rules: (1) If it mentions debugging/investigating/root cause/why, suggest Sequential Thinking MCP for structured analysis. (2) If it mentions design/figma/mockup/implement UI/styling/colors/layout/visual/font/typography, remind: Figma is the source of truth — use Figma MCP tools (mcp__figma-local-mcp__get_variable_defs, mcp__figma-local-mcp__get_screenshot) before writing any CSS or Tailwind. Design URL: https://www.figma.com/design/mHA4xTdD4loTmApGJF9NvC/Website?node-id=1-18&m=dev (3) If it asks 'how do I' or 'what's the pattern' or 'where is', suggest querying OpenMemory first (mcp__openmemory__search-memories). (4) If the user is correcting Claude ('no that's wrong', 'actually', 'correction', 'instead'), suggest storing the correction in OpenMemory (mcp__openmemory__add-memory). (5) If it's a multi-domain task (implement + test + docs, build + test), suggest using the skill-orchestrator skill to coordinate specialists. (6) If the user mentions a specific MDL project (fan-dev, admin-dev, lambdas, brand-site), suggest loading the relevant memory/projects/*.md file. Reply with a brief suggestion if any rule matches, or just {\"ok\": true} if none apply. Context: $ARGUMENTS"
           }
         ]
       }
@@ -113,7 +115,25 @@
         "hooks": [
           {
             "type": "command",
-            "command": "lsof -ti:5173 >/dev/null 2>&1 && echo 'WARNING: Dev server already running on port 5173 — no need to start again!' && exit 2 || echo 'Port 5173 available — starting dev server...'"
+            "command": "lsof -ti:4321 >/dev/null 2>&1 && echo 'WARNING: Dev server already running on port 4321 — no need to start again!' && exit 2 || echo 'Port 4321 available — starting dev server...'"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit.*content/.*\\.yaml$|Write.*content/.*\\.yaml$",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "CMS-managed YAML content file being edited. WARNING: On staging/prod branches, content is managed by mdl-brand-site-cms. Direct edits on main are OK for development, but ensure content types match the CMS schema at mdl-brand-site-cms/lib/types/content.types.ts. $ARGUMENTS"
+          }
+        ]
+      },
+      {
+        "matcher": "Write.*\\.astro$",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Astro component being created/modified. If this is a new section component (in src/components/sections/), remember to: (1) Register it in the page template's section renderer. (2) Add matching TypeScript interface to src/types/content.ts. (3) Document the new section type for CMS integration (mdl-brand-site-cms needs a matching block editor). $ARGUMENTS"
           }
         ]
       },
@@ -140,7 +160,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Git commit being made. Verify this checklist before proceeding: (1) Lint passed (npm run lint). (2) Tests passed (npm test). (3) No console.logs or debugger statements in committed code. (4) CHANGELOG.md updated if user-facing changes (see changelog-standards skill). (5) Commit message follows type(scope): subject format per git-workflow skill. (6) gitnexus_detect_changes({scope: 'staged'}) was run to verify change scope. Reply {\"ok\": true} with any items that appear unverified, or {\"ok\": true} if all look good. $ARGUMENTS"
+            "prompt": "Git commit being made. Verify this checklist before proceeding: (1) Lint passed (npm run claude:lint). (2) No console.logs or debugger statements in committed code. (3) CHANGELOG.md updated if user-facing changes (see changelog-standards skill). (4) Commit message follows type(scope): subject format per git-workflow skill. Reply {\"ok\": true} with any items that appear unverified, or {\"ok\": true} if all look good. $ARGUMENTS"
           }
         ]
       },
@@ -149,16 +169,16 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "File being modified. Check: (1) If this is a config file (package.json, vite.config, jest.config, tsconfig), warn about potential breaking changes — test thoroughly after editing. (2) If this is a shared utility or helper file, warn about cross-feature impact — check usage with grep or gitnexus_impact. (3) If this is a source file (.js/.ts/.jsx/.tsx/.mjs/.py), consider running gitnexus_impact() on modified symbols to check blast radius. Reply briefly if any concern applies, or {\"ok\": true} if straightforward. $ARGUMENTS"
+            "prompt": "File being modified. Check: (1) If this is a config file (package.json, astro.config, tsconfig), warn about potential breaking changes — test thoroughly after editing. (2) If this is a shared utility or helper file, warn about cross-feature impact. (3) If this is a source file (.ts/.astro), consider checking blast radius. Reply briefly if any concern applies, or {\"ok\": true} if straightforward. $ARGUMENTS"
           }
         ]
       },
       {
-        "matcher": "Write.*/ui/.*\\.(jsx?|tsx?)$|Write.*/components/.*\\.(jsx?|tsx?)$",
+        "matcher": "Write.*/components/.*\\.(astro|jsx?|tsx?)$",
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "New UI component being created. Check WCAG 2.1 AA compliance per frontend-ux-specialist skill: semantic HTML elements, ARIA labels where needed, keyboard navigation support, minimum 44px touch targets on interactive elements. If this is a page-level component, wrap critical sections in ErrorBoundary per error-handling-standards skill. $ARGUMENTS"
+            "prompt": "New component being created. Check WCAG 2.1 AA compliance: semantic HTML elements, ARIA labels where needed, keyboard navigation support, minimum 44px touch targets on interactive elements. $ARGUMENTS"
           }
         ]
       }
@@ -169,7 +189,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'Reminder: Run npm run lint before committing'"
+            "command": "echo 'Reminder: Run npm run claude:lint before committing'"
           }
         ]
       },
@@ -178,7 +198,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Code was modified. Check: (1) If a test file was changed, suggest running tests to validate (npm test -- <filename>). (2) If a feature or UI file was changed, remind to update CHANGELOG.md for user-facing changes per changelog-standards skill. (3) If a file in docs/ or Docs/ was changed, remind to run reindex_docs() to update the Docs-RAG search index. Reply briefly if any apply, or {\"ok\": true} if none. $ARGUMENTS"
+            "prompt": "Code was modified. Check: (1) If a test file was changed, suggest running tests. (2) If a feature or UI file was changed, remind to update CHANGELOG.md for user-facing changes. (3) If a file in Docs/ was changed, remind to run reindex_docs(). Reply briefly if any apply, or {\"ok\": true} if none. $ARGUMENTS"
           }
         ]
       },
@@ -187,7 +207,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Git commit completed. Check: (1) Commit message describes WHY not just WHAT, per git-workflow skill. (2) If docs/ files were committed, remind to run reindex_docs() to update the Docs-RAG search index. (3) If npm install was run, suggest npm audit to check for security vulnerabilities per security-standards skill. Reply briefly with any reminders. $ARGUMENTS"
+            "prompt": "Git commit completed. Check: (1) Commit message describes WHY not just WHAT. (2) If Docs/ files were committed, remind to run reindex_docs(). Reply briefly with any reminders. $ARGUMENTS"
           }
         ]
       },
@@ -196,16 +216,16 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'Dependencies updated — run npm audit to check for security vulnerabilities. See security-standards skill.'"
+            "command": "echo 'Dependencies updated — run npm audit to check for security vulnerabilities.'"
           }
         ]
       },
       {
-        "matcher": "Edit.*\\.css$|Edit.*\\.scss$|Write.*\\.css$|Write.*\\.scss$",
+        "matcher": "Edit.*\\.css$|Write.*\\.css$",
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'Styles modified — check responsive breakpoints: mobile (375px), tablet (768px), desktop (1920px). See performance-standards skill.'"
+            "command": "echo 'Styles modified — check responsive breakpoints: mobile (375px), tablet (768px), desktop (1920px).'"
           }
         ]
       }
@@ -216,7 +236,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'Session ending — checklist:' && echo '  [ ] Tests passing (npm test)' && echo '  [ ] Code linted (npm run lint)' && echo '  [ ] Changes committed (git status)' && echo '  [ ] Documentation updated for new features' && echo '  [ ] Security reviewed for sensitive changes' && echo '  [ ] Learnings stored in OpenMemory (mcp__openmemory__add-memory)' && echo '  [ ] gitnexus_detect_changes run for modified code' && echo '' && git status --short 2>&1 | head -10"
+            "command": "echo 'Session ending — checklist:' && echo '  [ ] Code linted (npm run claude:lint)' && echo '  [ ] Build passing (npm run build)' && echo '  [ ] Changes committed (git status)' && echo '  [ ] Documentation updated for new features' && echo '  [ ] Learnings stored in OpenMemory' && echo '' && git status --short 2>&1 | head -10"
           }
         ]
       }

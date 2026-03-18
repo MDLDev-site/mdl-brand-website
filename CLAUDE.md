@@ -1,6 +1,6 @@
-# CLAUDE.md — MDL Baseline
+# CLAUDE.md — MDL Brand Website
 
-This is the MDL team's baseline template repository. It contains shared tooling, skills, MCP configuration, and conventions used across all MDL projects.
+**MatchDayLive Marketing Site** — public-facing brand and marketing site built with Astro, Tailwind CSS, and YAML-driven content.
 
 ---
 
@@ -19,7 +19,7 @@ Keep all discussions concise and task-focused. Avoid banter and unnecessary comm
 Query OpenMemory MCP to load relevant project context before doing anything else:
 
 ```javascript
-mcp__openmemory__search-memories({ query: "MDL architecture patterns" })
+mcp__openmemory__search-memories({ query: "MDL brand website patterns" })
 mcp__openmemory__search-memories({ query: "common mistakes and corrections" })
 mcp__openmemory__search-memories({ query: "current work and priorities" })
 ```
@@ -55,9 +55,95 @@ If working on code, run `gitnexus_query` or read `gitnexus://repo/{repo-name}/co
 
 **When working on an item that will require a status update in CLAUDE.md, make that update so future conversations won't duplicate work.**
 
-**Always run the linter after making changes** — `npm run lint` (or the project-appropriate lint command).
+**Always run the linter after making changes** — `npm run claude:lint` (runs `astro check`).
 
 **Check existing patterns before implementing.** Review similar features/code for reusable patterns before writing new code.
+
+---
+
+## Astro Project Context
+
+### Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| **Framework** | Astro 6 (Static Site Generation) |
+| **Styling** | Tailwind CSS v4 (via Vite plugin) |
+| **Content** | YAML files in `content/` directory |
+| **Types** | TypeScript (strict mode) |
+| **SEO** | @astrojs/sitemap |
+| **Deployment** | AWS Amplify (S3 + CloudFront) |
+
+### Project Structure
+
+```
+src/
+├── pages/           # Astro pages (.astro files)
+├── layouts/         # Base HTML layouts
+├── components/
+│   ├── layout/      # Header, Footer
+│   └── sections/    # CMS section components (mapped to YAML types)
+├── lib/             # Utilities (yaml-loader)
+├── types/           # TypeScript interfaces (shared with CMS)
+└── styles/          # Tailwind global CSS + design tokens
+content/             # YAML content (CMS-managed)
+├── global/          # Site-wide content (navigation, footer)
+└── pages/           # Page content (home.yaml, etc.)
+```
+
+### Key Commands
+
+```bash
+npm run dev          # Start dev server on :4321
+npm run build        # Production build
+npm run preview      # Preview production build
+npm run claude:lint  # TypeScript checking (astro check)
+```
+
+---
+
+## CMS Integration
+
+This site's content is managed by **mdl-brand-site-cms** (separate repo).
+
+### How It Works
+
+- CMS reads/writes YAML files in `content/` directory
+- Content types in `src/types/content.ts` must match CMS schema at `mdl-brand-site-cms/lib/types/content.types.ts`
+- CMS pushes content changes to `staging` branch
+- Publishing merges `staging` → `prod` → Amplify deploys
+
+### Content Workflow
+
+- **Development**: Edit YAML directly on `main` branch
+- **Content editing**: CMS edits YAML, pushes to `staging`
+- **Publishing**: CMS merges `staging` → `prod`, triggers deploy
+
+### Adding New Section Types
+
+When adding a new section component:
+1. Add TypeScript interface to `src/types/content.ts`
+2. Create Astro component in `src/components/sections/`
+3. Register in page template's section renderer
+4. Update `mdl-brand-site-cms` with matching schema and block editor
+
+---
+
+## Figma Integration — Design Source of Truth
+
+**Figma is the SINGLE SOURCE OF TRUTH for all design decisions.**
+
+- Homepage design: `https://www.figma.com/design/mHA4xTdD4loTmApGJF9NvC/Website?node-id=1-18&m=dev`
+- **NEVER assume colors, fonts, spacing, or design tokens.** Always extract from Figma first.
+- Use Figma MCP tools (`mcp__figma-local-mcp__get_variable_defs`, `mcp__figma-local-mcp__get_screenshot`, etc.)
+- Design tokens go into `src/styles/global.css` as Tailwind v4 `@theme` variables
+
+### Design Implementation Workflow
+
+1. Connect to Figma design via MCP tools
+2. Extract design tokens (colors, typography, spacing) into `global.css`
+3. Implement components pixel-perfect from Figma specs
+4. Verify responsive behavior against Figma frames
 
 ---
 
@@ -69,12 +155,12 @@ OpenMemory MCP is configured in `.mcp.json` with client name `MDL` for team-wide
 
 You **must** store memories to OpenMemory in the following situations:
 
-1. **User Corrections** — when the user corrects an assumption, approach, or implementation detail. Store the correction with context about what was wrong and why.
-2. **Rule Violations** — when discovering patterns that violate project rules. Document the violation and the correct approach.
-3. **Project-Specific Patterns** — when encountering unique MDL patterns (architecture decisions, custom conventions, integration patterns).
-4. **Common Mistakes** — when the same issue is encountered multiple times. Store the mistake pattern and correct solution.
-5. **Performance Discoveries** — when finding effective optimization approaches. Document what worked, metrics improvement, and when to apply.
-6. **Security Patterns** — when implementing or correcting security-related code. Store secure patterns with rationale.
+1. **User Corrections** — when the user corrects an assumption, approach, or implementation detail
+2. **Rule Violations** — when discovering patterns that violate project rules
+3. **Project-Specific Patterns** — when encountering unique MDL patterns
+4. **Common Mistakes** — when the same issue is encountered multiple times
+5. **Performance Discoveries** — when finding effective optimization approaches
+6. **Security Patterns** — when implementing or correcting security-related code
 
 ### Memory Storage Format
 
@@ -85,13 +171,6 @@ Solution: [Correct approach or implementation]
 Rule Reference: [Link to skill or rule if applicable]
 Tags: [Comma-separated tags for retrieval]
 ```
-
-### Memory Retrieval Strategy
-
-- **Session start**: Query for project-specific memories (see Session Start Protocol)
-- **Before major changes**: Check for relevant memories before refactoring or implementing features
-- **After corrections**: Immediately store the learning and query for related patterns
-- **Domain switching**: When switching contexts (frontend to backend), retrieve domain-specific memories
 
 ---
 
@@ -136,74 +215,19 @@ const isEditing = false;
 const handleSubmit = () => {};
 ```
 
-### Tech Stack
+### Tech Stack (Full Platform)
 
 | Layer | Technology |
 |-------|-----------|
 | **Backend** | 237+ AWS Lambda functions (.mjs ESM), API Gateway v2, DynamoDB, SQS, S3 |
 | **Fan Frontend** | React 18 + Vite + TypeScript, TanStack Query v4, MUI v5, styled-components |
 | **Admin Frontend** | React 18 + Vite + JS, TanStack Query v4, Ant Design |
-| **Brand Site** | Astro (islands architecture, zero-JS-by-default) |
+| **Brand Site** | Astro 6 (this repo) — islands architecture, zero-JS-by-default |
 | **Auth** | AWS Cognito (per-channel user pools) |
 | **Payments** | Stripe (subscriptions, payment intents, webhooks) |
 | **Video** | Bitmovin Player/Analytics, HLS.js |
 | **Monitoring** | Sentry, CloudWatch |
 | **Issues** | Linear (team DEV, workspace MDL, prefix DEV-XXXX) |
-
-### Lambda Conventions
-
-**Channel ID extraction — ALWAYS from authorizer, NEVER from headers:**
-
-```javascript
-// CORRECT — verified by API Gateway authorizer
-const channelId = event.requestContext.authorizer.lambda.channel_id;
-
-// WRONG — can be spoofed by client
-const channelId = event.headers['x-channel-id'];  // NEVER
-```
-
-**Standard response format:**
-
-```javascript
-function successResponse(data) {
-  return {
-    statusCode: 200,
-    headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "Content-Type,Authorization" },
-    body: JSON.stringify({ data }),
-  };
-}
-
-function errorResponse(statusCode, message) {
-  return {
-    statusCode,
-    headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "Content-Type,Authorization" },
-    body: JSON.stringify({ error: message }),
-  };
-}
-```
-
-**Lambda configuration standards:**
-
-| Setting | Value |
-|---------|-------|
-| Runtime | Node.js 20.x |
-| Architecture | arm64 (Graviton2) |
-| Memory | 256 MB default |
-| Timeout | 30 seconds |
-
-**Required resource tags:**
-
-```javascript
-{ Project: "MDL", Feature: "FeatureName", Environment: "production", Team: "Development", CostCenter: "CBE", LinearIssue: "DEV-XXXX" }
-```
-
-**Multi-tenancy security — ALL Lambdas MUST enforce channel isolation:**
-
-1. Extract `channel_id` from authorizer (never trust client)
-2. Filter ALL queries by `channel_id`
-3. Verify ownership before mutations
-4. Return generic error messages (never expose internals)
-5. Log securely (no tokens, no PII in CloudWatch)
 
 ---
 
@@ -213,32 +237,22 @@ This repo contains a curated skills library at `.claude/skills/`. Skills are inv
 
 **IMPORTANT: Check for a relevant skill before starting any task.** If there is even a 1% chance a skill applies, invoke it first.
 
-### Key Skills for MDL Work
+### Key Skills for Brand Website Work
 
 | Trigger | Skill |
 |---------|-------|
-| Any `DEV-XXXX` mention, "start work", "create PR", "progress update" | `linear-workflow` |
 | Astro / brand site work | `astro-specialist` |
-| Lambda / API Gateway / DynamoDB | `backend-distributed-systems-engineer` |
-| Frontend (React, TanStack Query, Bitmovin) | `frontend-ux-specialist` |
-| Security review, auth, Cognito, Stripe | `security-sentinel` |
-| CI/CD, Lambda deploys, infrastructure | `devops-infrastructure-as-code` |
-| Playwright, Jest, MSW | `qa-automation-engineer` |
-| Performance — Lambda cold start, bundle, query | `performance-engineer` |
-| CloudWatch, Sentry, Bitmovin Analytics | `observability-engineer` |
-| Incident response | `incident-commander` |
+| Any `DEV-XXXX` mention, "start work", "create PR", "progress update" | `linear-workflow` |
+| Frontend (React islands, components) | `frontend-ux-specialist` |
+| Security review, auth | `security-sentinel` |
+| CI/CD, deploys, infrastructure | `devops-infrastructure-as-code` |
+| Performance — CWV, bundle, images | `performance-engineer` |
+| SEO, structured data, sitemap | `seo` skills |
 | Git commits, branches, PRs | `git-workflow` |
 | CHANGELOG updates, release notes | `changelog-standards` |
-| Security review, secrets, input validation | `security-standards` |
-| Error handling, logging, retry logic | `error-handling-standards` |
-| Performance, CWV, image optimisation | `performance-standards` |
 | "Which skill should I use?" | `skill-matrix` |
 | Multi-skill workflows | `skill-chains` |
 | Orchestrating multiple specialists | `skill-orchestrator` |
-
-### Linear Workflow
-
-All Linear issue management uses the `linear-workflow` skill. It is **self-contained** — all MDL team IDs, status IDs, and conventions are embedded in the skill. Never look for a `.linear-workflow.json` config file; it does not exist in this repo.
 
 ---
 
@@ -251,72 +265,39 @@ The following MCP servers are configured in `.mcp.json` for team-wide use:
 | **OpenMemory** | Team knowledge base | Session start, storing corrections, retrieving patterns |
 | **Linear** | Issue management | All DEV-XXXX work (via `linear-workflow` skill) |
 | **Context7** | Library documentation lookup | When you need up-to-date docs for any library |
-| **GitNexus** | Code intelligence | Before editing, debugging, refactoring (see below) |
-| **Figma** | Design file access | When implementing designs or reviewing mockups |
+| **GitNexus** | Code intelligence | Before editing, debugging, refactoring |
+| **Figma** | Design file access | **Primary tool** — all design implementation |
 | **Playwright** | Browser automation / E2E testing | Testing, screenshots, form filling |
 | **Chrome DevTools** | Browser debugging | Console logs, network requests, performance |
 | **Serena** | Semantic code analysis | Symbol-level code reading and editing |
-| **Sequential Thinking** | Structured reasoning | Complex debugging, architectural decisions, threat modelling |
+| **Sequential Thinking** | Structured reasoning | Complex debugging, architectural decisions |
 | **Docs-RAG** | Local documentation search | Querying `/Docs` without reading entire files |
-
-### Sequential Thinking — When to Use
-
-Use Sequential Thinking MCP for problems requiring structured multi-step reasoning:
-
-- **Complex debugging**: Multi-component failures, race conditions, intermittent issues
-- **Architectural decisions**: Evaluating trade-offs, planning major refactors
-- **Security analysis**: Threat modelling, vulnerability assessment
-- **Performance optimisation**: Systematic bottleneck identification
-
-Do NOT use for simple, straightforward tasks with clear solutions.
 
 ---
 
 ## Common Gotchas
 
-1. **Token refresh**: Always use the project's API client (e.g., `apiClient`, `apiFetch`) — never raw `fetch` for authenticated requests
-2. **Query invalidation**: Invalidate TanStack Query cache after mutations
-3. **URL state**: Use `{ replace: true }` for filter/search param changes
-4. **File uploads**: Upload to S3 happens AFTER API success (by design)
-5. **Channel switching**: Causes full page reload and cache clear
-6. **snake_case vs camelCase**: DB fields are snake_case, frontend logic is camelCase — never mix
+1. **Tailwind v4**: Uses `@import "tailwindcss"` in CSS, NOT `@tailwind` directives. Theme via `@theme {}` block.
+2. **YAML content edits**: On `main` for dev only — CMS manages content on `staging`/`prod` branches
+3. **Content types**: Must stay in sync between `src/types/content.ts` and `mdl-brand-site-cms/lib/types/content.types.ts`
+4. **Figma tokens**: Never hardcode design values — always extract from Figma MCP
+5. **Static output**: Astro builds to static HTML — no server-side runtime
+6. **snake_case vs camelCase**: YAML content uses snake_case, TypeScript logic uses camelCase
 
 ---
 
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence
 
-This project is indexed by GitNexus as **mdl-baseline** (38 symbols, 64 relationships, 4 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
+This project is indexed by GitNexus as **mdl-brand-website**. Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
 
 > If any GitNexus tool warns the index is stale, run `npx gitnexus analyze` in terminal first.
 
 ## Always Do
 
-- **MUST run impact analysis before editing any symbol.** Before modifying a function, class, or method, run `gitnexus_impact({target: "symbolName", direction: "upstream"})` and report the blast radius (direct callers, affected processes, risk level) to the user.
+- **MUST run impact analysis before editing any symbol.** Before modifying a function, class, or method, run `gitnexus_impact({target: "symbolName", direction: "upstream"})` and report the blast radius.
 - **MUST run `gitnexus_detect_changes()` before committing** to verify your changes only affect expected symbols and execution flows.
 - **MUST warn the user** if impact analysis returns HIGH or CRITICAL risk before proceeding with edits.
-- When exploring unfamiliar code, use `gitnexus_query({query: "concept"})` to find execution flows instead of grepping. It returns process-grouped results ranked by relevance.
-- When you need full context on a specific symbol — callers, callees, which execution flows it participates in — use `gitnexus_context({name: "symbolName"})`.
-
-## When Debugging
-
-1. `gitnexus_query({query: "<error or symptom>"})` — find execution flows related to the issue
-2. `gitnexus_context({name: "<suspect function>"})` — see all callers, callees, and process participation
-3. `READ gitnexus://repo/mdl-baseline/process/{processName}` — trace the full execution flow step by step
-4. For regressions: `gitnexus_detect_changes({scope: "compare", base_ref: "main"})` — see what your branch changed
-
-## When Refactoring
-
-- **Renaming**: MUST use `gitnexus_rename({symbol_name: "old", new_name: "new", dry_run: true})` first. Review the preview — graph edits are safe, text_search edits need manual review. Then run with `dry_run: false`.
-- **Extracting/Splitting**: MUST run `gitnexus_context({name: "target"})` to see all incoming/outgoing refs, then `gitnexus_impact({target: "target", direction: "upstream"})` to find all external callers before moving code.
-- After any refactor: run `gitnexus_detect_changes({scope: "all"})` to verify only expected files changed.
-
-## Never Do
-
-- NEVER edit a function, class, or method without first running `gitnexus_impact` on it.
-- NEVER ignore HIGH or CRITICAL risk warnings from impact analysis.
-- NEVER rename symbols with find-and-replace — use `gitnexus_rename` which understands the call graph.
-- NEVER commit changes without running `gitnexus_detect_changes()` to check affected scope.
 
 ## Tools Quick Reference
 
@@ -327,37 +308,10 @@ This project is indexed by GitNexus as **mdl-baseline** (38 symbols, 64 relation
 | `impact` | Blast radius before editing | `gitnexus_impact({target: "X", direction: "upstream"})` |
 | `detect_changes` | Pre-commit scope check | `gitnexus_detect_changes({scope: "staged"})` |
 | `rename` | Safe multi-file rename | `gitnexus_rename({symbol_name: "old", new_name: "new", dry_run: true})` |
-| `cypher` | Custom graph queries | `gitnexus_cypher({query: "MATCH ..."})` |
-
-## Impact Risk Levels
-
-| Depth | Meaning | Action |
-|-------|---------|--------|
-| d=1 | WILL BREAK — direct callers/importers | MUST update these |
-| d=2 | LIKELY AFFECTED — indirect deps | Should test |
-| d=3 | MAY NEED TESTING — transitive | Test if critical path |
-
-## Resources
-
-| Resource | Use for |
-|----------|---------|
-| `gitnexus://repo/mdl-baseline/context` | Codebase overview, check index freshness |
-| `gitnexus://repo/mdl-baseline/clusters` | All functional areas |
-| `gitnexus://repo/mdl-baseline/processes` | All execution flows |
-| `gitnexus://repo/mdl-baseline/process/{name}` | Step-by-step execution trace |
-
-## Self-Check Before Finishing
-
-Before completing any code modification task, verify:
-1. `gitnexus_impact` was run for all modified symbols
-2. No HIGH/CRITICAL risk warnings were ignored
-3. `gitnexus_detect_changes()` confirms changes match expected scope
-4. All d=1 (WILL BREAK) dependents were updated
 
 ## CLI
 
 - Re-index: `npx gitnexus analyze`
 - Check freshness: `npx gitnexus status`
-- Generate docs: `npx gitnexus wiki`
 
 <!-- gitnexus:end -->

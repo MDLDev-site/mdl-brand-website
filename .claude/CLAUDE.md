@@ -1,6 +1,8 @@
-# MDL Skills Library
+# MDL Brand Website — Skills Library
 
-This directory contains the Claude Code skills for the MDL development team. All skills live under `.claude/skills/` and are invoked via the `Skill` tool.
+This is the **MDL Brand Website** (`mdl-brand-website`), the public-facing marketing site for MatchDayLive. Built with Astro 6, Tailwind CSS v4, and YAML-driven content managed by `mdl-brand-site-cms`.
+
+**Primary skill: `astro-specialist`** — invoke this for any Astro framework work (components, pages, layouts, islands, content).
 
 ## Available Skills
 
@@ -8,56 +10,43 @@ This directory contains the Claude Code skills for the MDL development team. All
 
 | Skill | Purpose |
 |-------|---------|
-| `linear-workflow` | Full Linear issue lifecycle — create, start, progress updates, PRs, team status. Self-contained with all MDL IDs. |
+| `linear-workflow` | Full Linear issue lifecycle — create, start, progress updates, PRs, team status |
 | `skill-orchestrator` | Coordinates multiple specialists for complex tasks |
 | `skill-matrix` | Helps select the right skill for any situation |
 | `skill-chains` | Pre-built multi-skill workflows for common MDL tasks |
+
+### Brand Website (Primary)
+
+| Skill | Purpose |
+|-------|---------|
+| `astro-specialist` | **Primary** — Astro framework, islands, content, SSG, brand site patterns |
+| `frontend-ux-specialist` | React islands, interactive components, accessibility |
+| `performance-engineer` | Core Web Vitals, image optimization, bundle analysis |
 
 ### MDL Backend
 
 | Skill | Purpose |
 |-------|---------|
-| `backend-distributed-systems-engineer` | Lambda functions, API Gateway v2, DynamoDB, multi-tenant patterns |
-| `api-platform-engineer` | API design, routeKey handlers, CORS, response shapes |
-| `data-engineer` | DynamoDB DocumentClient, channel_id scoping, S3, SQS |
-| `security-sentinel` | Cognito auth, Stripe webhooks, DRM, CORS, Secrets Manager |
-
-### MDL Frontend
-
-| Skill | Purpose |
-|-------|---------|
-| `frontend-ux-specialist` | React 18, TanStack Query v4, Bitmovin Player, MUI/Ant Design |
-| `astro-specialist` | Astro framework — islands, content collections, SSG/SSR, brand site |
-| `performance-engineer` | Lambda cold starts, DynamoDB projections, Vite bundle splitting |
-| `localization-i18n-engineer` | i18n, locale routing, translation workflows |
+| `backend-distributed-systems-engineer` | Lambda functions, API Gateway v2, DynamoDB |
+| `api-platform-engineer` | API design, CORS, response shapes |
+| `security-sentinel` | Auth, Stripe webhooks, DRM, CORS, Secrets Manager |
 
 ### Quality & Reliability
 
 | Skill | Purpose |
 |-------|---------|
-| `qa-automation-engineer` | Playwright, Jest, MSW — fan-dev and Lambda test suites |
-| `site-reliability-engineer` | SLOs, incident response, runbooks |
-| `observability-engineer` | CloudWatch, Sentry, Bitmovin Analytics |
-| `incident-commander` | Live incident coordination |
-
-### Infrastructure & Ops
-
-| Skill | Purpose |
-|-------|---------|
-| `devops-infrastructure-as-code` | Lambda deploys, CI/CD, dev/prod naming, Claude command chains |
-| `finops-optimizer` | AWS cost analysis and optimisation |
-| `privacy-engineer` | GDPR, data minimisation, PII handling |
-| `compliance-guardian` | Regulatory compliance checks |
+| `qa-automation-engineer` | Playwright, Jest — testing |
+| `observability-engineer` | CloudWatch, Sentry |
 
 ### Standards & Rules
 
 | Skill | Purpose |
 |-------|---------|
 | `git-workflow` | Conventional commits, branch naming, PR guidelines |
-| `changelog-standards` | CHANGELOG.md format, writing style, version management |
-| `security-standards` | Secrets, auth, input validation, PCI, incident response |
-| `error-handling-standards` | User-friendly messages, logging, retry strategies |
-| `performance-standards` | CWV targets, image optimisation, caching, monitoring |
+| `changelog-standards` | CHANGELOG.md format |
+| `security-standards` | Secrets, auth, input validation |
+| `error-handling-standards` | User-friendly messages, logging |
+| `performance-standards` | CWV targets, image optimization, caching |
 
 ### Architecture & Leadership
 
@@ -65,11 +54,8 @@ This directory contains the Claude Code skills for the MDL development team. All
 |-------|---------|
 | `pragmatic-architect` | Architectural decisions, trade-off analysis |
 | `technical-writer` | Docs, READMEs, runbooks |
-| `snarky senior engineer` | Blunt peer review |
 
 ## GitNexus Skills
-
-Specialised skills for code intelligence via GitNexus:
 
 | Skill | Purpose |
 |-------|---------|
@@ -79,19 +65,3 @@ Specialised skills for code intelligence via GitNexus:
 | `gitnexus/gitnexus-refactoring` | Safe refactoring with graph awareness |
 | `gitnexus/gitnexus-debugging` | Debugging with execution flow traces |
 | `gitnexus/gitnexus-cli` | CLI commands reference |
-
-## Adding New Skills
-
-1. Create `.claude/skills/{skill-name}/SKILL.md` with YAML frontmatter (`name`, `description`, `allowed-tools`)
-2. Add an entry to the skill-matrix table in `skill-matrix/SKILL.md`
-3. Add relevant chains to `skill-chains/SKILL.md` if it fits a workflow
-4. Register in `skill-orchestrator/SKILL.md` council list if it's a specialist role
-5. Add a row to this file's table above
-
-<claude-mem-context>
-# Recent Activity
-
-<!-- This section is auto-generated by claude-mem. Edit content outside the tags. -->
-
-*No recent activity*
-</claude-mem-context>
