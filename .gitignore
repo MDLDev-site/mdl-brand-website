@@ -19,3 +19,12 @@ __pycache__/
 
 # OS
 .DS_Store
+
+# Claude Code worktrees (local only)
+.claude/worktrees/
+
+# Claude-mem auto-generated per-directory context
+src/**/CLAUDE.md
+content/**/CLAUDE.md
+public/**/CLAUDE.md
+.astro/CLAUDE.md

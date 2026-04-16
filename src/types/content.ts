@@ -162,6 +162,40 @@ export interface PageContent {
   sections: Section[];
 }
 
+// Features page types
+
+export interface FeaturesHeroData {
+  heading: string[];
+  description: string;
+}
+
+export interface AnchorItem {
+  id: string;
+  label: string;
+}
+
+export interface FeatureRow {
+  title: string;
+  description: string;
+  checks?: string[];
+  image?: string;
+}
+
+export interface FeatureCategory {
+  id: string;
+  heading: string;
+  description: string;
+  background: 'white' | 'grey';
+  features: FeatureRow[];
+}
+
+export interface FeaturesPageContent {
+  page: PageMeta;
+  hero: FeaturesHeroData;
+  anchors: AnchorItem[];
+  categories: FeatureCategory[];
+}
+
 export interface FooterColumn {
   title: string;
   links: Array<{

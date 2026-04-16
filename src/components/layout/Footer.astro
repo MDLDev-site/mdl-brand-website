@@ -15,7 +15,7 @@ const footerColumns = [
       { text: 'Brandability', href: '#brandability' },
       { text: 'Monetisation', href: '#monetisation' },
       { text: 'Insights', href: '#insights' },
-      { text: 'Fan Experience', href: '#fan-experience' },
+      { text: 'Fan experience', href: '#fan-experience' },
       { text: 'Scalability', href: '#scalability' },
       { text: 'Security', href: '#security' },
     ],
@@ -67,13 +67,13 @@ const socialLinks = [
 ];
 ---
 
-<footer class="bg-charcoal-pitch px-[24px] py-[120px] md:px-[120px]">
-  <div class="mx-auto flex max-w-[1440px] flex-col gap-[64px]">
-    <!-- Link columns -->
-    <div class="grid grid-cols-2 gap-[40px] md:grid-cols-4">
+<footer class="bg-charcoal-pitch px-[24px] py-[64px] md:px-[120px] md:py-[120px]">
+  <div class="mx-auto flex max-w-[1440px] flex-col gap-[48px] md:gap-[64px]">
+    {/* Link columns — desktop: grid, mobile: accordion */}
+    <div class="hidden gap-[40px] md:grid md:grid-cols-4">
       {footerColumns.map((column) => (
         <div>
-          <h3 class="pb-[16px] font-subheading text-[18px] font-semibold uppercase text-white">
+          <h3 class="pb-[16px] font-subheading text-[18px] font-semibold uppercase text-yellow-tennis">
             {column.title}
           </h3>
           <ul class="flex flex-col gap-[12px]" role="list">
@@ -81,7 +81,7 @@ const socialLinks = [
               <li>
                 <a
                   href={link.href}
-                  class="font-body text-[18px] font-normal leading-[1.4] text-white transition-colors hover:text-yellow-tennis"
+                  class="font-body text-[16px] font-normal leading-[1.4] text-white transition-colors hover:text-yellow-tennis"
                 >
                   {link.text}
                 </a>
@@ -92,25 +92,63 @@ const socialLinks = [
       ))}
     </div>
 
-    <!-- Bottom bar -->
-    <div class="flex flex-col items-center justify-between gap-[24px] border-t border-white/10 pt-[32px] md:flex-row">
-      <!-- Left: Logo + copyright -->
-      <div class="flex items-center gap-[12px]">
-        <a href="/" class="font-heading text-[20px] font-medium uppercase tracking-wide text-white">
-          {brand.name}
+    {/* Mobile accordion footer */}
+    <div class="flex flex-col md:hidden" id="footer-accordion">
+      {footerColumns.map((column, idx) => (
+        <div class="border-b border-white/10">
+          <button
+            class="flex w-full items-center justify-between py-[16px] text-left"
+            type="button"
+            aria-expanded="false"
+            data-footer-toggle={idx}
+          >
+            <span class="font-subheading text-[16px] font-semibold uppercase text-yellow-tennis">
+              {column.title}
+            </span>
+            <svg class="h-[20px] w-[20px] text-white/60 transition-transform" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="max-h-0 overflow-hidden transition-all duration-300" data-footer-panel={idx}>
+            <ul class="flex flex-col gap-[12px] pb-[16px]" role="list">
+              {column.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="font-body text-[14px] font-normal leading-[1.5] text-white transition-colors hover:text-yellow-tennis"
+                  >
+                    {link.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {/* Bottom bar */}
+    <div class="flex flex-col items-center gap-[24px] border-t border-white/10 pt-[32px] md:flex-row md:justify-between">
+      {/* Logo + copyright */}
+      <div class="flex flex-col items-center gap-[8px] md:flex-row md:gap-[12px]">
+        <a href="/" class="shrink-0">
+          <img src="/logo.svg" alt={brand.name} class="h-[20px] w-auto" />
         </a>
-        <span class="font-body text-[18px] font-normal text-white">
-          &copy; Matchday Media. All rights reserved &bull;
-        </span>
-        <a
-          href="/legal"
-          class="font-body text-[18px] font-normal text-white transition-colors hover:text-yellow-tennis"
-        >
-          Legal
-        </a>
+        <div class="flex items-center gap-[4px] text-center">
+          <span class="font-body text-[14px] font-normal text-white md:text-[16px]">
+            &copy; Matchday Media. All rights reserved
+          </span>
+          <span class="text-white/40">&bull;</span>
+          <a
+            href="/legal"
+            class="font-body text-[14px] font-normal text-white transition-colors hover:text-yellow-tennis md:text-[16px]"
+          >
+            Legal
+          </a>
+        </div>
       </div>
 
-      <!-- Right: Social icons -->
+      {/* Social icons */}
       <div class="flex items-center gap-[12px]">
         {socialLinks.map((social) => (
           <a
@@ -134,3 +172,33 @@ const socialLinks = [
     </div>
   </div>
 </footer>
+
+<script>
+  function initFooterAccordion() {
+    const toggles = document.querySelectorAll('[data-footer-toggle]');
+    toggles.forEach((toggle) => {
+      toggle.addEventListener('click', () => {
+        const idx = toggle.getAttribute('data-footer-toggle');
+        const panel = document.querySelector(`[data-footer-panel="${idx}"]`) as HTMLElement;
+        const chevron = toggle.querySelector('svg');
+        if (!panel) return;
+
+        const isOpen = panel.classList.contains('max-h-[300px]');
+        if (isOpen) {
+          panel.classList.remove('max-h-[300px]');
+          panel.classList.add('max-h-0');
+          toggle.setAttribute('aria-expanded', 'false');
+          chevron?.classList.remove('rotate-180');
+        } else {
+          panel.classList.add('max-h-[300px]');
+          panel.classList.remove('max-h-0');
+          toggle.setAttribute('aria-expanded', 'true');
+          chevron?.classList.add('rotate-180');
+        }
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initFooterAccordion);
+  initFooterAccordion();
+</script>

@@ -1,0 +1,110 @@
+---
+import type { AnchorItem } from '../../types/content';
+
+interface Props {
+  anchors: AnchorItem[];
+}
+
+const { anchors } = Astro.props;
+---
+
+<nav
+  class="anchor-menu sticky top-[80px] z-40 bg-navy-umpire shadow-[0px_4px_13px_0px_rgba(22,29,37,0.1),0px_3px_38px_0px_rgba(0,0,0,0.05)]"
+  aria-label="Feature sections"
+>
+  <div class="mx-auto flex max-w-[1440px] items-stretch">
+    {/* Scrollable anchors on mobile, flex on desktop */}
+    <div class="flex flex-1 items-stretch overflow-x-auto scrollbar-hide">
+      {anchors.map((anchor) => (
+        <a
+          href={`#${anchor.id}`}
+          class="anchor-link flex shrink-0 items-center justify-center border-b-[4px] border-grey px-[12px] py-[16px] font-subheading text-[14px] font-medium uppercase leading-none tracking-[-0.48px] text-white whitespace-nowrap transition-all hover:border-yellow-tennis hover:text-yellow-tennis md:flex-1 md:border-b-[8px] md:px-[8px] md:py-[24px] md:text-[18px] md:tracking-[-0.6px] lg:text-[20px]"
+          data-anchor={anchor.id}
+        >
+          {anchor.label}
+        </a>
+      ))}
+    </div>
+
+    {/* Book A Call button */}
+    <div class="hidden shrink-0 items-center border-b-[8px] border-grey p-[24px] md:flex">
+      <a
+        href="/contact"
+        class="inline-flex h-[42px] items-center justify-center rounded-[4px] bg-blue-matchday px-[24px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:bg-blue-matchday/90"
+      >
+        Book A Call
+      </a>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .anchor-link[data-active="true"] {
+    border-color: var(--color-yellow-tennis) !important;
+    color: var(--color-yellow-tennis);
+  }
+</style>
+
+<script>
+  function initAnchorMenu() {
+    const anchors = document.querySelectorAll<HTMLAnchorElement>('.anchor-link');
+    const sections = new Map<string, HTMLElement>();
+
+    anchors.forEach((anchor) => {
+      const id = anchor.dataset.anchor;
+      if (id) {
+        const section = document.getElementById(id);
+        if (section) sections.set(id, section);
+      }
+    });
+
+    function updateActive() {
+      const scrollY = window.scrollY + 200;
+      let activeId = '';
+
+      sections.forEach((section, id) => {
+        const top = section.offsetTop;
+        const bottom = top + section.offsetHeight;
+        if (scrollY >= top && scrollY < bottom) {
+          activeId = id;
+        }
+      });
+
+      anchors.forEach((anchor) => {
+        const id = anchor.dataset.anchor;
+        if (id === activeId) {
+          anchor.setAttribute('data-active', 'true');
+        } else {
+          anchor.removeAttribute('data-active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
+
+    // Smooth scroll on click
+    anchors.forEach((anchor) => {
+      anchor.addEventListener('click', (e) => {
+        e.preventDefault();
+        const id = anchor.dataset.anchor;
+        if (!id) return;
+        const section = sections.get(id);
+        if (!section) return;
+        const menuHeight = document.querySelector('.anchor-menu')?.getBoundingClientRect().height || 90;
+        const top = section.offsetTop - menuHeight;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initAnchorMenu);
+  initAnchorMenu();
+</script>

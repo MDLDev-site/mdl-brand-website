@@ -10,24 +10,24 @@ const { section } = Astro.props;
 
 <section class="bg-grey" aria-label="Trusted partners">
   <div class="mx-auto flex max-w-[1440px] flex-col items-center gap-[32px] px-[24px] pt-[24px] pb-[64px] md:px-[120px]">
-    <h4 class="font-heading-semi text-[24px] font-medium uppercase leading-none tracking-[-0.96px] text-charcoal-pitch md:text-[32px]">
+    <h4 class="text-center font-heading text-[20px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch md:font-subheading md:text-[24px] md:tracking-[-0.96px]">
       {section.heading}
     </h4>
 
-    <ul class="flex flex-wrap items-center justify-center gap-[24px] md:gap-[40px]" role="list">
+    <ul class="grid grid-cols-4 items-center justify-items-center gap-x-[16px] gap-y-[24px] md:flex md:flex-wrap md:justify-center md:gap-[40px]" role="list">
       {section.logos.map((logo) => (
-        <li>
+        <li class="flex items-center justify-center">
           {logo.src ? (
             <img
               src={logo.src}
               alt={logo.alt}
-              class="h-[50px] w-[50px] object-contain md:h-[70px] md:w-[70px]"
+              class="h-[40px] w-auto max-w-[80px] object-contain md:h-[60px] md:max-w-[120px]"
               loading="lazy"
               decoding="async"
             />
           ) : (
             <div
-              class="flex h-[50px] w-[50px] items-center justify-center rounded-[4px] bg-charcoal-pitch/10 md:h-[70px] md:w-[70px]"
+              class="flex h-[40px] w-[40px] items-center justify-center rounded-[4px] bg-charcoal-pitch/10 md:h-[60px] md:w-[60px]"
               role="img"
               aria-label={logo.alt}
             >

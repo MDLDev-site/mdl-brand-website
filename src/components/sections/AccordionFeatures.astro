@@ -11,22 +11,22 @@ const { section } = Astro.props;
 <section class="bg-navy-umpire" aria-label={section.heading.join(' ')}>
   <div class="mx-auto flex max-w-[1440px] flex-col gap-[64px] px-[24px] py-[80px] md:gap-[100px] md:p-[120px]">
     {/* Top: heading */}
-    <h1 class="max-w-[800px] font-heading text-[48px] font-medium uppercase leading-[0.9] tracking-[0.8px] text-white md:text-[80px]">
+    <h2 class="max-w-[800px] font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] text-white md:text-[80px] md:tracking-[1px]">
       {section.heading.map((line) => (
         <span class="block">{line}</span>
       ))}
-    </h1>
+    </h2>
 
-    {/* Stats row */}
-    <div class="flex flex-col gap-[32px] sm:flex-row sm:gap-[48px] md:gap-[64px]">
+    {/* Stats row — 2x2 grid on mobile, single row on desktop */}
+    <div class="grid grid-cols-2 gap-[24px] md:flex md:gap-[64px]">
       {section.stats.map((stat) => (
-        <div class="flex items-stretch gap-[16px]">
-          <div class="w-[8px] shrink-0 rounded-full bg-yellow-tennis" aria-hidden="true"></div>
+        <div class="flex items-stretch gap-[12px] md:gap-[16px]">
+          <div class="w-[4px] shrink-0 rounded-full bg-yellow-tennis md:w-[8px]" aria-hidden="true"></div>
           <div class="flex flex-col gap-[4px]">
-            <span class="font-heading text-[36px] font-medium uppercase leading-[1.15] tracking-[-0.5px] text-white md:text-[50px]">
+            <span class="font-heading text-[28px] font-medium uppercase leading-[1.15] tracking-[-0.5px] text-white md:text-[50px]">
               {stat.value}
             </span>
-            <span class="font-body text-[14px] font-normal leading-[1.5] text-white/60">
+            <span class="font-body text-[12px] font-normal leading-[1.4] text-white/60 md:text-[14px]">
               {stat.label}
             </span>
           </div>
@@ -38,14 +38,14 @@ const { section } = Astro.props;
     <div class="flex flex-col gap-[16px] sm:flex-row sm:items-center sm:gap-[24px]">
       <a
         href={section.cta.primary.link}
-        class="inline-flex items-center rounded-[4px] bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:bg-blue-matchday/90"
+        class="inline-flex w-full items-center justify-center rounded-[4px] bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90 sm:w-auto"
       >
         {section.cta.primary.text}
       </a>
 
       <a
         href={section.cta.secondary.link}
-        class="group inline-flex items-center gap-[8px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:text-yellow-tennis"
+        class="group inline-flex items-center justify-center gap-[8px] py-[8px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:text-yellow-tennis"
       >
         {section.cta.secondary.text}
         <svg
@@ -117,12 +117,31 @@ const { section } = Astro.props;
 
       {/* Illustration area */}
       <div class="hidden flex-1 items-center justify-center md:flex">
-        <div
-          class="flex h-[400px] w-full items-center justify-center rounded-[16px] bg-white/5"
-          role="img"
-          aria-label="Feature illustration"
-        >
-          <span class="font-body text-[14px] text-white/20">Illustration</span>
+        <div class="relative h-[500px] w-full rounded-[16px] overflow-hidden">
+          {[
+            '/images/accordion/drm.png',
+            '/images/accordion/stripe.png',
+            '/images/accordion/support.png',
+            '/images/accordion/scale.png',
+            '/images/accordion/cdn.png',
+            '/images/accordion/gdpr.png',
+          ].map((src, i) => {
+            const expandedIndex = section.items.findIndex(item => item.expanded);
+            const defaultActive = expandedIndex >= 0 ? expandedIndex : 0;
+            return (
+              <img
+                src={src}
+                alt={section.items[i]?.title || ''}
+                class:list={[
+                  'accordion-illustration absolute inset-0 h-full w-full object-contain transition-opacity duration-300',
+                  i === defaultActive ? 'opacity-100' : 'opacity-0',
+                ]}
+                data-illustration-index={i}
+                loading="lazy"
+                decoding="async"
+              />
+            );
+          })}
         </div>
       </div>
     </div>
@@ -143,6 +162,7 @@ const { section } = Astro.props;
 
         button.addEventListener('click', () => {
           const isExpanded = item.getAttribute('data-expanded') === 'true';
+          const itemIndex = Array.from(items).indexOf(item);
 
           // Collapse all items
           items.forEach((otherItem) => {
@@ -158,6 +178,13 @@ const { section } = Astro.props;
             }
           });
 
+          // Hide all illustrations
+          const illustrations = accordion.closest('section')?.querySelectorAll('.accordion-illustration');
+          illustrations?.forEach((img) => {
+            img.classList.remove('opacity-100');
+            img.classList.add('opacity-0');
+          });
+
           // Expand clicked item (if it was collapsed)
           if (!isExpanded) {
             item.setAttribute('data-expanded', 'true');
@@ -166,6 +193,13 @@ const { section } = Astro.props;
             button.setAttribute('aria-expanded', 'true');
             panel.classList.add('max-h-[300px]', 'opacity-100');
             panel.classList.remove('max-h-0', 'opacity-0');
+
+            // Show matching illustration
+            const targetIllustration = accordion.closest('section')?.querySelector(`[data-illustration-index="${itemIndex}"]`);
+            if (targetIllustration) {
+              targetIllustration.classList.remove('opacity-0');
+              targetIllustration.classList.add('opacity-100');
+            }
           }
         });
       });

@@ -9,72 +9,195 @@ const { nav } = Astro.props;
 
 const navLinks = [
   { text: 'Products', href: '#products', hasDropdown: true },
-  { text: 'Features', href: '#features', hasDropdown: false },
+  { text: 'Features', href: '/features', hasDropdown: false },
   { text: 'Solution', href: '#solution', hasDropdown: true },
-  { text: 'Pricing', href: '#pricing', hasDropdown: false },
+  { text: 'Pricing', href: '/pricing', hasDropdown: false },
 ];
 ---
 
 <header class="fixed top-0 left-0 right-0 z-50 p-[16px]">
-  <nav
-    class="mx-auto flex max-w-[1440px] items-center justify-between rounded-[16px] bg-[rgba(22,29,37,0.9)] px-[24px] py-[12px] backdrop-blur-[12px]"
-    aria-label="Main navigation"
-  >
-    <!-- Logo -->
-    <a href="/" class="font-heading text-[22px] font-medium uppercase tracking-wide text-white">
-      {nav.brand.name}
-    </a>
-
-    <!-- Center links -->
-    <ul class="hidden items-center gap-[4px] lg:flex" role="list">
-      {navLinks.map((link) => (
-        <li>
-          <a
-            href={link.href}
-            class="flex items-center gap-[4px] rounded-[8px] px-[8px] py-[4px] font-body text-[16px] font-medium capitalize tracking-[-0.16px] text-white transition-colors hover:bg-white/10"
-          >
-            {link.text}
-            {link.hasDropdown && (
-              <svg
-                class="h-[16px] w-[16px] opacity-70"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-            )}
-          </a>
-        </li>
-      ))}
-    </ul>
-
-    <!-- Right buttons -->
-    <div class="hidden items-center gap-[12px] lg:flex">
-      <a
-        href="/sign-in"
-        class="rounded-[4px] border border-white px-[32px] py-[16px] font-body text-[16px] font-medium uppercase tracking-[0.32px] text-white transition-colors hover:bg-white/10"
-      >
-        Sign in
-      </a>
-      <a
-        href="/book-a-call"
-        class="rounded-[4px] bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium uppercase tracking-[0.32px] text-white transition-colors hover:bg-blue-matchday/90"
-      >
-        Book a call
-      </a>
-    </div>
-
-    <!-- Mobile menu button -->
-    <button
-      class="flex items-center justify-center rounded-[8px] p-[8px] text-white lg:hidden"
-      aria-label="Open menu"
-      type="button"
+  <div class="relative mx-auto max-w-[1440px]">
+    <nav
+      class="flex items-center justify-between rounded-[16px] bg-[rgba(22,29,37,0.9)] px-[24px] py-[12px] backdrop-blur-[12px]"
+      aria-label="Main navigation"
     >
-      <svg class="h-[24px] w-[24px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
-  </nav>
+      <!-- Logo -->
+      <a href="/" class="shrink-0">
+        <img src="/logo.svg" alt={nav.brand.name} class="h-[24px] w-auto" />
+      </a>
+
+      <!-- Center links -->
+      <ul class="hidden items-center gap-[4px] lg:flex" role="list">
+        {navLinks.map((link) => (
+          <li class="relative">
+            {link.hasDropdown ? (
+              <button
+                type="button"
+                class="nav-dropdown-trigger flex items-center gap-[4px] rounded-[8px] px-[8px] py-[4px] font-body text-[16px] font-medium capitalize tracking-[-0.16px] text-white transition-colors hover:bg-white/10"
+                data-dropdown={link.text.toLowerCase()}
+                aria-expanded="false"
+                aria-haspopup="true"
+              >
+                {link.text}
+                <svg
+                  class="h-[16px] w-[16px] opacity-70 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            ) : (
+              <a
+                href={link.href}
+                class="flex items-center gap-[4px] rounded-[8px] px-[8px] py-[4px] font-body text-[16px] font-medium capitalize tracking-[-0.16px] text-white transition-colors hover:bg-white/10"
+              >
+                {link.text}
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+
+      <!-- Right buttons -->
+      <div class="hidden items-center gap-[12px] lg:flex">
+        <a
+          href="/sign-in"
+          class="rounded-[4px] border border-white px-[32px] py-[16px] font-body text-[16px] font-medium uppercase tracking-[0.32px] text-white transition-colors hover:bg-white/10"
+        >
+          Sign in
+        </a>
+        <a
+          href="/book-a-call"
+          class="rounded-[4px] bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium uppercase tracking-[0.32px] text-white transition-colors hover:bg-blue-matchday/90"
+        >
+          Book a call
+        </a>
+      </div>
+
+      <!-- Mobile menu button -->
+      <button
+        class="flex items-center justify-center rounded-[8px] p-[8px] text-white lg:hidden"
+        aria-label="Open menu"
+        type="button"
+      >
+        <svg class="h-[24px] w-[24px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Products dropdown panel -->
+    <div
+      class="nav-dropdown-panel pointer-events-none absolute left-0 right-0 top-full z-40 mt-[8px] opacity-0 transition-all duration-200"
+      data-panel="products"
+      aria-hidden="true"
+    >
+      <div class="mx-[16px] flex gap-[32px] rounded-[16px] bg-[rgba(22,29,37,0.9)] p-[16px] backdrop-blur-[7px]">
+        <!-- On-Demand -->
+        <div class="flex flex-1 flex-col gap-[16px] p-[24px]">
+          <div class="flex items-center gap-[16px]">
+            <!-- Play icon (blue triangle) -->
+            <div class="flex h-[32px] w-[32px] items-center justify-center">
+              <svg class="h-[20px] w-[20px]" viewBox="0 0 20 20" fill="none">
+                <path d="M4 3.5L16 10L4 16.5V3.5Z" fill="var(--color-blue-matchday)" />
+              </svg>
+            </div>
+            <h4 class="font-subheading text-[32px] font-medium uppercase leading-none tracking-[-0.96px] text-white">
+              On-Demand
+            </h4>
+          </div>
+          <p class="font-body text-[14px] font-normal leading-[1.5] text-white">
+            From match replays to exclusive interviews, control how your content is organised, published, and monetised all from one platform.
+          </p>
+          <a href="/products/on-demand" class="group inline-flex items-center gap-[8px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:text-yellow-tennis">
+            Learn more
+            <svg class="h-[16px] w-[16px] transition-transform group-hover:translate-x-[4px]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Live & On-Demand -->
+        <div class="flex flex-1 flex-col gap-[16px] p-[24px]">
+          <div class="flex items-center gap-[16px]">
+            <!-- Live dot icon (orange/red circle) -->
+            <div class="flex h-[24px] w-[24px] items-center justify-center">
+              <div class="h-[16px] w-[16px] rounded-full bg-orange-basketball"></div>
+            </div>
+            <h4 class="font-subheading text-[32px] font-medium uppercase leading-none tracking-[-0.96px] text-white">
+              Live & On-Demand
+            </h4>
+          </div>
+          <p class="font-body text-[14px] font-normal leading-[1.5] text-white">
+            Deliver smooth, low-latency live broadcasts with professional-grade quality whether it's a packed stadium or a behind-the-scenes moment.
+          </p>
+          <a href="/products/live" class="group inline-flex items-center gap-[8px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:text-yellow-tennis">
+            Learn more
+            <svg class="h-[16px] w-[16px] transition-transform group-hover:translate-x-[4px]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>
+
+<script>
+  function initNavDropdowns() {
+    const triggers = document.querySelectorAll<HTMLButtonElement>('.nav-dropdown-trigger');
+    const panels = document.querySelectorAll<HTMLElement>('.nav-dropdown-panel');
+
+    function closeAll() {
+      triggers.forEach((t) => {
+        t.setAttribute('aria-expanded', 'false');
+        t.querySelector('svg')?.classList.remove('rotate-180');
+      });
+      panels.forEach((p) => {
+        p.classList.add('opacity-0', 'pointer-events-none');
+        p.classList.remove('opacity-100', 'pointer-events-auto');
+        p.setAttribute('aria-hidden', 'true');
+      });
+    }
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const dropdownName = trigger.dataset.dropdown;
+        const panel = document.querySelector<HTMLElement>(`[data-panel="${dropdownName}"]`);
+        if (!panel) return;
+
+        const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+        closeAll();
+
+        if (!isOpen) {
+          trigger.setAttribute('aria-expanded', 'true');
+          trigger.querySelector('svg')?.classList.add('rotate-180');
+          panel.classList.remove('opacity-0', 'pointer-events-none');
+          panel.classList.add('opacity-100', 'pointer-events-auto');
+          panel.setAttribute('aria-hidden', 'false');
+        }
+      });
+    });
+
+    // Close on click outside
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('.nav-dropdown-trigger') && !target.closest('.nav-dropdown-panel')) {
+        closeAll();
+      }
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeAll();
+    });
+  }
+
+  document.addEventListener('astro:page-load', initNavDropdowns);
+  initNavDropdowns();
+</script>

@@ -11,6 +11,7 @@ import Customers from '../components/sections/Customers.astro';
 import AccordionFeatures from '../components/sections/AccordionFeatures.astro';
 import CTABanner from '../components/sections/CTABanner.astro';
 import MailingList from '../components/sections/MailingList.astro';
+import Diagonals from '../components/sections/Diagonals.astro';
 
 const page = await loadYaml<PageContent>('pages/home.yaml');
 ---
@@ -35,6 +36,8 @@ const page = await loadYaml<PageContent>('pages/home.yaml');
       return <CTABanner section={section} />;
     } else if (section.type === 'mailing_list') {
       return <MailingList section={section} />;
+    } else if (section.type === 'diagonals') {
+      return <Diagonals section={section} />;
     }
     return null;
   })}

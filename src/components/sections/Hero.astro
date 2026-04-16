@@ -29,7 +29,7 @@ const { section } = Astro.props;
   </div>
 
   <div class="relative z-10 mx-auto flex max-w-[1440px] flex-col items-center gap-[50px] px-[24px] pt-[140px] pb-[100px] text-center md:px-[120px] md:pt-[180px] md:pb-[140px]">
-    <h1 class="font-heading text-[48px] font-medium uppercase leading-[0.9] tracking-[0.8px] text-white md:text-[80px]">
+    <h1 class="font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] text-white md:text-[80px] md:tracking-[1px]">
       {section.heading.map((line) => (
         <span class="block">{line}</span>
       ))}
@@ -39,17 +39,17 @@ const { section } = Astro.props;
       {section.subheading}
     </p>
 
-    <div class="flex flex-col items-center gap-[16px] sm:flex-row sm:gap-[24px]">
+    <div class="flex w-full max-w-[340px] flex-col items-center gap-[16px] sm:w-auto sm:max-w-none sm:flex-row sm:gap-[24px]">
       <a
         href={section.cta.primary.link}
-        class="inline-flex items-center rounded-[4px] bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:bg-blue-matchday/90"
+        class="inline-flex w-full items-center justify-center rounded-[4px] bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90 sm:w-auto"
       >
         {section.cta.primary.text}
       </a>
 
       <a
         href={section.cta.secondary.link}
-        class="group inline-flex items-center gap-[8px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:text-yellow-tennis"
+        class="group inline-flex items-center gap-[8px] py-[8px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:text-yellow-tennis"
       >
         {section.cta.secondary.text}
         <svg

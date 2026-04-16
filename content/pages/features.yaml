@@ -1,0 +1,120 @@
+page:
+  title: Features — MatchDayLive
+  description: Everything you need to stream like a pro. From your first live stream to a global OTT rollout.
+
+hero:
+  heading:
+    - EVERYTHING YOU NEED
+    - TO STREAM LIKE A PRO
+  description: "From your first live stream to a global OTT rollout. MatchdayLive gives you the control, flexibility, and power to build your own broadcasting empire."
+
+anchors:
+  - id: platform
+    label: Platform
+  - id: brandability
+    label: Brandability
+  - id: monetisation
+    label: Monetisation
+  - id: insights
+    label: Insights
+  - id: fan-experience
+    label: Fan Experience
+  - id: scalability
+    label: Scalability
+  - id: security
+    label: Security
+
+categories:
+  - id: brandability
+    heading: "YOUR OWN BRANDED OTT"
+    description: "Take full ownership of your Live & On-Demand content, branded and on your domain."
+    background: white
+    features:
+      - title: "Your Brand"
+        description: "Seamlessly apply your brand identity across all touch-points."
+      - title: "On Your Domain"
+        description: "Make your fans feel right at home via access on your domain (e.g. fantv.yourdomain.com)"
+        image: /images/features/on-your-domain.png
+      - title: "Sponsor Involvement"
+        description: "Retain brand partnerships with opportunities to highlight key sponsors."
+      - title: "Statement Lines"
+        description: "Ensure fans are never in the dark about transactions by customising bank statement descriptions to identify your channel."
+        image: /images/features/statement-lines.png
+      - title: "Drag & Drop Channel Builder"
+        description: "Maximise engagement and monetisation opportunities through the strategic positioning of Playlists and Collections."
+        checks:
+          - Create
+          - Manage
+          - Optimise
+
+  - id: monetisation
+    heading: "TURN PASSION INTO PROFIT"
+    description: "Leverage your content to expand existing and explore new monetisation opportunities."
+    background: grey
+    features:
+      - title: "Plans"
+        description: "Create bespoke automatically **recurring** plans to ensure steady annuity income. Alternatively make use of **one-off** plans to create fixed term access for a bouquet of content."
+        checks:
+          - Recurring or One-off
+          - "Monthly, Annual, Seasonal"
+          - Customisable to content types
+      - title: "Pay Per View (PPV)"
+        description: "Pay Per View (PPV) pricing allows one-off, low commitment pricing."
+        checks:
+          - Suits price sensitive fans
+          - "Ad-Hoc fans (e.g. Away fans)"
+          - 'Encourages "try before you buy"'
+      - title: "Free & Freemium"
+        description: "Organically grow your fanbase by offering **Free** & **Freemium** content.\n\n**Freemium** pricing, which requires a fan to create and account and sign-in, allows access to demographic and behavioural insights & offers access to communicate with your fans."
+        checks:
+          - Generate insights
+          - Grow your fanbase
+      - title: "Stripe Facilitated Payments"
+        description: "Accept payments using a trusted and globally recognised, PCI DSS compliant payment gateway.\n\n- No Stripe Account Required\n- Accept Local and International Cards\n- VISA, Mastercard, Amex, Apple Pay, Google Pay, Link and more\n- Locally trusted payment options"
+        image: /images/features/stripe.png
+      - title: "Managed VAT & Sales Taxes"
+        description: "Avoid countless hours managing global VAT and Sales Tax obligations."
+        checks:
+          - Tax calculated at checkout
+          - Manage filing and remittance
+          - Global tax compliance
+      - title: "Promotions"
+        description: "Incentivise fan purchases through promotions on both **Plans** and **Pay-Per-View** pricing models."
+        checks:
+          - Regional
+          - Value or % based
+          - Time limited
+          - Bundled
+      - title: "User Groups"
+        description: "Build bespoke audiences from invited and registered fans and assign access limitations to suit group requirements."
+        image: /images/features/user-groups.png
+
+  - id: platform
+    heading: "YOUR OWN BRANDED OTT"
+    description: "A central hub for all your Live & On-Demand video content."
+    background: white
+    features: []
+
+  - id: insights
+    heading: "UNDERSTAND FANS LIKE NEVER BEFORE"
+    description: "Unlock fresh insights and opportunities."
+    background: white
+    features: []
+
+  - id: fan-experience
+    heading: "PUTTING FANS FIRST"
+    description: "A premium end-to-end viewing experience across all devices."
+    background: grey
+    features: []
+
+  - id: scalability
+    heading: "HANDLE THE BIGGEST OCCASIONS"
+    description: "Scale infinitely with enterprise-grade infrastructure."
+    background: white
+    features: []
+
+  - id: security
+    heading: "PROTECT YOUR CONTENT"
+    description: "Industry-leading security and digital rights management."
+    background: grey
+    features: []

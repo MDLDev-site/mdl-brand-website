@@ -12,9 +12,9 @@ const { section } = Astro.props;
   <div class="mx-auto flex max-w-[1440px] flex-col gap-[64px] px-[24px] py-[80px] md:gap-[100px] md:px-[120px] md:py-[100px]">
     {/* Top: heading + description + buttons */}
     <div class="flex max-w-[600px] flex-col gap-[24px]">
-      <h1 class="font-heading text-[48px] font-medium uppercase leading-[0.9] tracking-[0.8px] text-charcoal-pitch md:text-[80px]">
+      <h2 class="font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch md:text-[80px] md:tracking-[1px]">
         {section.heading}
-      </h1>
+      </h2>
 
       <p class="font-body text-[18px] font-normal leading-[1.4] text-text-primary">
         {section.description}
@@ -23,14 +23,14 @@ const { section } = Astro.props;
       <div class="flex flex-col gap-[16px] pt-[8px] sm:flex-row sm:items-center sm:gap-[24px]">
         <a
           href={section.cta.primary.link}
-          class="inline-flex items-center rounded-[4px] bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:bg-blue-matchday/90"
+          class="inline-flex w-full items-center justify-center rounded-[4px] bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90 sm:w-auto"
         >
           {section.cta.primary.text}
         </a>
 
         <a
           href={section.cta.secondary.link}
-          class="group inline-flex items-center gap-[8px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-charcoal-pitch transition-colors hover:text-blue-matchday"
+          class="group inline-flex items-center justify-center gap-[8px] py-[8px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-charcoal-pitch transition-colors hover:text-blue-matchday"
         >
           {section.cta.secondary.text}
           <svg
@@ -51,7 +51,7 @@ const { section } = Astro.props;
         <div class="flex flex-col gap-[16px]">
           {feature.icon ? (
             <img
-              src={feature.icon}
+              src={`/images/icons/${feature.icon}.svg`}
               alt=""
               class="h-[32px] w-[32px]"
               loading="lazy"
