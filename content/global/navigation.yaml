@@ -3,13 +3,21 @@ brand:
   logo: /logo.svg
 
 links:
+  - text: Products
+    href: /products
+    hasDropdown: true
   - text: Features
-    href: "#features"
+    href: /features
+  - text: Solution
+    href: /solution
+    hasDropdown: true
   - text: Pricing
-    href: "#pricing"
-  - text: About
-    href: /about
+    href: /pricing
 
 cta:
-  text: Get Started
-  link: /contact
+  signIn:
+    text: Sign In
+    link: /sign-in
+  primary:
+    text: Book a Call
+    link: /contact

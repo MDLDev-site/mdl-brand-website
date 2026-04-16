@@ -1,0 +1,80 @@
+---
+import type { GridSection } from '../../types/content';
+
+interface Props {
+  section: GridSection;
+}
+
+const { section } = Astro.props;
+---
+
+<section class="bg-white" aria-label={section.heading}>
+  <div class="mx-auto flex max-w-[1440px] flex-col gap-[64px] px-[24px] py-[80px] md:gap-[100px] md:px-[120px] md:py-[100px]">
+    {/* Top: heading + description + buttons */}
+    <div class="flex max-w-[600px] flex-col gap-[24px]">
+      <h2 class="font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch md:text-[80px] md:tracking-[1px]">
+        {section.heading}
+      </h2>
+
+      <p class="font-body text-[18px] font-normal leading-[1.4] text-text-primary">
+        {section.description}
+      </p>
+
+      <div class="flex flex-col gap-[16px] pt-[8px] sm:flex-row sm:items-center sm:gap-[24px]">
+        <a
+          href={section.cta.primary.link}
+          class="inline-flex w-full items-center justify-center rounded-[4px] bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90 sm:w-auto"
+        >
+          {section.cta.primary.text}
+        </a>
+
+        <a
+          href={section.cta.secondary.link}
+          class="group inline-flex items-center justify-center gap-[8px] py-[8px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-charcoal-pitch transition-colors hover:text-blue-matchday"
+        >
+          {section.cta.secondary.text}
+          <svg
+            class="h-[16px] w-[16px] transition-transform group-hover:translate-x-[4px]"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    {/* Grid: 2 rows x 3 columns */}
+    <div class="grid grid-cols-1 gap-x-[24px] gap-y-[48px] sm:grid-cols-2 md:grid-cols-3 md:gap-x-[24px] md:gap-y-[64px]">
+      {section.features.map((feature) => (
+        <div class="flex flex-col gap-[16px]">
+          {feature.icon ? (
+            <img
+              src={`/images/icons/${feature.icon}.svg`}
+              alt=""
+              class="h-[32px] w-[32px]"
+              loading="lazy"
+              decoding="async"
+              aria-hidden="true"
+            />
+          ) : (
+            <div class="flex h-[32px] w-[32px] items-center justify-center rounded-[4px] bg-blue-matchday/10" aria-hidden="true">
+              <svg class="h-[18px] w-[18px] text-blue-matchday" viewBox="0 0 18 18" fill="none">
+                <rect x="1" y="1" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+            </div>
+          )}
+
+          <h4 class="font-heading-semi text-[24px] font-medium uppercase leading-none tracking-[-0.96px] text-charcoal-pitch md:text-[32px]">
+            {feature.title}
+          </h4>
+
+          <p class="font-body text-[14px] font-normal leading-[1.5] text-charcoal-pitch/60">
+            {feature.description}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

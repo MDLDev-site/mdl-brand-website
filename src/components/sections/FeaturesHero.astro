@@ -1,0 +1,30 @@
+---
+import type { FeaturesHeroData } from '../../types/content';
+
+interface Props {
+  hero: FeaturesHeroData;
+}
+
+const { hero } = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-gradient-to-b from-charcoal-pitch to-navy-umpire">
+  {/* Decorative blur circle */}
+  <div class="pointer-events-none absolute left-1/2 top-[-292px] h-[746px] w-[746px] -translate-x-1/2" aria-hidden="true">
+    <div class="h-full w-full rounded-full bg-blue-matchday/20 blur-[120px]"></div>
+  </div>
+
+  <div class="relative mx-auto flex max-w-[1200px] flex-col items-center gap-[50px] overflow-hidden px-[24px] pb-[100px] pt-[160px] md:pb-[140px] md:pt-[180px]">
+    <div class="flex w-full flex-col items-center gap-[24px] text-center text-white">
+      <h1 class="w-full font-heading text-[36px] font-medium uppercase leading-[0.9] tracking-[-1px] text-white sm:text-[50px] md:text-[80px] md:tracking-[0.8px]">
+        {hero.heading.map((line) => (
+          <span class="block">{line}</span>
+        ))}
+      </h1>
+
+      <p class="max-w-[680px] font-body text-[16px] font-normal leading-[1.4] text-white/80 md:text-[20px]">
+        {hero.description}
+      </p>
+    </div>
+  </div>
+</section>

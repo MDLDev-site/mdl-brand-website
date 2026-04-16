@@ -2,6 +2,16 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { loadYaml } from '../lib/yaml-loader';
 import type { PageContent } from '../types/content';
+import Hero from '../components/sections/Hero.astro';
+import LogoBanner from '../components/sections/LogoBanner.astro';
+import Feature from '../components/sections/Feature.astro';
+import Carousel from '../components/sections/Carousel.astro';
+import Grid from '../components/sections/Grid.astro';
+import Customers from '../components/sections/Customers.astro';
+import AccordionFeatures from '../components/sections/AccordionFeatures.astro';
+import CTABanner from '../components/sections/CTABanner.astro';
+import MailingList from '../components/sections/MailingList.astro';
+import Diagonals from '../components/sections/Diagonals.astro';
 
 const page = await loadYaml<PageContent>('pages/home.yaml');
 ---
@@ -9,44 +19,25 @@ const page = await loadYaml<PageContent>('pages/home.yaml');
 <BaseLayout title={page.page.title} description={page.page.description}>
   {page.sections.map((section) => {
     if (section.type === 'hero') {
-      return (
-        <section>
-          <h1>{section.heading}</h1>
-          <p>{section.subheading}</p>
-          <div>
-            <a href={section.cta.primary.link}>{section.cta.primary.text}</a>
-            {section.cta.secondary && (
-              <a href={section.cta.secondary.link}>{section.cta.secondary.text}</a>
-            )}
-          </div>
-        </section>
-      );
-    }
-    if (section.type === 'feature_grid') {
-      return (
-        <section>
-          <h2>{section.heading}</h2>
-          {section.description && <p>{section.description}</p>}
-          <div>
-            {section.features.map((feature) => (
-              <div>
-                <span>{feature.icon}</span>
-                <h3>{feature.title}</h3>
-                <p>{feature.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      );
-    }
-    if (section.type === 'cta_banner') {
-      return (
-        <section>
-          <h2>{section.heading}</h2>
-          {section.description && <p>{section.description}</p>}
-          <a href={section.button.link}>{section.button.text}</a>
-        </section>
-      );
+      return <Hero section={section} />;
+    } else if (section.type === 'logo_banner') {
+      return <LogoBanner section={section} />;
+    } else if (section.type === 'feature') {
+      return <Feature section={section} />;
+    } else if (section.type === 'carousel') {
+      return <Carousel section={section} />;
+    } else if (section.type === 'grid') {
+      return <Grid section={section} />;
+    } else if (section.type === 'customers') {
+      return <Customers section={section} />;
+    } else if (section.type === 'accordion_features') {
+      return <AccordionFeatures section={section} />;
+    } else if (section.type === 'cta_banner') {
+      return <CTABanner section={section} />;
+    } else if (section.type === 'mailing_list') {
+      return <MailingList section={section} />;
+    } else if (section.type === 'diagonals') {
+      return <Diagonals section={section} />;
     }
     return null;
   })}

@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { loadYaml } from '../lib/yaml-loader';
+import type { FeaturesPageContent, PageContent } from '../types/content';
+import FeaturesHero from '../components/sections/FeaturesHero.astro';
+import AnchorMenu from '../components/sections/AnchorMenu.astro';
+import FeatureCategory from '../components/sections/FeatureCategory.astro';
+import Diagonals from '../components/sections/Diagonals.astro';
+import CTABanner from '../components/sections/CTABanner.astro';
+import MailingList from '../components/sections/MailingList.astro';
+
+const features = await loadYaml<FeaturesPageContent>('pages/features.yaml');
+
+// Load CTA banner and mailing list data from home page
+const home = await loadYaml<PageContent>('pages/home.yaml');
+const ctaBanner = home.sections.find((s) => s.type === 'cta_banner');
+const mailingList = home.sections.find((s) => s.type === 'mailing_list');
+---
+
+<BaseLayout title={features.page.title} description={features.page.description}>
+  {/* Hero */}
+  <FeaturesHero hero={features.hero} />
+
+  {/* Anchor menu + feature categories */}
+  <AnchorMenu anchors={features.anchors} />
+
+  {/* Render populated categories with diagonal transitions between them */}
+  {(() => {
+    const populated = features.categories.filter((c) => c.features.length > 0);
+    return populated.map((category, i) => {
+      const prevBg = i === 0 ? null : populated[i - 1]?.background;
+      const needsDiagonal = prevBg && prevBg !== category.background;
+
+      return (
+        <>
+          {needsDiagonal && (
+            <Diagonals
+              section={{
+                type: 'diagonals',
+                variant: prevBg === 'white' ? 'white-to-grey' : 'grey-to-white',
+              }}
+            />
+          )}
+          <FeatureCategory category={category} />
+        </>
+      );
+    });
+  })()}
+
+  {/* Hidden anchor targets for empty categories */}
+  {features.categories
+    .filter((c) => c.features.length === 0)
+    .map((c) => <div id={c.id}></div>)}
+
+  {/* CTA Banner — reuse from home page */}
+  {ctaBanner && ctaBanner.type === 'cta_banner' && <CTABanner section={ctaBanner} />}
+
+  {/* Mailing List — reuse from home page */}
+  {mailingList && mailingList.type === 'mailing_list' && <MailingList section={mailingList} />}
+</BaseLayout>

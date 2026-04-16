@@ -1,0 +1,77 @@
+---
+import type { MailingListSection } from '../../types/content';
+
+interface Props {
+  section: MailingListSection;
+}
+
+const { section } = Astro.props;
+---
+
+<section class="bg-navy-umpire" aria-label="Newsletter signup">
+  <div class="mx-auto flex max-w-[1440px] flex-col gap-[32px] px-[24px] py-[64px] md:px-[120px] md:py-[80px]">
+    <h4 class="text-center font-heading text-[28px] font-medium uppercase leading-[0.9] tracking-[-1px] text-white md:text-left md:font-subheading md:text-[32px] md:tracking-[-3px] md:text-yellow-tennis">
+      {section.heading}
+    </h4>
+
+    <form
+      class="flex w-full flex-col gap-[24px] md:flex-row md:items-end md:gap-[24px]"
+      data-mailing-list-form
+    >
+      <div class="flex-1">
+        <label for="mailing-list-name" class="sr-only">First name</label>
+        <input
+          id="mailing-list-name"
+          type="text"
+          name="firstName"
+          placeholder="Al"
+          class="w-full border-b border-white/40 bg-transparent px-0 py-[12px] font-body text-[14px] text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
+          autocomplete="given-name"
+        />
+      </div>
+
+      <div class="flex-1">
+        <label for="mailing-list-surname" class="sr-only">Surname</label>
+        <input
+          id="mailing-list-surname"
+          type="text"
+          name="surname"
+          placeholder="Your surname"
+          class="w-full border-b border-white/40 bg-transparent px-0 py-[12px] font-body text-[14px] text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
+          autocomplete="family-name"
+        />
+      </div>
+
+      <div class="flex-1">
+        <label for="mailing-list-company" class="sr-only">Company name</label>
+        <input
+          id="mailing-list-company"
+          type="text"
+          name="company"
+          placeholder="Company name (optional)"
+          class="w-full border-b border-white/40 bg-transparent px-0 py-[12px] font-body text-[14px] text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
+        />
+      </div>
+
+      <div class="flex-1">
+        <label for="mailing-list-email" class="sr-only">Email address</label>
+        <input
+          id="mailing-list-email"
+          type="email"
+          name="email"
+          required
+          placeholder="Your email address"
+          class="w-full border-b border-white/40 bg-transparent px-0 py-[12px] font-body text-[14px] text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
+          autocomplete="email"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="w-full shrink-0 rounded-[4px] bg-blue-matchday px-[32px] py-[14px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90 md:w-auto"
+      >
+        {section.buttonText}
+      </button>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,87 @@
+---
+import type { CTABannerSection } from '../../types/content';
+
+interface Props {
+  section: CTABannerSection;
+}
+
+const { section } = Astro.props;
+---
+
+<section class="relative bg-navy-umpire" aria-label="Call to action">
+  {/* Main content area */}
+  <div class="relative mx-auto flex max-w-[1440px] flex-col md:flex-row">
+    {/* Left: content */}
+    <div class="relative z-[2] flex flex-col items-center justify-center gap-[24px] px-[24px] py-[64px] text-center md:w-[600px] md:shrink-0 md:items-start md:gap-[40px] md:pb-[100px] md:pl-[120px] md:pr-[64px] md:pt-[140px] md:text-left">
+      <div class="flex flex-col gap-[24px]">
+        <h2 class="font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] text-white md:text-[80px] md:tracking-[1px]">
+          {section.heading.map((line) => (
+            <span class="block">{line}</span>
+          ))}
+        </h2>
+
+        <p class="font-body text-[16px] font-normal leading-[1.4] text-white/80 md:text-[18px]">
+          {section.description}
+        </p>
+      </div>
+
+      <div class="w-full max-w-[340px] md:w-auto md:max-w-none">
+        <a
+          href={section.button.link}
+          class="inline-flex w-full items-center justify-center rounded-[4px] bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90 md:w-auto"
+        >
+          {section.button.text}
+        </a>
+      </div>
+    </div>
+
+    {/* Right: decorative image area with geometric overlay */}
+    <div class="relative hidden flex-1 overflow-hidden md:block">
+      {section.backgroundImage ? (
+        <>
+          {/* Blue blob shape — behind the player */}
+          <svg class="absolute right-[-40px] top-[10%] h-[90%] w-[90%]" viewBox="0 0 629 758" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M450.782 719.129C420.01 799.204 326.431 810.55 282.339 739.551L18.6569 314.962C-25.4351 243.963 13.0296 143.869 87.8933 134.792L535.598 80.5108C610.462 71.434 665.577 160.182 634.805 240.257L450.782 719.129Z" fill="var(--color-blue-matchday)" />
+          </svg>
+
+          {/* Orange ellipse — bottom right, peeking behind the blue */}
+          <svg class="absolute bottom-[-20%] right-[-10%] h-[60%] w-[70%]" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="200" cy="200" rx="200" ry="180" fill="var(--color-orange-basketball)" />
+          </svg>
+
+          {/* Player image — on top */}
+          <img
+            src={section.backgroundImage}
+            alt=""
+            class="relative z-[1] h-full w-full object-contain object-right-bottom"
+            loading="lazy"
+            decoding="async"
+            aria-hidden="true"
+          />
+        </>
+      ) : (
+        <div
+          class="flex h-full min-h-[400px] items-center justify-center bg-white/5"
+          role="img"
+          aria-label="Decorative sports imagery"
+        >
+          <span class="font-body text-[14px] text-white/20">Sports Imagery</span>
+        </div>
+      )}
+    </div>
+  </div>
+
+  {/* Bottom diagonal decorative strips */}
+  <div class="relative h-[40px] md:h-[109px] overflow-hidden" aria-hidden="true">
+    {/* Colour strips — yellow, blue, light blue */}
+    <svg class="absolute bottom-0 left-0 z-[2] h-full w-[72%]" viewBox="0 0 863 118" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M863 0L0.00140381 94.5556V118.235L863 41.9754V0Z" fill="var(--color-yellow-tennis)" />
+      <path d="M424.055 28.6836L0.00534058 79.7537V107.489L424.055 62.0142V28.6836Z" fill="var(--color-blue-matchday)" />
+      <path d="M424.047 62.0186L0.000976562 107.492V94.5557L424.047 48.0938V62.0186Z" fill="#8CC3E1" />
+    </svg>
+    {/* Dark charcoal triangle — fills bottom right */}
+    <svg class="absolute inset-0 z-[1] h-full w-full" viewBox="0 0 1200 109" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 109L1200 0V109H0Z" fill="var(--color-charcoal-pitch)" />
+    </svg>
+  </div>
+</section>

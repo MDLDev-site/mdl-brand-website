@@ -19,11 +19,13 @@
     "claude:analyze": "npx gitnexus analyze"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.8",
     "@astrojs/sitemap": "^3.7.1",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.0.6",
     "js-yaml": "^4.1.0",
-    "tailwindcss": "^4.2.2"
+    "tailwindcss": "^4.2.2",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9"

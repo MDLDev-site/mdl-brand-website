@@ -1,0 +1,93 @@
+---
+import type { FeatureSection } from '../../types/content';
+
+interface Props {
+  section: FeatureSection;
+}
+
+const { section } = Astro.props;
+const isImageLeft = section.imagePosition === 'left';
+---
+
+<section class="bg-grey" aria-label={section.heading}>
+  <div class:list={[
+    'mx-auto flex max-w-[1440px] flex-col md:flex-row',
+    isImageLeft && 'md:flex-row-reverse',
+  ]}>
+    {/* Content side */}
+    <div class="flex flex-1 flex-col justify-center gap-[24px] px-[24px] py-[48px] md:gap-[32px] md:py-[140px] md:pl-[120px] md:pr-[64px]">
+      <h2 class="font-heading text-[28px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch md:text-[60px] md:tracking-[-3px]">
+        {section.heading}
+      </h2>
+
+      <p class="max-w-[500px] font-body text-[16px] font-normal leading-[1.4] text-text-primary md:text-[18px]">
+        {section.description}
+      </p>
+
+      {section.features.length > 0 && (
+        <ul class="flex flex-col gap-[16px]" role="list">
+          {section.features.map((feature) => (
+            <li class="flex items-start gap-[12px]">
+              <span
+                class="mt-[2px] flex h-[24px] w-[24px] shrink-0 items-center justify-center rounded-full bg-yellow-tennis"
+                aria-hidden="true"
+              >
+                <svg class="h-[14px] w-[14px] text-charcoal-pitch" viewBox="0 0 14 14" fill="none">
+                  <path d="M2.5 7l3 3 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <span class="font-body text-[14px] font-normal leading-[1.5] text-charcoal-pitch">
+                {feature.text}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div class="flex flex-col gap-[16px] pt-[8px] sm:flex-row sm:items-center sm:gap-[24px]">
+        <a
+          href={section.cta.primary.link}
+          class="inline-flex items-center justify-center rounded-[4px] bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90 sm:w-auto"
+        >
+          {section.cta.primary.text}
+        </a>
+
+        <a
+          href={section.cta.secondary.link}
+          class="group inline-flex items-center justify-center gap-[8px] py-[8px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-charcoal-pitch transition-colors hover:text-blue-matchday"
+        >
+          {section.cta.secondary.text}
+          <svg
+            class="h-[16px] w-[16px] transition-transform group-hover:translate-x-[4px]"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    {/* Image side */}
+    <div class="relative flex flex-1 items-center justify-center overflow-hidden bg-grey px-[24px] pb-[48px] md:px-0 md:pb-0">
+      {section.image ? (
+        <img
+          src={section.image}
+          alt={section.imageAlt}
+          class="h-auto w-full max-w-[500px] object-contain md:h-full md:max-w-none md:object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <div
+          class="flex h-[300px] w-full items-center justify-center bg-charcoal-pitch/5 md:h-full"
+          role="img"
+          aria-label={section.imageAlt}
+        >
+          <span class="font-body text-[14px] text-charcoal-pitch/30">Feature Image</span>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
