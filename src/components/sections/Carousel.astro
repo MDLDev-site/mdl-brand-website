@@ -8,30 +8,30 @@ interface Props {
 const { section } = Astro.props;
 ---
 
-<section class="bg-grey py-[80px] md:py-[120px]" aria-label={section.heading}>
-  <div class="mx-auto max-w-[1440px]">
+<section class="bg-grey py-20 md:py-30" aria-label={section.heading}>
+  <div class="mx-auto max-w-360">
     {/* Header row */}
-    <div class="flex items-end justify-between px-[24px] pb-[48px] md:px-[120px]">
-      <h2 class="max-w-[600px] font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch md:text-[80px] md:tracking-[1px]">
+    <div class="flex items-end justify-between px-[24px] pb-[48px] md:px-30">
+      <h2 class="max-w-150 font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch md:text-[80px] md:tracking-[1px]">
         {section.heading}
       </h2>
 
       <div class="hidden items-center gap-[12px] md:flex" role="group" aria-label="Carousel navigation">
         <button
-          class="carousel-prev flex h-[56px] w-[56px] items-center justify-center rounded-full border border-light-football transition-colors hover:bg-light-football"
+          class="carousel-prev flex h-14 w-14 items-center justify-center rounded-full border border-light-football transition-colors hover:bg-light-football"
           aria-label="Previous slide"
           type="button"
         >
-          <svg class="h-[20px] w-[20px] text-charcoal-pitch" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <svg class="h-5 w-5 text-charcoal-pitch" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <path d="M13 4l-6 6 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
         <button
-          class="carousel-next flex h-[56px] w-[56px] items-center justify-center rounded-full bg-yellow-tennis transition-colors hover:bg-yellow-tennis/80"
+          class="carousel-next flex h-14 w-14 items-center justify-center rounded-full bg-yellow-tennis transition-colors hover:bg-yellow-tennis/80"
           aria-label="Next slide"
           type="button"
         >
-          <svg class="h-[20px] w-[20px] text-charcoal-pitch" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <svg class="h-5 w-5 text-charcoal-pitch" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
@@ -40,17 +40,17 @@ const { section } = Astro.props;
 
     {/* Cards track */}
     <div
-      class="carousel-track flex gap-[24px] overflow-x-auto px-[24px] pb-[8px] scrollbar-hide md:px-[120px]"
+      class="carousel-track flex gap-[24px] overflow-x-auto px-[24px] pb-[8px] scrollbar-hide md:px-30"
       role="list"
       style="scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;"
     >
       {section.cards.map((card) => (
         <article
-          class="flex w-[300px] shrink-0 flex-col rounded-[8px] border-t-[8px] border-blue-matchday bg-white shadow-card-lg md:w-[380px]"
+          class="flex w-75 shrink-0 flex-col rounded-md border-t-8 border-blue-matchday bg-white shadow-card-lg md:w-95"
           role="listitem"
           style="scroll-snap-align: start;"
         >
-          <div class="flex flex-1 flex-col gap-[16px] px-[32px] pt-[48px] pb-[36px] md:px-[48px] md:pt-[64px] md:pb-[48px]">
+          <div class="flex flex-1 flex-col gap-[16px] px-[32px] pt-[48px] pb-9 md:px-[48px] md:pt-[64px] md:pb-[48px]">
             <h3 class="font-heading text-[36px] font-medium uppercase leading-[1.15] tracking-[-0.5px] text-charcoal-pitch md:text-[50px]">
               {card.title}
             </h3>

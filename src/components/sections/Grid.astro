@@ -9,9 +9,9 @@ const { section } = Astro.props;
 ---
 
 <section class="bg-white" aria-label={section.heading}>
-  <div class="mx-auto flex max-w-[1440px] flex-col gap-[64px] px-[24px] py-[80px] md:gap-[100px] md:px-[120px] md:py-[100px]">
+  <div class="mx-auto flex max-w-360 flex-col gap-[64px] px-[24px] py-20 md:gap-25 md:px-30 md:py-25">
     {/* Top: heading + description + buttons */}
-    <div class="flex max-w-[600px] flex-col gap-[24px]">
+    <div class="flex max-w-150 flex-col gap-[24px]">
       <h2 class="font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch md:text-[80px] md:tracking-[1px]">
         {section.heading}
       </h2>
@@ -23,7 +23,7 @@ const { section } = Astro.props;
       <div class="flex flex-col gap-[16px] pt-[8px] sm:flex-row sm:items-center sm:gap-[24px]">
         <a
           href={section.cta.primary.link}
-          class="inline-flex w-full items-center justify-center rounded-[4px] bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90 sm:w-auto"
+          class="inline-flex w-full items-center justify-center rounded-sm bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90 sm:w-auto"
         >
           {section.cta.primary.text}
         </a>
@@ -59,8 +59,8 @@ const { section } = Astro.props;
               aria-hidden="true"
             />
           ) : (
-            <div class="flex h-[32px] w-[32px] items-center justify-center rounded-[4px] bg-blue-matchday/10" aria-hidden="true">
-              <svg class="h-[18px] w-[18px] text-blue-matchday" viewBox="0 0 18 18" fill="none">
+            <div class="flex h-[32px] w-[32px] items-center justify-center rounded-sm bg-blue-matchday/10" aria-hidden="true">
+              <svg class="h-4.5 w-4.5 text-blue-matchday" viewBox="0 0 18 18" fill="none">
                 <rect x="1" y="1" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.5" />
               </svg>
             </div>
@@ -70,7 +70,7 @@ const { section } = Astro.props;
             {feature.title}
           </h4>
 
-          <p class="font-body text-[14px] font-normal leading-[1.5] text-charcoal-pitch/60">
+          <p class="font-body text-[14px] font-normal leading-normal text-charcoal-pitch/60">
             {feature.description}
           </p>
         </div>

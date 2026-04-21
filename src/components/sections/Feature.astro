@@ -11,16 +11,16 @@ const isImageLeft = section.imagePosition === 'left';
 
 <section class="bg-grey" aria-label={section.heading}>
   <div class:list={[
-    'mx-auto flex max-w-[1440px] flex-col md:flex-row',
+    'mx-auto flex max-w-360 flex-col md:flex-row',
     isImageLeft && 'md:flex-row-reverse',
   ]}>
     {/* Content side */}
-    <div class="flex flex-1 flex-col justify-center gap-[24px] px-[24px] py-[48px] md:gap-[32px] md:py-[140px] md:pl-[120px] md:pr-[64px]">
+    <div class="flex flex-1 flex-col justify-center gap-[24px] px-[24px] py-[48px] md:gap-[32px] md:py-35 md:pl-30 md:pr-[64px]">
       <h2 class="font-heading text-[28px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch md:text-[60px] md:tracking-[-3px]">
         {section.heading}
       </h2>
 
-      <p class="max-w-[500px] font-body text-[16px] font-normal leading-[1.4] text-text-primary md:text-[18px]">
+      <p class="max-w-125 font-body text-[16px] font-normal leading-[1.4] text-text-primary md:text-[18px]">
         {section.description}
       </p>
 
@@ -32,11 +32,11 @@ const isImageLeft = section.imagePosition === 'left';
                 class="mt-[2px] flex h-[24px] w-[24px] shrink-0 items-center justify-center rounded-full bg-yellow-tennis"
                 aria-hidden="true"
               >
-                <svg class="h-[14px] w-[14px] text-charcoal-pitch" viewBox="0 0 14 14" fill="none">
+                <svg class="h-3.5 w-3.5 text-charcoal-pitch" viewBox="0 0 14 14" fill="none">
                   <path d="M2.5 7l3 3 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </span>
-              <span class="font-body text-[14px] font-normal leading-[1.5] text-charcoal-pitch">
+              <span class="font-body text-[14px] font-normal leading-normal text-charcoal-pitch">
                 {feature.text}
               </span>
             </li>
@@ -47,7 +47,7 @@ const isImageLeft = section.imagePosition === 'left';
       <div class="flex flex-col gap-[16px] pt-[8px] sm:flex-row sm:items-center sm:gap-[24px]">
         <a
           href={section.cta.primary.link}
-          class="inline-flex items-center justify-center rounded-[4px] bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90 sm:w-auto"
+          class="inline-flex items-center justify-center rounded-sm bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90 sm:w-auto"
         >
           {section.cta.primary.text}
         </a>
@@ -75,13 +75,13 @@ const isImageLeft = section.imagePosition === 'left';
         <img
           src={section.image}
           alt={section.imageAlt}
-          class="h-auto w-full max-w-[500px] object-contain md:h-full md:max-w-none md:object-cover"
+          class="h-auto w-full max-w-125 object-contain md:h-full md:max-w-none md:object-cover"
           loading="lazy"
           decoding="async"
         />
       ) : (
         <div
-          class="flex h-[300px] w-full items-center justify-center bg-charcoal-pitch/5 md:h-full"
+          class="flex h-75 w-full items-center justify-center bg-charcoal-pitch/5 md:h-full"
           role="img"
           aria-label={section.imageAlt}
         >

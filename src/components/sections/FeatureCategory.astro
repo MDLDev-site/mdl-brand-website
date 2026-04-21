@@ -10,14 +10,14 @@ const bgClass = category.background === 'grey' ? 'bg-grey' : 'bg-white';
 ---
 
 {category.features.length > 0 && (
-  <section id={category.id} class={`${bgClass} overflow-hidden py-[64px] md:py-[120px]`}>
-    <div class="mx-auto max-w-[1440px] px-[24px] md:px-[120px]">
+  <section id={category.id} class={`${bgClass} overflow-hidden py-[64px] md:py-30`}>
+    <div class="mx-auto max-w-360 px-[24px] md:px-30">
       {/* Section header */}
-      <div class="mb-[48px] md:mb-[100px]">
+      <div class="mb-[48px] md:mb-25">
         <h2 class="font-heading text-[28px] font-medium uppercase leading-[1.15] tracking-[-0.5px] text-charcoal-pitch sm:text-[36px] md:text-[50px] md:tracking-[-1px]">
           {category.heading}
         </h2>
-        <p class="mt-[16px] max-w-[590px] font-body text-[14px] font-normal leading-[1.4] text-[#5b5b5b] md:text-[18px]">
+        <p class="mt-[16px] max-w-147.5 font-body text-[14px] font-normal leading-[1.4] text-text-primary md:text-[18px]">
           {category.description}
         </p>
       </div>
@@ -25,14 +25,14 @@ const bgClass = category.background === 'grey' ? 'bg-grey' : 'bg-white';
       {/* Feature rows */}
       <div class="flex flex-col">
         {category.features.map((feature) => (
-          <div class="flex flex-col gap-[16px] border-b border-[rgba(21,38,68,0.05)] py-[16px] md:flex-row md:items-start md:gap-[52px]">
+          <div class="flex flex-col gap-[16px] border-b border-[rgba(21,38,68,0.05)] py-[16px] md:flex-row md:items-start md:gap-13">
             {/* Title column — fixed width on desktop */}
-            <p class="shrink-0 font-body text-[14px] font-bold leading-[1.5] text-[#5b5b5b] md:w-[195px]">
+            <p class="shrink-0 font-body text-[14px] font-bold leading-normal text-text-primary md:w-48.75">
               {feature.title}
             </p>
 
             {/* Description column — flex */}
-            <div class="min-w-0 flex-1 font-body text-[14px] font-normal leading-[1.5] text-[#5b5b5b]">
+            <div class="min-w-0 flex-1 font-body text-[14px] font-normal leading-normal text-text-primary">
               <Fragment set:html={feature.description
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\n\n/g, '<br><br>')
@@ -47,11 +47,11 @@ const bgClass = category.background === 'grey' ? 'bg-grey' : 'bg-white';
                   {feature.checks.map((check) => (
                     <div class="flex items-center gap-[16px]">
                       <div class="flex h-[32px] w-[32px] shrink-0 items-center justify-center rounded-full bg-yellow-tennis">
-                        <svg class="h-[14px] w-[14px] text-charcoal-pitch" viewBox="0 0 16 16" fill="none">
+                        <svg class="h-3.5 w-3.5 text-charcoal-pitch" viewBox="0 0 16 16" fill="none">
                           <path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                       </div>
-                      <span class="font-body text-[14px] font-normal leading-[1.5] text-[#5b5b5b]">
+                      <span class="font-body text-[14px] font-normal leading-normal text-text-primary">
                         {check}
                       </span>
                     </div>
@@ -61,7 +61,7 @@ const bgClass = category.background === 'grey' ? 'bg-grey' : 'bg-white';
 
               {feature.image && (
                 <div class="py-[24px]">
-                  <div class="h-[180px] overflow-hidden rounded-[8px] bg-grey">
+                  <div class="h-45 overflow-hidden rounded-md bg-grey">
                     <img
                       src={feature.image}
                       alt={feature.title}

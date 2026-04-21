@@ -9,7 +9,7 @@ const { section } = Astro.props;
 ---
 
 <section class="bg-navy-umpire" aria-label="Newsletter signup">
-  <div class="mx-auto flex max-w-[1440px] flex-col gap-[32px] px-[24px] py-[64px] md:px-[120px] md:py-[80px]">
+  <div class="mx-auto flex max-w-360 flex-col gap-[32px] px-[24px] py-[64px] md:px-30 md:py-20">
     <h4 class="text-center font-heading text-[28px] font-medium uppercase leading-[0.9] tracking-[-1px] text-white md:text-left md:font-subheading md:text-[32px] md:tracking-[-3px] md:text-yellow-tennis">
       {section.heading}
     </h4>
@@ -68,7 +68,7 @@ const { section } = Astro.props;
 
       <button
         type="submit"
-        class="w-full shrink-0 rounded-[4px] bg-blue-matchday px-[32px] py-[14px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90 md:w-auto"
+        class="w-full shrink-0 rounded-sm bg-blue-matchday px-[32px] py-3.5 font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90 md:w-auto"
       >
         {section.buttonText}
       </button>
