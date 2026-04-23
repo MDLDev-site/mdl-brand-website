@@ -1,0 +1,77 @@
+---
+import type { PricingTier, PricingProductId } from '../../types/content';
+
+interface Props {
+  tier: PricingTier;
+  productId: PricingProductId;
+  tierIndex: number;
+}
+
+const { tier, productId, tierIndex } = Astro.props;
+
+const buttonClass =
+  tier.buttonVariant === 'orange'
+    ? 'bg-orange-basketball text-white hover:bg-orange-basketball/90'
+    : tier.buttonVariant === 'blue'
+      ? 'bg-blue-matchday text-white hover:bg-blue-matchday/90'
+      : 'bg-white/10 text-white hover:bg-white/20';
+
+const ringClass =
+  tier.tag?.variant === 'recommended'
+    ? 'ring-1 ring-orange-basketball'
+    : tier.tag?.variant === 'most-popular'
+      ? 'ring-1 ring-white/30'
+      : 'ring-1 ring-white/10';
+
+const tagClass =
+  tier.tag?.variant === 'recommended'
+    ? 'bg-orange-basketball text-white'
+    : 'bg-white/20 text-white';
+---
+
+<div
+  class={`pricing-plan-card relative flex flex-col rounded-[16px] bg-charcoal-pitch px-[16px] pb-[20px] pt-[28px] ${ringClass}`}
+  data-product={productId}
+  data-tier={tier.id}
+  data-tier-index={tierIndex}
+>
+  {tier.tag && (
+    <span
+      class={`absolute -top-[12px] left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-[12px] py-[4px] font-body text-[12px] font-medium tracking-[0.24px] ${tagClass}`}
+    >
+      {tier.tag.label}
+    </span>
+  )}
+
+  <div class="flex flex-col items-center gap-[8px] text-center">
+    <p class="font-subheading text-[12px] font-semibold uppercase tracking-[0.24px] text-white">
+      {tier.name}
+    </p>
+    <div class="flex items-baseline gap-[8px]">
+      <span
+        class="pricing-price font-heading text-[40px] font-medium leading-none text-white"
+        data-monthly={tier.monthlyPrice}
+        data-annual={tier.annualPrice}
+      >
+        {tier.monthlyPrice}
+      </span>
+      <span class="flex flex-col text-left font-body text-[10px] font-medium uppercase tracking-[0.2px] text-white/60">
+        <span
+          class="pricing-price-strike line-through"
+          data-monthly-strike={tier.annualPrice}
+          data-annual-strike={tier.monthlyPrice}
+        >{tier.annualPrice}</span>
+        <span class="pricing-price-vat" data-monthly-vat="PER MONTH EXCL. VAT" data-annual-vat={tier.vatNote}>
+          PER MONTH EXCL. VAT
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <a
+    href={tier.cta.link}
+    class={`mt-[16px] inline-flex w-full items-center justify-center rounded-sm px-[24px] py-[12px] font-body text-[14px] font-medium leading-[1.1] transition-colors ${buttonClass}`}
+  >
+    {tier.cta.text}
+  </a>
+</div>

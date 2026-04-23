@@ -196,6 +196,125 @@ export interface FeaturesPageContent {
   categories: FeatureCategory[];
 }
 
+// Pricing page types
+
+export type PricingProductId = 'on-demand' | 'live';
+export type PricingTagVariant = 'recommended' | 'most-popular';
+export type PricingButtonVariant = 'grey' | 'blue' | 'orange';
+
+export interface PricingDifferentiator {
+  label: string;
+  value: string;
+}
+
+export interface PricingTier {
+  id: string;
+  name: string;
+  monthlyPrice: string;
+  annualPrice: string;
+  vatNote: string;
+  description: string;
+  tag?: {
+    label: string;
+    variant: PricingTagVariant;
+  };
+  buttonVariant: PricingButtonVariant;
+  differentiators: PricingDifferentiator[];
+  cta: CTAButton;
+}
+
+export interface PricingProduct {
+  id: PricingProductId;
+  tabLabel: string;
+  description: string;
+  tiers: PricingTier[];
+}
+
+export interface PricingHeroData {
+  heading: string;
+  description: string;
+  calculatorPrompt: string;
+  calculatorButton: string;
+  billingToggle: {
+    monthlyLabel: string;
+    annualLabel: string;
+  };
+}
+
+export interface PricingComparisonAvailability {
+  // String for textual values (e.g. "1TB", "Unlimited"); true/false for checkmark/dash
+  value: string | boolean;
+}
+
+export interface PricingComparisonRow {
+  label: string;
+  // One entry per tier in product.tiers, ordered identically
+  values: PricingComparisonAvailability[];
+}
+
+export interface PricingComparisonGroup {
+  id: string;
+  heading: string;
+  rows: PricingComparisonRow[];
+}
+
+export interface PricingComparison {
+  productId: PricingProductId;
+  groups: PricingComparisonGroup[];
+}
+
+export interface PricingCalculatorSlider {
+  id: string;
+  label: string;
+  tooltip: string;
+  min: number;
+  max: number;
+  step: number;
+  default: number;
+  ticks: number[];
+  unit?: string;
+}
+
+export interface PricingCalculator {
+  heading: string;
+  description: string;
+  productPrompt: string;
+  sliders: PricingCalculatorSlider[];
+  outputs: {
+    consumptionLabel: string;
+    recommendationPrefix: string;
+    hoursLabel: string;
+    hoursTooltip: string;
+    bandwidthLabel: string;
+    bandwidthTooltip: string;
+  };
+  contact: {
+    prompt: string;
+    cta: CTAButton;
+  };
+}
+
+export interface PricingFAQItem {
+  question: string;
+  answer: string;
+}
+
+export interface PricingFAQ {
+  heading: string;
+  description: string;
+  cta: CTAButton;
+  items: PricingFAQItem[];
+}
+
+export interface PricingPageContent {
+  page: PageMeta;
+  hero: PricingHeroData;
+  products: PricingProduct[];
+  comparisons: PricingComparison[];
+  calculator: PricingCalculator;
+  faq: PricingFAQ;
+}
+
 export interface FooterColumn {
   title: string;
   links: Array<{

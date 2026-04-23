@@ -1,0 +1,60 @@
+---
+import type { PricingFAQ } from '../../types/content';
+
+interface Props {
+  faq: PricingFAQ;
+}
+
+const { faq } = Astro.props;
+---
+
+<section class="bg-navy-umpire py-[64px] md:py-25" aria-label="Frequently asked questions">
+  <div class="mx-auto grid max-w-360 grid-cols-1 gap-[40px] px-[24px] md:grid-cols-[1fr_2fr] md:gap-15 md:px-30">
+    {/* Left: heading + description + CTA */}
+    <div class="flex flex-col gap-[24px]">
+      <h2 class="font-heading text-[40px] font-medium uppercase leading-[0.9] tracking-[-1px] text-white md:text-[60px] md:tracking-[-2px]">
+        {faq.heading}
+      </h2>
+      <p class="font-body text-[14px] font-normal leading-[1.4] text-white/70 md:text-[16px]">
+        {faq.description}
+      </p>
+      <a
+        href={faq.cta.link}
+        class="inline-flex w-fit items-center justify-center rounded-sm bg-blue-matchday px-[24px] py-[12px] font-body text-[14px] font-medium leading-[1.1] tracking-[0.28px] text-white transition-colors hover:bg-blue-matchday/90"
+      >
+        {faq.cta.text}
+      </a>
+    </div>
+
+    {/* Right: accordion */}
+    <div class="flex flex-col">
+      {faq.items.map((item) => (
+        <details class="pricing-faq-item group border-b border-white/10 py-[16px]">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-[16px]">
+            <span class="font-body text-[14px] font-medium text-white md:text-[16px]">
+              {item.question}
+            </span>
+            <svg
+              class="h-[16px] w-[16px] shrink-0 text-white transition-transform group-open:rotate-180"
+              viewBox="0 0 16 16"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </summary>
+          <p class="mt-[12px] font-body text-[13px] font-normal leading-[1.5] text-white/70 md:text-[14px]">
+            {item.answer}
+          </p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Hide default summary marker in webkit */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
