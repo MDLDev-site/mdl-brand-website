@@ -1,0 +1,191 @@
+---
+import type { PricingHeroData, PricingProduct } from '../../types/content';
+import PricingPlanCard from './PricingPlanCard.astro';
+
+interface Props {
+  hero: PricingHeroData;
+  products: PricingProduct[];
+}
+
+const { hero, products } = Astro.props;
+---
+
+<section class="relative bg-charcoal-pitch pb-[64px] pt-32 md:pb-30 md:pt-40">
+  <div class="mx-auto flex max-w-300 flex-col gap-[40px] px-[24px] md:gap-15 md:px-[64px]">
+    {/* Title */}
+    <div class="flex flex-col items-center gap-[16px] text-center text-white">
+      <h1 class="font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] text-white md:text-[80px] md:tracking-[0.8px]">
+        {hero.heading}
+      </h1>
+      <p class="max-w-150 font-body text-[16px] font-normal leading-[1.4] text-white/80 md:text-[18px]">
+        {hero.description}
+      </p>
+    </div>
+
+    {/* Calculator prompt + button */}
+    <div class="flex flex-col items-center justify-center gap-[16px] md:flex-row">
+      <p class="font-subheading text-[14px] font-semibold tracking-[-0.28px] text-white md:text-[16px]">
+        {hero.calculatorPrompt}
+      </p>
+      <button
+        type="button"
+        class="pricing-calc-trigger inline-flex items-center gap-[12px] rounded-sm border border-white/20 bg-white/5 px-[24px] py-[12px] font-body text-[14px] font-medium text-white transition-colors hover:bg-white/10"
+        data-calc-trigger
+      >
+        <svg class="h-[16px] w-[16px]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <rect x="2" y="1" width="12" height="14" rx="1.5" stroke="currentColor" stroke-width="1.2" />
+          <path d="M5 4h6M5 7h2M9 7h2M5 10h2M9 10h2M5 13h2M9 13h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+        </svg>
+        {hero.calculatorButton}
+      </button>
+    </div>
+
+    {/* Product tab cards */}
+    <div class="grid grid-cols-1 gap-[16px] md:grid-cols-2 md:gap-[24px]">
+      {products.map((product, i) => (
+        <button
+          type="button"
+          class={`pricing-product-tab group flex flex-col items-center gap-[16px] rounded-[16px] px-[24px] py-[40px] text-center transition-colors ${i === 0 ? 'is-active' : ''}`}
+          data-product-tab={product.id}
+        >
+          <span class="product-tab-label font-heading text-[36px] font-medium uppercase leading-[0.9] tracking-[-0.5px] md:text-[50px] md:tracking-[-1px]">
+            {product.tabLabel}
+          </span>
+          <span class="product-tab-desc max-w-110 font-body text-[14px] font-normal leading-[1.4] md:text-[16px]">
+            {product.description}
+          </span>
+        </button>
+      ))}
+    </div>
+
+    {/* Billing toggle */}
+    <div class="flex items-center justify-center gap-[16px]">
+      <span class="billing-label font-body text-[14px] font-medium text-white" data-billing-label="monthly">
+        {hero.billingToggle.monthlyLabel}
+      </span>
+      <button
+        type="button"
+        class="billing-toggle relative flex h-[24px] w-[44px] items-center rounded-full bg-white/15 transition-colors"
+        role="switch"
+        aria-checked="false"
+        data-billing-toggle
+      >
+        <span class="billing-thumb absolute left-[2px] h-[20px] w-[20px] rounded-full bg-orange-basketball transition-transform"></span>
+      </button>
+      <span class="billing-label font-body text-[14px] font-medium text-white/60" data-billing-label="annual">
+        {hero.billingToggle.annualLabel}
+      </span>
+    </div>
+
+    {/* Plan cards — one grid per product, only the active one shown */}
+    {products.map((product, i) => (
+      <div
+        class={`pricing-plan-grid grid grid-cols-1 gap-[24px] sm:grid-cols-2 lg:grid-cols-4 ${i === 0 ? '' : 'hidden'}`}
+        data-product-grid={product.id}
+      >
+        {product.tiers.map((tier, idx) => (
+          <PricingPlanCard tier={tier} productId={product.id} tierIndex={idx} />
+        ))}
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  /* Product tab visual states */
+  .pricing-product-tab {
+    background-color: rgb(255 255 255 / 0.05);
+    color: rgb(255 255 255 / 0.5);
+  }
+  .pricing-product-tab:hover {
+    background-color: rgb(255 255 255 / 0.08);
+  }
+  .pricing-product-tab.is-active[data-product-tab='on-demand'] {
+    background-color: var(--color-blue-matchday);
+    color: white;
+  }
+  .pricing-product-tab.is-active[data-product-tab='live'] {
+    background-color: var(--color-orange-basketball);
+    color: white;
+  }
+  .pricing-product-tab .product-tab-label {
+    color: inherit;
+  }
+  .pricing-product-tab .product-tab-desc {
+    color: inherit;
+    opacity: 0.85;
+  }
+
+  /* Billing toggle thumb position */
+  .billing-toggle[aria-checked='true'] .billing-thumb {
+    transform: translateX(20px);
+  }
+</style>
+
+<script>
+  function initPricingHero() {
+    const tabs = document.querySelectorAll<HTMLButtonElement>('.pricing-product-tab');
+    const grids = document.querySelectorAll<HTMLElement>('[data-product-grid]');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const productId = tab.dataset.productTab;
+        if (!productId) return;
+        tabs.forEach((t) => t.classList.toggle('is-active', t.dataset.productTab === productId));
+        grids.forEach((g) =>
+          g.classList.toggle('hidden', g.dataset.productGrid !== productId)
+        );
+      });
+    });
+
+    const toggle = document.querySelector<HTMLButtonElement>('[data-billing-toggle]');
+    if (toggle) {
+      const monthlyLabel = document.querySelector<HTMLElement>('[data-billing-label="monthly"]');
+      const annualLabel = document.querySelector<HTMLElement>('[data-billing-label="annual"]');
+
+      toggle.addEventListener('click', () => {
+        const isAnnual = toggle.getAttribute('aria-checked') === 'true';
+        const next = !isAnnual;
+        toggle.setAttribute('aria-checked', String(next));
+
+        monthlyLabel?.classList.toggle('text-white', !next);
+        monthlyLabel?.classList.toggle('text-white/60', next);
+        annualLabel?.classList.toggle('text-white', next);
+        annualLabel?.classList.toggle('text-white/60', !next);
+
+        document.querySelectorAll<HTMLElement>('.pricing-price').forEach((el) => {
+          const v = next ? el.dataset.annual : el.dataset.monthly;
+          if (v) el.textContent = v;
+        });
+        document.querySelectorAll<HTMLElement>('.pricing-price-strike').forEach((el) => {
+          const v = next ? el.dataset.annualStrike : el.dataset.monthlyStrike;
+          if (v) el.textContent = v;
+          el.classList.toggle('opacity-0', !next);
+        });
+        document.querySelectorAll<HTMLElement>('.pricing-price-vat').forEach((el) => {
+          const v = next ? el.dataset.annualVat : el.dataset.monthlyVat;
+          if (v) el.textContent = v;
+        });
+      });
+
+      // Initial: monthly selected, hide strike-through
+      document
+        .querySelectorAll<HTMLElement>('.pricing-price-strike')
+        .forEach((el) => el.classList.add('opacity-0'));
+    }
+
+    // Calculator trigger — opens modal (handled by calculator script if mounted)
+    const calcTriggers = document.querySelectorAll<HTMLButtonElement>('[data-calc-trigger]');
+    calcTriggers.forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const modal = document.querySelector<HTMLElement>('[data-calc-modal]');
+        modal?.classList.remove('hidden');
+        modal?.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initPricingHero);
+  initPricingHero();
+</script>

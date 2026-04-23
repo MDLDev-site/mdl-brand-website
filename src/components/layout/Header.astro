@@ -16,9 +16,9 @@ const navLinks = [
 ---
 
 <header class="fixed top-0 left-0 right-0 z-50 p-[16px]">
-  <div class="relative mx-auto max-w-[1440px]">
+  <div class="relative mx-auto max-w-360">
     <nav
-      class="flex items-center justify-between rounded-[16px] bg-[rgba(22,29,37,0.9)] px-[24px] py-[12px] backdrop-blur-[12px]"
+      class="flex items-center justify-between rounded-[16px] bg-[rgba(22,29,37,0.9)] px-[24px] py-[12px] backdrop-blur-md"
       aria-label="Main navigation"
     >
       <!-- Logo -->
@@ -33,7 +33,7 @@ const navLinks = [
             {link.hasDropdown ? (
               <button
                 type="button"
-                class="nav-dropdown-trigger flex items-center gap-[4px] rounded-[8px] px-[8px] py-[4px] font-body text-[16px] font-medium capitalize tracking-[-0.16px] text-white transition-colors hover:bg-white/10"
+                class="nav-dropdown-trigger flex items-center gap-[4px] rounded-md px-[8px] py-[4px] font-body text-[16px] font-medium capitalize tracking-[-0.16px] text-white transition-colors hover:bg-white/10"
                 data-dropdown={link.text.toLowerCase()}
                 aria-expanded="false"
                 aria-haspopup="true"
@@ -52,7 +52,7 @@ const navLinks = [
             ) : (
               <a
                 href={link.href}
-                class="flex items-center gap-[4px] rounded-[8px] px-[8px] py-[4px] font-body text-[16px] font-medium capitalize tracking-[-0.16px] text-white transition-colors hover:bg-white/10"
+                class="flex items-center gap-[4px] rounded-md px-[8px] py-[4px] font-body text-[16px] font-medium capitalize tracking-[-0.16px] text-white transition-colors hover:bg-white/10"
               >
                 {link.text}
               </a>
@@ -65,13 +65,13 @@ const navLinks = [
       <div class="hidden items-center gap-[12px] lg:flex">
         <a
           href="/sign-in"
-          class="rounded-[4px] border border-white px-[32px] py-[16px] font-body text-[16px] font-medium uppercase tracking-[0.32px] text-white transition-colors hover:bg-white/10"
+          class="rounded-sm border border-white px-[32px] py-[16px] font-body text-[16px] font-medium uppercase tracking-[0.32px] text-white transition-colors hover:bg-white/10"
         >
           Sign in
         </a>
         <a
           href="/book-a-call"
-          class="rounded-[4px] bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium uppercase tracking-[0.32px] text-white transition-colors hover:bg-blue-matchday/90"
+          class="rounded-sm bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium uppercase tracking-[0.32px] text-white transition-colors hover:bg-blue-matchday/90"
         >
           Book a call
         </a>
@@ -79,7 +79,7 @@ const navLinks = [
 
       <!-- Mobile menu button -->
       <button
-        class="flex items-center justify-center rounded-[8px] p-[8px] text-white lg:hidden"
+        class="flex items-center justify-center rounded-md p-[8px] text-white lg:hidden"
         aria-label="Open menu"
         type="button"
       >
@@ -101,7 +101,7 @@ const navLinks = [
           <div class="flex items-center gap-[16px]">
             <!-- Play icon (blue triangle) -->
             <div class="flex h-[32px] w-[32px] items-center justify-center">
-              <svg class="h-[20px] w-[20px]" viewBox="0 0 20 20" fill="none">
+              <svg class="h-5 w-5" viewBox="0 0 20 20" fill="none">
                 <path d="M4 3.5L16 10L4 16.5V3.5Z" fill="var(--color-blue-matchday)" />
               </svg>
             </div>
@@ -109,7 +109,7 @@ const navLinks = [
               On-Demand
             </h4>
           </div>
-          <p class="font-body text-[14px] font-normal leading-[1.5] text-white">
+          <p class="font-body text-[14px] font-normal leading-normal text-white">
             From match replays to exclusive interviews, control how your content is organised, published, and monetised all from one platform.
           </p>
           <a href="/products/on-demand" class="group inline-flex items-center gap-[8px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:text-yellow-tennis">
@@ -131,7 +131,7 @@ const navLinks = [
               Live & On-Demand
             </h4>
           </div>
-          <p class="font-body text-[14px] font-normal leading-[1.5] text-white">
+          <p class="font-body text-[14px] font-normal leading-normal text-white">
             Deliver smooth, low-latency live broadcasts with professional-grade quality whether it's a packed stadium or a behind-the-scenes moment.
           </p>
           <a href="/products/live" class="group inline-flex items-center gap-[8px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:text-yellow-tennis">

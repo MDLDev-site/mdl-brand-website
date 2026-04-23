@@ -9,25 +9,25 @@ const { section } = Astro.props;
 ---
 
 <section class="bg-grey" aria-label="Trusted partners">
-  <div class="mx-auto flex max-w-[1440px] flex-col items-center gap-[32px] px-[24px] pt-[24px] pb-[64px] md:px-[120px]">
+  <div class="mx-auto flex max-w-360 flex-col items-center gap-[32px] px-[24px] pt-[24px] pb-[64px] md:px-30">
     <h4 class="text-center font-heading text-[20px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch md:font-subheading md:text-[24px] md:tracking-[-0.96px]">
       {section.heading}
     </h4>
 
-    <ul class="grid grid-cols-4 items-center justify-items-center gap-x-[16px] gap-y-[24px] md:flex md:flex-wrap md:justify-center md:gap-[40px]" role="list">
+    <ul class="grid grid-cols-4 items-center justify-items-center gap-x-[16px] gap-y-[24px] md:flex md:flex-wrap md:justify-center md:gap-10" role="list">
       {section.logos.map((logo) => (
         <li class="flex items-center justify-center">
           {logo.src ? (
             <img
               src={logo.src}
               alt={logo.alt}
-              class="h-[40px] w-auto max-w-[80px] object-contain md:h-[60px] md:max-w-[120px]"
+              class="h-10 w-auto max-w-20 object-contain md:h-15 md:max-w-30"
               loading="lazy"
               decoding="async"
             />
           ) : (
             <div
-              class="flex h-[40px] w-[40px] items-center justify-center rounded-[4px] bg-charcoal-pitch/10 md:h-[60px] md:w-[60px]"
+              class="flex h-10 w-10 items-center justify-center rounded-sm bg-charcoal-pitch/10 md:h-15 md:w-15"
               role="img"
               aria-label={logo.alt}
             >

@@ -1,0 +1,391 @@
+---
+import type { PricingCalculator, PricingProduct } from '../../types/content';
+
+interface Props {
+  calculator: PricingCalculator;
+  products: PricingProduct[];
+}
+
+const { calculator, products } = Astro.props;
+---
+
+<div
+  class="pricing-calc-modal fixed inset-0 z-[60] hidden items-start justify-center overflow-y-auto bg-charcoal-pitch/80 p-[16px] backdrop-blur-sm md:items-center md:p-[40px]"
+  data-calc-modal
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-label={calculator.heading}
+>
+  <div class="relative my-[32px] w-full max-w-220 rounded-[16px] bg-charcoal-pitch p-[24px] ring-1 ring-white/10 md:p-[40px]">
+    {/* Close button */}
+    <button
+      type="button"
+      class="absolute -top-[16px] right-[16px] flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white text-charcoal-pitch shadow-md hover:bg-grey md:-top-[20px] md:-right-[20px] md:h-[48px] md:w-[48px]"
+      data-calc-close
+      aria-label="Close calculator"
+    >
+      <svg class="h-[16px] w-[16px]" viewBox="0 0 16 16" fill="none">
+        <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+    </button>
+
+    {/* Heading */}
+    <div class="flex flex-col gap-[8px]">
+      <h2 class="font-body text-[16px] font-semibold text-white md:text-[18px]">
+        {calculator.heading}
+      </h2>
+      <p class="font-body text-[14px] font-normal leading-[1.4] text-white/70">
+        {calculator.description}
+      </p>
+    </div>
+
+    {/* Product type tabs (modal) */}
+    <div class="mt-[24px] grid grid-cols-1 gap-[12px] md:grid-cols-2 md:gap-[16px]">
+      {products.map((product, i) => (
+        <button
+          type="button"
+          class={`pricing-calc-tab group flex flex-col items-center gap-[8px] rounded-[12px] px-[16px] py-[24px] text-center transition-colors ${i === 0 ? 'is-active' : ''}`}
+          data-calc-tab={product.id}
+        >
+          <span class="calc-tab-label font-heading text-[24px] font-medium uppercase leading-none tracking-[-0.5px] md:text-[32px]">
+            {product.tabLabel}
+          </span>
+          <span class="calc-tab-desc max-w-90 font-body text-[12px] font-normal leading-[1.4] md:text-[14px]">
+            {product.description}
+          </span>
+        </button>
+      ))}
+    </div>
+
+    {/* Sliders */}
+    <div class="mt-[24px] grid grid-cols-1 gap-[24px] md:grid-cols-3 md:gap-[32px]">
+      {calculator.sliders.map((slider) => (
+        <div class="flex flex-col gap-[12px]">
+          <div class="flex items-center gap-[6px]">
+            <label
+              for={`calc-slider-${slider.id}`}
+              class="font-body text-[13px] font-medium text-white"
+            >
+              {slider.label}
+            </label>
+            <button
+              type="button"
+              class="calc-tooltip-trigger relative flex h-[16px] w-[16px] items-center justify-center text-white/60 hover:text-white"
+              data-tooltip={slider.tooltip}
+              aria-label="More info"
+            >
+              <svg class="h-[14px] w-[14px]" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2" />
+                <path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                <circle cx="8" cy="5" r="0.6" fill="currentColor" />
+              </svg>
+            </button>
+          </div>
+          <input
+            id={`calc-slider-${slider.id}`}
+            type="range"
+            class="calc-slider"
+            min={slider.min}
+            max={slider.max}
+            step={slider.step}
+            value={slider.default}
+            data-slider={slider.id}
+          />
+          <div class="flex justify-between font-body text-[10px] font-medium text-white/60">
+            {slider.ticks.map((t) => (<span>{t}</span>))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {/* Output panel */}
+    <div class="mt-[24px] flex flex-col gap-[16px] rounded-[12px] bg-white px-[24px] py-[20px] md:flex-row md:items-center md:justify-between">
+      <div class="flex flex-col gap-[4px]">
+        <p class="font-body text-[14px] font-semibold text-charcoal-pitch">
+          {calculator.outputs.consumptionLabel}
+        </p>
+        <p class="calc-recommendation font-body text-[14px] text-charcoal-pitch/70">
+          {calculator.outputs.recommendationPrefix}
+          <span class="ml-[4px] font-semibold text-orange-basketball" data-calc-plan>—</span>
+        </p>
+      </div>
+
+      <div class="flex gap-[24px] md:gap-[40px]">
+        <div class="flex flex-col gap-[4px]">
+          <div class="flex items-center gap-[6px]">
+            <span class="font-body text-[12px] font-medium text-charcoal-pitch/70">
+              {calculator.outputs.hoursLabel}
+            </span>
+            <button
+              type="button"
+              class="calc-tooltip-trigger flex h-[14px] w-[14px] items-center justify-center text-charcoal-pitch/40 hover:text-charcoal-pitch"
+              data-tooltip={calculator.outputs.hoursTooltip}
+              aria-label="More info"
+            >
+              <svg class="h-[12px] w-[12px]" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2" />
+                <path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                <circle cx="8" cy="5" r="0.6" fill="currentColor" />
+              </svg>
+            </button>
+          </div>
+          <p class="font-heading text-[24px] font-medium leading-none text-charcoal-pitch">
+            <span data-calc-hours>0</span> <span class="text-[14px]">hrs</span>
+          </p>
+        </div>
+        <div class="flex flex-col gap-[4px]">
+          <div class="flex items-center gap-[6px]">
+            <span class="font-body text-[12px] font-medium text-charcoal-pitch/70">
+              {calculator.outputs.bandwidthLabel}
+            </span>
+            <button
+              type="button"
+              class="calc-tooltip-trigger flex h-[14px] w-[14px] items-center justify-center text-charcoal-pitch/40 hover:text-charcoal-pitch"
+              data-tooltip={calculator.outputs.bandwidthTooltip}
+              aria-label="More info"
+            >
+              <svg class="h-[12px] w-[12px]" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2" />
+                <path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                <circle cx="8" cy="5" r="0.6" fill="currentColor" />
+              </svg>
+            </button>
+          </div>
+          <p class="font-heading text-[24px] font-medium leading-none text-charcoal-pitch">
+            <span data-calc-bandwidth>0</span> <span class="text-[14px]">TB</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {/* Contact prompt */}
+    <div class="mt-[24px] flex flex-col items-center justify-center gap-[16px] md:flex-row">
+      <p class="font-body text-[14px] font-medium text-white">
+        {calculator.contact.prompt}
+      </p>
+      <a
+        href={calculator.contact.cta.link}
+        class="inline-flex items-center justify-center rounded-sm border border-white/30 bg-transparent px-[24px] py-[10px] font-body text-[14px] font-medium text-white transition-colors hover:bg-white/10"
+      >
+        {calculator.contact.cta.text}
+      </a>
+    </div>
+  </div>
+
+  {/* Tooltip floating element (single, repositioned) */}
+  <div
+    class="calc-tooltip pointer-events-none fixed z-[70] hidden max-w-65 rounded-[8px] bg-charcoal-pitch px-[12px] py-[8px] font-body text-[12px] leading-[1.4] text-white shadow-lg ring-1 ring-white/10"
+    data-calc-tooltip
+    role="tooltip"
+  ></div>
+</div>
+
+<style>
+  .pricing-calc-tab {
+    background-color: rgb(255 255 255 / 0.05);
+    color: rgb(255 255 255 / 0.5);
+  }
+  .pricing-calc-tab:hover {
+    background-color: rgb(255 255 255 / 0.08);
+  }
+  .pricing-calc-tab.is-active[data-calc-tab='on-demand'] {
+    background-color: var(--color-blue-matchday);
+    color: white;
+  }
+  .pricing-calc-tab.is-active[data-calc-tab='live'] {
+    background-color: var(--color-orange-basketball);
+    color: white;
+  }
+  .pricing-calc-tab .calc-tab-label,
+  .pricing-calc-tab .calc-tab-desc {
+    color: inherit;
+  }
+
+  /* Range slider — orange filled portion via background-image */
+  .calc-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: rgb(255 255 255 / 0.15);
+    border-radius: 999px;
+    outline: none;
+  }
+  .calc-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    background: white;
+    border: 2px solid var(--color-orange-basketball);
+    cursor: pointer;
+  }
+  .calc-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    background: white;
+    border: 2px solid var(--color-orange-basketball);
+    cursor: pointer;
+    border: none;
+  }
+  .calc-slider::-moz-range-track {
+    height: 4px;
+    border-radius: 999px;
+  }
+  .calc-slider::-moz-range-progress {
+    height: 4px;
+    background: var(--color-orange-basketball);
+    border-radius: 999px;
+  }
+</style>
+
+<script>
+  type ProductId = 'on-demand' | 'live';
+
+  // Plan thresholds — tier index (0=Launch, 1=Growth, 2=Scale, 3=Unlimited)
+  const OD_BANDWIDTH_TB = [1, 5, 20, Infinity];
+  const LIVE_BANDWIDTH_TB = [2, 10, 40, Infinity];
+  const LIVE_HOURS = [10, 50, 200, Infinity];
+  const TIER_NAMES = ['Launch Plan', 'Growth Plan', 'Scale Plan', 'Unlimited Plan'];
+
+  // 1080p HLS averages ~5 Mbps. Bandwidth (TB) per fan-hour at 1080p:
+  // 5 Mbps * 3600s = 18 Gb = 2.25 GB. Convert to TB: / 1024.
+  const GB_PER_FAN_HOUR_1080P = 2.25;
+
+  function pickTier(value: number, thresholds: number[]) {
+    for (let i = 0; i < thresholds.length; i++) {
+      if (value <= thresholds[i]) return i;
+    }
+    return thresholds.length - 1;
+  }
+
+  function initPricingCalculator() {
+    const modal = document.querySelector<HTMLElement>('[data-calc-modal]');
+    if (!modal) return;
+
+    // Open trigger handled in PricingHero. Bind close + escape.
+    const close = () => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+
+    modal.querySelector('[data-calc-close]')?.addEventListener('click', close);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) close();
+    });
+
+    // Product tabs in calculator
+    let activeProduct: ProductId = 'on-demand';
+    const tabs = modal.querySelectorAll<HTMLButtonElement>('.pricing-calc-tab');
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        activeProduct = (tab.dataset.calcTab as ProductId) || 'on-demand';
+        tabs.forEach((t) => t.classList.toggle('is-active', t === tab));
+        recompute();
+      });
+    });
+
+    // Sliders
+    const sliders = modal.querySelectorAll<HTMLInputElement>('.calc-slider');
+    sliders.forEach((s) => {
+      s.addEventListener('input', () => updateSliderFill(s));
+      updateSliderFill(s);
+      s.addEventListener('input', recompute);
+    });
+
+    function updateSliderFill(slider: HTMLInputElement) {
+      const min = parseFloat(slider.min);
+      const max = parseFloat(slider.max);
+      const val = parseFloat(slider.value);
+      const pct = ((val - min) / (max - min)) * 100;
+      slider.style.background = `linear-gradient(to right, var(--color-orange-basketball) 0%, var(--color-orange-basketball) ${pct}%, rgb(255 255 255 / 0.15) ${pct}%, rgb(255 255 255 / 0.15) 100%)`;
+    }
+
+    function recompute() {
+      const length = parseFloat(
+        (modal!.querySelector('[data-slider="stream-length"]') as HTMLInputElement)?.value ?? '0'
+      );
+      const fans = parseFloat(
+        (modal!.querySelector('[data-slider="fans-per-stream"]') as HTMLInputElement)?.value ?? '0'
+      );
+      const streams = parseFloat(
+        (modal!.querySelector('[data-slider="streams-per-month"]') as HTMLInputElement)?.value ?? '0'
+      );
+
+      const liveHours = length * streams;
+      // Bandwidth = liveHours * fans * GB_PER_FAN_HOUR_1080P / 1024 (GB → TB)
+      const liveBandwidthTB = (liveHours * fans * GB_PER_FAN_HOUR_1080P) / 1024;
+      // On-demand factor: assume 1.3x for replays/highlights
+      const totalBandwidthTB = liveBandwidthTB * 1.3;
+
+      const hoursEl = modal!.querySelector('[data-calc-hours]');
+      const bwEl = modal!.querySelector('[data-calc-bandwidth]');
+      const planEl = modal!.querySelector('[data-calc-plan]');
+
+      if (hoursEl) hoursEl.textContent = String(Math.round(liveHours));
+      if (bwEl) bwEl.textContent = totalBandwidthTB.toFixed(1);
+
+      let tierIdx: number;
+      if (activeProduct === 'live') {
+        const bwTier = pickTier(totalBandwidthTB, LIVE_BANDWIDTH_TB);
+        const hoursTier = pickTier(liveHours, LIVE_HOURS);
+        tierIdx = Math.max(bwTier, hoursTier);
+      } else {
+        tierIdx = pickTier(totalBandwidthTB, OD_BANDWIDTH_TB);
+      }
+      if (planEl) planEl.textContent = TIER_NAMES[tierIdx];
+    }
+
+    recompute();
+
+    // Tooltips — single floating element, positioned next to the trigger
+    const tooltip = modal.querySelector<HTMLElement>('[data-calc-tooltip]');
+    if (!tooltip) return;
+
+    const triggers = modal.querySelectorAll<HTMLButtonElement>('.calc-tooltip-trigger');
+
+    function show(trigger: HTMLElement) {
+      const text = trigger.dataset.tooltip;
+      if (!text || !tooltip) return;
+      tooltip.textContent = text;
+      tooltip.classList.remove('hidden');
+      const rect = trigger.getBoundingClientRect();
+      const tipRect = tooltip.getBoundingClientRect();
+      let top = rect.bottom + 8;
+      let left = rect.left + rect.width / 2 - tipRect.width / 2;
+      if (left < 8) left = 8;
+      if (left + tipRect.width > window.innerWidth - 8) {
+        left = window.innerWidth - tipRect.width - 8;
+      }
+      tooltip.style.top = `${top}px`;
+      tooltip.style.left = `${left}px`;
+    }
+
+    function hide() {
+      tooltip?.classList.add('hidden');
+    }
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener('mouseenter', () => show(trigger));
+      trigger.addEventListener('mouseleave', hide);
+      trigger.addEventListener('focus', () => show(trigger));
+      trigger.addEventListener('blur', hide);
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (tooltip!.classList.contains('hidden')) show(trigger);
+        else hide();
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initPricingCalculator);
+  initPricingCalculator();
+</script>

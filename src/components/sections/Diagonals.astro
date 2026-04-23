@@ -10,7 +10,7 @@ const variant = section.variant;
 ---
 
 {variant === 'grey-to-white' && (
-  <div class="relative h-[24px] md:h-[80px] bg-grey">
+  <div class="relative h-[24px] md:h-20 bg-grey">
     <svg class="absolute inset-0 w-full h-full" viewBox="0 0 1200 80" preserveAspectRatio="none" fill="none">
       <polygon points="0,0 1200,80 1200,80 0,80" fill="var(--color-surface-primary)" />
     </svg>
@@ -18,7 +18,7 @@ const variant = section.variant;
 )}
 
 {variant === 'white-to-grey' && (
-  <div class="relative h-[24px] md:h-[80px] bg-white">
+  <div class="relative h-[24px] md:h-20 bg-white">
     <svg class="absolute inset-0 w-full h-full" viewBox="0 0 1200 80" preserveAspectRatio="none" fill="none">
       <polygon points="0,0 1200,80 1200,80 0,80" fill="var(--color-grey)" />
     </svg>
@@ -26,7 +26,7 @@ const variant = section.variant;
 )}
 
 {variant === 'color-strips' && (
-  <div class="relative h-[24px] md:h-[106px] bg-navy-umpire overflow-hidden">
+  <div class="relative h-[24px] md:h-26.5 bg-navy-umpire overflow-hidden">
     <svg class="absolute inset-0 w-full h-full" viewBox="0 0 1200 106" preserveAspectRatio="none" fill="none">
       <polygon points="0,0 400,106 350,106 0,20" fill="var(--color-orange-basketball)" />
       <polygon points="0,30 500,106 450,106 0,50" fill="var(--color-blue-matchday)" />

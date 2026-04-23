@@ -1,0 +1,108 @@
+---
+import type { PricingComparison, PricingProduct } from '../../types/content';
+
+interface Props {
+  comparisons: PricingComparison[];
+  products: PricingProduct[];
+}
+
+const { comparisons, products } = Astro.props;
+
+function findProduct(productId: string) {
+  return products.find((p) => p.id === productId);
+}
+---
+
+<section class="bg-white py-[48px] md:py-25" aria-label="Plan comparison">
+  <div class="mx-auto max-w-360 px-[24px] md:px-30">
+    {comparisons.map((comparison, idx) => {
+      const product = findProduct(comparison.productId);
+      if (!product) return null;
+      return (
+        <div
+          class={`pricing-comparison ${idx === 0 ? '' : 'hidden'}`}
+          data-comparison={comparison.productId}
+        >
+          {/* Tier header row — sticky on desktop */}
+          <div class="sticky top-[160px] z-10 -mx-[24px] mb-[24px] bg-white px-[24px] pb-[16px] md:-mx-30 md:px-30">
+            <div class="grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] gap-[8px] border-b border-charcoal-pitch/10 pb-[12px] md:gap-[16px]">
+              <div></div>
+              {product.tiers.map((tier) => (
+                <div class="flex flex-col items-center gap-[4px] text-center">
+                  <span class="font-subheading text-[10px] font-semibold uppercase tracking-[0.2px] text-charcoal-pitch md:text-[12px]">
+                    {tier.name}
+                  </span>
+                  <span class="hidden font-heading text-[20px] font-medium leading-none text-charcoal-pitch md:inline">
+                    {tier.monthlyPrice}
+                  </span>
+                  <a
+                    href={tier.cta.link}
+                    class="hidden rounded-sm bg-charcoal-pitch px-[12px] py-[6px] font-body text-[11px] font-medium text-white hover:bg-charcoal-pitch/90 md:inline-block"
+                  >
+                    {tier.cta.text}
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Groups */}
+          {comparison.groups.map((group) => (
+            <div class="mb-[32px]">
+              <h3 class="mb-[12px] font-subheading text-[14px] font-semibold uppercase tracking-[0.28px] text-charcoal-pitch md:text-[16px]">
+                {group.heading}
+              </h3>
+              <div class="flex flex-col">
+                {group.rows.map((row) => (
+                  <div class="grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] items-center gap-[8px] border-b border-charcoal-pitch/5 py-[10px] md:gap-[16px]">
+                    <span class="font-body text-[12px] font-normal leading-tight text-text-primary md:text-[14px]">
+                      {row.label}
+                    </span>
+                    {row.values.map((cell) => (
+                      <div class="flex justify-center">
+                        {typeof cell.value === 'boolean' ? (
+                          cell.value ? (
+                            <span class="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-yellow-tennis">
+                              <svg class="h-3 w-3 text-charcoal-pitch" viewBox="0 0 16 16" fill="none">
+                                <path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                              </svg>
+                            </span>
+                          ) : (
+                            <span class="font-body text-[14px] text-charcoal-pitch/30">—</span>
+                          )
+                        ) : (
+                          <span class="text-center font-body text-[12px] font-medium text-charcoal-pitch md:text-[14px]">
+                            {cell.value}
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    })}
+  </div>
+</section>
+
+<script>
+  function initPricingComparison() {
+    // Sync comparison visibility with product tab selection
+    const tabs = document.querySelectorAll<HTMLButtonElement>('.pricing-product-tab');
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const productId = tab.dataset.productTab;
+        if (!productId) return;
+        document
+          .querySelectorAll<HTMLElement>('[data-comparison]')
+          .forEach((c) => c.classList.toggle('hidden', c.dataset.comparison !== productId));
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initPricingComparison);
+  initPricingComparison();
+</script>

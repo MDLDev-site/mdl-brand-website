@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { loadYaml } from '../lib/yaml-loader';
+import type { PricingPageContent, PageContent } from '../types/content';
+import PricingHero from '../components/sections/PricingHero.astro';
+import PricingComparisonTable from '../components/sections/PricingComparisonTable.astro';
+import PricingCalculator from '../components/sections/PricingCalculator.astro';
+import PricingFAQ from '../components/sections/PricingFAQ.astro';
+import MailingList from '../components/sections/MailingList.astro';
+
+const pricing = await loadYaml<PricingPageContent>('pages/pricing.yaml');
+
+const home = await loadYaml<PageContent>('pages/home.yaml');
+const mailingList = home.sections.find((s) => s.type === 'mailing_list');
+---
+
+<BaseLayout title={pricing.page.title} description={pricing.page.description}>
+  <PricingHero hero={pricing.hero} products={pricing.products} />
+  <PricingComparisonTable comparisons={pricing.comparisons} products={pricing.products} />
+  <PricingFAQ faq={pricing.faq} />
+  {mailingList && mailingList.type === 'mailing_list' && <MailingList section={mailingList} />}
+
+  {/* Calculator modal — hidden by default, opened by hero "Calculate Usage" button */}
+  <PricingCalculator calculator={pricing.calculator} products={pricing.products} />
+</BaseLayout>

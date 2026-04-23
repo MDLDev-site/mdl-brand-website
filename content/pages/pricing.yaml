@@ -1,0 +1,317 @@
+page:
+  title: "Pricing — MatchDayLive"
+  description: "Tiered pricing built for sport — from grassroots clubs to global federations. Choose the plan that fits your audience, content and growth."
+
+hero:
+  heading: "Pricing"
+  description: "Our tiered pricing plans are built to support all levels of the game, from grassroots clubs to global federations."
+  calculatorPrompt: "Not sure which plan to choose?"
+  calculatorButton: "Calculate Usage"
+  billingToggle:
+    monthlyLabel: "Monthly"
+    annualLabel: "Annual (save 20%)"
+
+products:
+  - id: on-demand
+    tabLabel: "On-Demand"
+    description: "From match replays to exclusive interviews, organise, publish and monetise your on-demand media."
+    tiers:
+      - id: launch
+        name: "Launch"
+        monthlyPrice: "£499"
+        annualPrice: "£399"
+        vatNote: "P/M ANNUALLY EXCL. VAT"
+        description: "Kickstart your on-demand channel with a scalable plan designed to support your first steps."
+        buttonVariant: grey
+        differentiators:
+          - { label: "Bandwidth", value: "1TB p/m" }
+          - { label: "Storage Capacity", value: "1TB" }
+        cta: { text: "Contact Sales", link: "/contact" }
+      - id: growth
+        name: "Growth"
+        monthlyPrice: "£999"
+        annualPrice: "£799"
+        vatNote: "P/M ANNUALLY EXCL. VAT"
+        description: "Scale your reach as your content library and audience continue to grow."
+        tag: { label: "Recommended", variant: recommended }
+        buttonVariant: orange
+        differentiators:
+          - { label: "Bandwidth", value: "5TB p/m" }
+          - { label: "Storage Capacity", value: "5TB" }
+        cta: { text: "Contact Sales", link: "/contact" }
+      - id: scale
+        name: "Scale"
+        monthlyPrice: "£1499"
+        annualPrice: "£1199"
+        vatNote: "P/M ANNUALLY EXCL. VAT"
+        description: "Built for ambitious organisations expanding to a national or international audience."
+        tag: { label: "Most Popular", variant: most-popular }
+        buttonVariant: grey
+        differentiators:
+          - { label: "Bandwidth", value: "20TB p/m" }
+          - { label: "Storage Capacity", value: "20TB" }
+        cta: { text: "Contact Sales", link: "/contact" }
+      - id: unlimited
+        name: "Unlimited"
+        monthlyPrice: "£1999"
+        annualPrice: "£1599"
+        vatNote: "P/M ANNUALLY EXCL. VAT"
+        description: "Unrestricted scale for federations, leagues and broadcasters."
+        buttonVariant: grey
+        differentiators:
+          - { label: "Bandwidth", value: "Unlimited" }
+          - { label: "Storage Capacity", value: "Unlimited" }
+        cta: { text: "Contact Sales", link: "/contact" }
+
+  - id: live
+    tabLabel: "Live & On-Demand"
+    description: "Deliver smooth, low-latency live broadcasts with professional quality alongside your bouquet of on-demand media."
+    tiers:
+      - id: launch
+        name: "Launch"
+        monthlyPrice: "£499"
+        annualPrice: "£399"
+        vatNote: "P/M ANNUALLY EXCL. VAT"
+        description: "Kickstart your live and on-demand channel with a scalable plan designed to support your first steps."
+        buttonVariant: grey
+        differentiators:
+          - { label: "Live Stream Hours", value: "10 hrs p/m" }
+          - { label: "Bandwidth", value: "2TB p/m" }
+          - { label: "Storage Capacity", value: "1TB" }
+        cta: { text: "Contact Sales", link: "/contact" }
+      - id: growth
+        name: "Growth"
+        monthlyPrice: "£999"
+        annualPrice: "£799"
+        vatNote: "P/M ANNUALLY EXCL. VAT"
+        description: "Scale your live programming as audience and library grow."
+        tag: { label: "Recommended", variant: recommended }
+        buttonVariant: orange
+        differentiators:
+          - { label: "Live Stream Hours", value: "50 hrs p/m" }
+          - { label: "Bandwidth", value: "10TB p/m" }
+          - { label: "Storage Capacity", value: "5TB" }
+        cta: { text: "Contact Sales", link: "/contact" }
+      - id: scale
+        name: "Scale"
+        monthlyPrice: "£1499"
+        annualPrice: "£1199"
+        vatNote: "P/M ANNUALLY EXCL. VAT"
+        description: "Built for organisations broadcasting full match-day schedules."
+        tag: { label: "Most Popular", variant: most-popular }
+        buttonVariant: grey
+        differentiators:
+          - { label: "Live Stream Hours", value: "200 hrs p/m" }
+          - { label: "Bandwidth", value: "40TB p/m" }
+          - { label: "Storage Capacity", value: "20TB" }
+        cta: { text: "Contact Sales", link: "/contact" }
+      - id: unlimited
+        name: "Unlimited"
+        monthlyPrice: "£1999"
+        annualPrice: "£1599"
+        vatNote: "P/M ANNUALLY EXCL. VAT"
+        description: "Unlimited streaming for federations, leagues and broadcasters."
+        buttonVariant: grey
+        differentiators:
+          - { label: "Live Stream Hours", value: "Unlimited" }
+          - { label: "Bandwidth", value: "Unlimited" }
+          - { label: "Storage Capacity", value: "Unlimited" }
+        cta: { text: "Contact Sales", link: "/contact" }
+
+# Feature comparison tables — one per product. Each row's `values` array
+# corresponds 1:1 with the product's `tiers` order (Launch, Growth, Scale, Unlimited).
+comparisons:
+  - productId: on-demand
+    groups:
+      - id: platform
+        heading: "Platform"
+        rows:
+          - label: "1080p HD streaming"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Smart TV casting"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Global CDN delivery"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Bandwidth"
+            values: [{ value: "1TB" }, { value: "5TB" }, { value: "20TB" }, { value: "Unlimited" }]
+          - label: "Storage capacity"
+            values: [{ value: "1TB" }, { value: "5TB" }, { value: "20TB" }, { value: "Unlimited" }]
+      - id: brandability
+        heading: "Brandability"
+        rows:
+          - label: "Custom branding"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Custom domain"
+            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
+          - label: "White-label apps"
+            values: [{ value: false }, { value: false }, { value: true }, { value: true }]
+      - id: monetisation
+        heading: "Monetisation"
+        rows:
+          - label: "Subscriptions"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Pay-per-view"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Promo codes & gifting"
+            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
+          - label: "Bundles & seasons"
+            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
+      - id: insights
+        heading: "Insights"
+        rows:
+          - label: "Audience analytics"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Revenue dashboards"
+            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
+          - label: "Custom reports & API access"
+            values: [{ value: false }, { value: false }, { value: true }, { value: true }]
+      - id: fan-experience
+        heading: "Fan experience"
+        rows:
+          - label: "iOS & Android apps"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Smart TV apps"
+            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
+          - label: "Multi-language UI"
+            values: [{ value: false }, { value: false }, { value: true }, { value: true }]
+      - id: scalability
+        heading: "Scalability"
+        rows:
+          - label: "Auto-scaling delivery"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Geo-distributed origin"
+            values: [{ value: false }, { value: false }, { value: true }, { value: true }]
+      - id: security
+        heading: "Security"
+        rows:
+          - label: "DRM (Widevine / FairPlay)"
+            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
+          - label: "Geo-restrictions"
+            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
+          - label: "SSO / SAML"
+            values: [{ value: false }, { value: false }, { value: false }, { value: true }]
+
+  - productId: live
+    groups:
+      - id: platform
+        heading: "Platform"
+        rows:
+          - label: "1080p live streaming"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Low-latency mode"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Live stream hours"
+            values: [{ value: "10 hrs" }, { value: "50 hrs" }, { value: "200 hrs" }, { value: "Unlimited" }]
+          - label: "Bandwidth"
+            values: [{ value: "2TB" }, { value: "10TB" }, { value: "40TB" }, { value: "Unlimited" }]
+          - label: "Storage capacity"
+            values: [{ value: "1TB" }, { value: "5TB" }, { value: "20TB" }, { value: "Unlimited" }]
+      - id: brandability
+        heading: "Brandability"
+        rows:
+          - label: "Custom branding"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Custom domain"
+            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
+          - label: "White-label apps"
+            values: [{ value: false }, { value: false }, { value: true }, { value: true }]
+      - id: monetisation
+        heading: "Monetisation"
+        rows:
+          - label: "Subscriptions"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Pay-per-view & PPV events"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Sponsorship overlays"
+            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
+      - id: insights
+        heading: "Insights"
+        rows:
+          - label: "Live audience analytics"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Revenue dashboards"
+            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
+          - label: "Custom reports & API access"
+            values: [{ value: false }, { value: false }, { value: true }, { value: true }]
+      - id: fan-experience
+        heading: "Fan experience"
+        rows:
+          - label: "iOS & Android apps"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Smart TV apps"
+            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
+      - id: scalability
+        heading: "Scalability"
+        rows:
+          - label: "Auto-scaling live delivery"
+            values: [{ value: true }, { value: true }, { value: true }, { value: true }]
+          - label: "Multi-region failover"
+            values: [{ value: false }, { value: false }, { value: true }, { value: true }]
+      - id: security
+        heading: "Security"
+        rows:
+          - label: "DRM (Widevine / FairPlay)"
+            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
+          - label: "Geo-restrictions"
+            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
+          - label: "SSO / SAML"
+            values: [{ value: false }, { value: false }, { value: false }, { value: true }]
+
+calculator:
+  heading: "Not sure which plan to choose?"
+  description: "Share an estimate of your expected viewership so that we can recommend the plan that best fits your needs."
+  productPrompt: "Tell us more about the features you're interested in. This will help us recommend the perfect plan tailored to your club's unique needs."
+  sliders:
+    - id: stream-length
+      label: "Average length of stream"
+      tooltip: "What is the average length of each of your live streams in hours, from the moment you go live to the moment you end your stream. Consider what occurs before and after the fixture or event (e.g. pre/post match shows, interviews) which would add to the length of your stream."
+      min: 0
+      max: 10
+      step: 0.5
+      default: 2
+      ticks: [0, 2, 4, 6, 8, 10]
+      unit: "hrs"
+    - id: fans-per-stream
+      label: "Estimated fans per stream"
+      tooltip: "What volume of fans do you estimate to watch each of your live streams?"
+      min: 0
+      max: 5000
+      step: 50
+      default: 1000
+      ticks: [0, 100, 250, 1000, 2500, 5000]
+    - id: streams-per-month
+      label: "Estimated live streams per month"
+      tooltip: "How many times per month do you plan to live stream to your fan base? Consider not only fixtures, but also events like press conferences, player announcements and fan forums."
+      min: 0
+      max: 60
+      step: 1
+      default: 4
+      ticks: [0, 5, 10, 20, 40, 60]
+  outputs:
+    consumptionLabel: "This is your estimated consumption"
+    recommendationPrefix: "We recommend the"
+    hoursLabel: "Live stream hours"
+    hoursTooltip: "This is how many hours of live streaming you plan to do per month."
+    bandwidthLabel: "Bandwidth"
+    bandwidthTooltip: "The calculated bandwidth is based on an average bitrate or quality index across all viewers at 1080p. It includes a factor based on your fans watching on-demand media (e.g. replays, highlights, interviews, behind the scenes, etc.)"
+  contact:
+    prompt: "Are your requirements larger than what is offered?"
+    cta: { text: "Book A Call", link: "/contact" }
+
+faq:
+  heading: "Have Questions?"
+  description: "Talk to our team for a tailored walk-through of pricing, integrations and onboarding."
+  cta: { text: "Contact Support", link: "/contact" }
+  items:
+    - question: "How does billing work?"
+      answer: "Plans are billed monthly or annually. Annual plans save 20% and are paid up front. All prices exclude VAT."
+    - question: "Can I switch plans later?"
+      answer: "Yes — upgrade at any time and the change takes effect immediately. Downgrades take effect at the end of your current billing period."
+    - question: "What happens if I exceed my bandwidth?"
+      answer: "We'll let you know before you hit your cap and recommend the next plan up. We never throttle your streams."
+    - question: "Do you offer custom plans?"
+      answer: "Yes — for federations, leagues and broadcasters we build a tailored package. Book a call to discuss your needs."
+    - question: "Is there a setup fee?"
+      answer: "No setup fees. Onboarding, branding and migration support are included with every plan."
+    - question: "Which payment methods do you accept?"
+      answer: "All major credit cards via Stripe. Annual customers can also pay by bank transfer."
