@@ -102,7 +102,7 @@ const { section } = Astro.props;
                       href={item.learnMoreLink}
                       class="inline-flex items-center gap-[4px] font-body text-[14px] font-medium text-yellow-tennis transition-colors hover:text-yellow-tennis/80"
                     >
-                      Learn more
+                      {item.learnMoreText ?? 'Learn more'}
                       <svg class="h-3.5 w-3.5" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                         <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                       </svg>

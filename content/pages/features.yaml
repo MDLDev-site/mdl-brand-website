@@ -1,6 +1,6 @@
 page:
-  title: Features — MatchDayLive
-  description: Everything you need to stream like a pro. From your first live stream to a global OTT rollout.
+  title: "Live Streaming Features — Sports OTT Platform | MatchDayLive"
+  description: "DRM, global CDN, fan analytics, Stripe payments, and Smart TV support — everything sports organisations need to run a professional OTT platform."
 
 hero:
   heading:
@@ -90,31 +90,93 @@ categories:
         image: /images/features/user-groups.png
 
   - id: platform
-    heading: "YOUR OWN BRANDED OTT"
-    description: "A central hub for all your Live & On-Demand video content."
+    heading: "YOUR STREAMING COMMAND CENTRE"
+    description: "A central hub for all your Live & On-Demand video content — built to power your channel end-to-end."
     background: white
-    features: []
+    features:
+      - title: "Content Management"
+        description: "Upload, organise and schedule your entire content library from a single, intuitive dashboard. Publish instantly or plan ahead with scheduled releases."
+      - title: "Adaptive Web Player"
+        description: "A responsive web player that delivers smooth 1080p HD playback on desktop and mobile browsers — automatically selecting the best quality for each fan's connection."
+      - title: "Chromecast & AirPlay"
+        description: "Fans can cast Live & On-Demand content directly from the web player to their TV via Chromecast or AirPlay — no app download required."
+        checks:
+          - Google Chromecast
+          - Apple AirPlay
+          - Cast from any browser
+      - title: "Channel Builder"
+        description: "Design your channel homepage with a drag-and-drop builder. Curate playlists, highlight live events, and strategically promote featured content."
 
   - id: insights
     heading: "UNDERSTAND FANS LIKE NEVER BEFORE"
-    description: "Unlock fresh insights and opportunities."
+    description: "Unlock fresh insights and opportunities — ensuring your fans are at the heart of every move."
     background: white
-    features: []
+    features:
+      - title: "Audience Analytics"
+        description: "Understand who your fans are, where they're watching from, and which content keeps them coming back — with real-time and historical reporting."
+      - title: "Revenue Dashboards"
+        description: "Track subscriptions, PPV sales and promotional performance in one place. Identify your highest-value content and act on it immediately."
+      - title: "Content Performance"
+        description: "See exactly how each piece of content performs — views, watch time, completion rate and engagement trends over any time period."
+      - title: "Fan Behaviour"
+        description: "Understand how fans navigate your channel: what they search for, where they drop off, and what drives conversions to paid tiers."
+      - title: "Custom Reports & API Access"
+        description: "Export data and connect to your existing business intelligence tools via REST API. Available on Scale and Unlimited plans."
+        checks:
+          - Data export (CSV)
+          - REST API access
+          - Custom report builder
 
   - id: fan-experience
     heading: "PUTTING FANS FIRST"
-    description: "A premium end-to-end viewing experience across all devices."
+    description: "A premium end-to-end sports streaming experience across all devices — whether on the couch or on the move."
     background: grey
-    features: []
+    features:
+      - title: "1080p HD Streaming"
+        description: "Every stream delivered in crisp 1080p HD with HLS adaptive bitrate streaming — automatically adjusting quality to each fan's connection speed."
+      - title: "Low-Latency Live"
+        description: "Live action with virtually no delay. Fans stay ahead of the game with our low-latency streams, keeping second-screen experiences perfectly in sync."
+      - title: "Chromecast & AirPlay"
+        description: "Cast Live & On-Demand content directly from the web player to a TV via Chromecast or AirPlay — no additional app required."
+      - title: "Fan Support"
+        description: "Real-time fan support via Intercom chat — helping your fans with login issues, payment queries and playback problems, with straightforward escalation to your support team."
 
   - id: scalability
     heading: "HANDLE THE BIGGEST OCCASIONS"
-    description: "Scale infinitely with enterprise-grade infrastructure."
+    description: "Scale infinitely with enterprise-grade AWS infrastructure — from 100 viewers to 100,000 and beyond."
     background: white
-    features: []
+    features:
+      - title: "Auto-Scaling Delivery"
+        description: "AWS-powered infrastructure automatically scales to handle any audience size — whether it's a regular league fixture or a sold-out cup final."
+      - title: "99.9% Uptime SLA"
+        description: "Your channel is always on. Enterprise-grade redundancy and 24/7 monitoring ensure fans can always access your content."
+      - title: "Global CDN"
+        description: "Content is delivered from edge locations worldwide, ensuring fast load times and reliable streaming wherever your fans are watching."
+      - title: "Multi-Region Failover"
+        description: "Automatic traffic rerouting in the event of regional outages keeps your streams live without interruption. Available on Scale and Unlimited plans."
+      - title: "No Throttling"
+        description: "We never throttle your streams mid-event. If you are approaching your bandwidth limit, we alert you proactively and can upgrade your plan instantly."
 
   - id: security
     heading: "PROTECT YOUR CONTENT"
-    description: "Industry-leading security and digital rights management."
+    description: "Industry-leading security and digital rights management — so your premium sports content stays premium."
     background: grey
-    features: []
+    features:
+      - title: "Geographic Content Controls"
+        description: "Restrict access to your content by country — essential for enforcing territorial broadcast rights and honouring licensing agreements with rights holders."
+        checks:
+          - Country-level access control
+          - Configurable per stream or event
+          - Admin-managed via the dashboard
+      - title: "GDPR-Compliant Data Handling"
+        description: "Fan data is stored securely and processed in full compliance with GDPR. You retain ownership and control of your audience data at all times."
+      - title: "Secure Payments"
+        description: "All card transactions are handled exclusively by Stripe, a PCI DSS Level 1 certified provider. Your fans' payment data never touches our servers."
+        checks:
+          - PCI DSS Level 1 via Stripe
+          - Stripe Radar fraud detection
+          - Secure payment tokenisation
+      - title: "Sports Alliance SSO"
+        description: "Fans can sign in using their Sports Alliance account, removing friction and letting them access your channel with credentials they already have."
+      - title: "Encrypted Delivery"
+        description: "All content is delivered over HTTPS via Amazon CloudFront, ensuring encrypted transmission between our infrastructure and your fans."

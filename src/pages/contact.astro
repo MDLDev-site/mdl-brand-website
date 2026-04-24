@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Contact Sales — MatchDayLive"
+  description="Book a call with the MatchDayLive team to discuss your streaming needs."
+  noindex={true}
+>
+  <section class="bg-linear-to-b from-charcoal-pitch to-navy-umpire px-6 pb-30 pt-45 text-center text-white">
+    <div class="mx-auto max-w-160">
+      <h1 class="font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] md:text-[72px]">
+        Get In Touch
+      </h1>
+      <p class="mx-auto mt-6 max-w-120 font-body text-[18px] leading-[1.5] text-white/80 md:text-[20px]">
+        Book a call with our team and we'll walk you through how MatchDayLive can work for your organisation — no pressure, no commitment.
+      </p>
+      <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+        <a
+          href="https://calendly.com/matchdaylive"
+          class="inline-flex items-center justify-center rounded-sm bg-blue-matchday px-10 py-4 font-body text-[16px] font-medium capitalize tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90"
+        >
+          Book a Call
+        </a>
+        <a
+          href="/pricing"
+          class="inline-flex items-center justify-center rounded-sm border border-white/30 px-10 py-4 font-body text-[16px] font-medium capitalize tracking-[2px] text-white transition-colors hover:border-white/60"
+        >
+          View Pricing
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

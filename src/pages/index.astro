@@ -17,6 +17,41 @@ const page = await loadYaml<PageContent>('pages/home.yaml');
 ---
 
 <BaseLayout title={page.page.title} description={page.page.description}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "MatchDayLive",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web",
+      "url": "https://matchdaylive.com",
+      "description": "MatchDayLive is an all-in-one white-label OTT streaming platform for sports clubs, leagues and federations. Launch branded live-streaming and on-demand channels with subscriptions, pay-per-view, fan analytics, and global CDN delivery.",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "GBP",
+        "lowPrice": "399",
+        "highPrice": "1999",
+        "offerCount": "8"
+      },
+      "featureList": [
+        "White-label OTT platform on your own domain",
+        "Live streaming with low latency",
+        "On-demand video library",
+        "Geographic content access controls",
+        "Stripe-powered subscriptions and pay-per-view",
+        "Fan analytics and revenue dashboards",
+        "Global CDN delivery via CloudFront",
+        "Chromecast and AirPlay casting",
+        "GDPR-compliant data handling",
+        "Fan support via Intercom"
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "Matchday Media",
+        "url": "https://matchdaylive.com"
+      }
+    })} />
+  </Fragment>
   {page.sections.map((section) => {
     if (section.type === 'hero') {
       return <Hero section={section} />;

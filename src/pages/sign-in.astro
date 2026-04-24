@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Sign In — MatchDayLive"
+  description="Sign in to your MatchDayLive account."
+  noindex={true}
+>
+  <section class="bg-linear-to-b from-charcoal-pitch to-navy-umpire px-6 pb-30 pt-45 text-center text-white">
+    <div class="mx-auto max-w-120">
+      <h1 class="font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] md:text-[72px]">
+        Sign In
+      </h1>
+      <p class="mx-auto mt-6 max-w-100 font-body text-[18px] leading-[1.5] text-white/80">
+        Your MatchDayLive admin portal is accessed via the custom URL provided when your channel was set up.
+      </p>
+      <p class="mx-auto mt-4 font-body text-[16px] leading-[1.5] text-white/60">
+        If you need help accessing your account, contact your MatchDayLive account manager or reach out to support.
+      </p>
+      <div class="mt-10">
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center rounded-sm bg-blue-matchday px-10 py-4 font-body text-[16px] font-medium capitalize tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90"
+        >
+          Contact Support
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

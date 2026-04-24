@@ -31,6 +31,7 @@ export interface Navigation {
 export interface HeroSection {
   type: 'hero';
   heading: string[];
+  subtitle?: string;
   subheading: string;
   cta: {
     primary: CTAButton;
@@ -115,6 +116,7 @@ export interface AccordionFeaturesSection {
     title: string;
     description?: string;
     learnMoreLink?: string;
+    learnMoreText?: string;
     expanded?: boolean;
   }>;
 }
