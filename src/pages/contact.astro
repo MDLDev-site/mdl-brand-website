@@ -1,34 +1,150 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { loadYaml } from '../lib/yaml-loader';
+import type { ContactPageContent, PageContent } from '../types/content';
+import CTABanner from '../components/sections/CTABanner.astro';
+
+const contact = await loadYaml<ContactPageContent>('pages/contact.yaml');
+
+// Reuse the homepage CTA banner at the bottom of the page
+const home = await loadYaml<PageContent>('pages/home.yaml');
+const ctaBanner = home.sections.find((s) => s.type === 'cta_banner');
+
+const contactWebPage = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: contact.page.title,
+  description: contact.page.description,
+  url: 'https://matchdaylive.com/contact',
+  isPartOf: { '@type': 'WebSite', url: 'https://matchdaylive.com' },
+};
 ---
 
-<BaseLayout
-  title="Contact Sales — MatchDayLive"
-  description="Book a call with the MatchDayLive team to discuss your streaming needs."
-  noindex={true}
->
-  <section class="bg-linear-to-b from-charcoal-pitch to-navy-umpire px-6 pb-30 pt-45 text-center text-white">
-    <div class="mx-auto max-w-160">
-      <h1 class="font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] md:text-[72px]">
-        Get In Touch
-      </h1>
-      <p class="mx-auto mt-6 max-w-120 font-body text-[18px] leading-[1.5] text-white/80 md:text-[20px]">
-        Book a call with our team and we'll walk you through how MatchDayLive can work for your organisation — no pressure, no commitment.
-      </p>
-      <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-        <a
-          href="https://calendly.com/matchdaylive"
-          class="inline-flex items-center justify-center rounded-sm bg-blue-matchday px-10 py-4 font-body text-[16px] font-medium capitalize tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90"
-        >
-          Book a Call
-        </a>
-        <a
-          href="/pricing"
-          class="inline-flex items-center justify-center rounded-sm border border-white/30 px-10 py-4 font-body text-[16px] font-medium capitalize tracking-[2px] text-white transition-colors hover:border-white/60"
-        >
-          View Pricing
-        </a>
+<BaseLayout title={contact.page.title} description={contact.page.description}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(contactWebPage)} />
+  </Fragment>
+
+  <section class="bg-charcoal-pitch py-20 pt-35 md:py-30 md:pt-45">
+    <div class="mx-auto grid max-w-300 grid-cols-1 gap-[64px] px-[24px] md:grid-cols-2 md:gap-25 md:px-[64px]">
+      {/* Left: copy + benefits + support prompt */}
+      <div class="flex flex-col gap-[40px]">
+        <div class="flex flex-col gap-[16px]">
+          <h1 class="text-h1 text-white">{contact.hero.heading}</h1>
+          <p class="text-body-lg text-white/80">{contact.hero.description}</p>
+        </div>
+
+        <ul class="flex flex-col gap-[16px]" role="list">
+          {contact.benefits.map((b) => (
+            <li class="flex items-center gap-[16px]">
+              <span
+                class="flex h-[28px] w-[28px] shrink-0 items-center justify-center rounded-full bg-yellow-tennis"
+                aria-hidden="true"
+              >
+                <svg class="h-3.5 w-3.5 text-charcoal-pitch" viewBox="0 0 14 14" fill="none">
+                  <path d="M2.5 7l3 3 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <span class="text-body-lg text-white">{b.text}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div class="flex flex-col gap-[16px] border-t border-white/10 pt-[24px]">
+          <p class="text-body-lg text-white">{contact.support.prompt}</p>
+          <a
+            href={contact.support.cta.link}
+            class="group inline-flex w-fit items-center gap-[8px] text-body-lg font-medium capitalize text-yellow-tennis transition-colors hover:text-yellow-tennis/80"
+          >
+            {contact.support.cta.text}
+            <svg class="h-[16px] w-[16px] transition-transform group-hover:translate-x-[4px]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        </div>
       </div>
+
+      {/* Right: form */}
+      <form
+        class="contact-form flex flex-col gap-[24px] rounded-[16px] bg-white p-[24px] md:p-[40px]"
+        data-contact-form
+      >
+        {contact.form.fields.map((field) => (
+          <div class="flex flex-col gap-[8px]">
+            <label for={`contact-${field.id}`} class="text-body font-bold text-text-primary">
+              {field.label}
+              {field.required && <span class="text-orange-basketball" aria-hidden="true"> *</span>}
+            </label>
+            {field.type === 'textarea' ? (
+              <textarea
+                id={`contact-${field.id}`}
+                name={field.id}
+                placeholder={field.placeholder}
+                required={field.required}
+                rows="5"
+                class="rounded-sm border border-charcoal-pitch/15 bg-white px-[16px] py-[12px] text-body text-charcoal-pitch placeholder:text-charcoal-pitch/40 focus:border-blue-matchday focus:outline-none"
+              ></textarea>
+            ) : field.type === 'select' ? (
+              <select
+                id={`contact-${field.id}`}
+                name={field.id}
+                required={field.required}
+                class="rounded-sm border border-charcoal-pitch/15 bg-white px-[16px] py-[12px] text-body text-charcoal-pitch focus:border-blue-matchday focus:outline-none"
+              >
+                <option value="">{field.placeholder}</option>
+                {field.options?.map((opt) => (
+                  <option value={opt}>{opt}</option>
+                ))}
+              </select>
+            ) : (
+              <input
+                id={`contact-${field.id}`}
+                name={field.id}
+                type={field.type}
+                placeholder={field.placeholder}
+                required={field.required}
+                class="rounded-sm border border-charcoal-pitch/15 bg-white px-[16px] py-[12px] text-body text-charcoal-pitch placeholder:text-charcoal-pitch/40 focus:border-blue-matchday focus:outline-none"
+              />
+            )}
+          </div>
+        ))}
+
+        <button
+          type="submit"
+          class="mt-[8px] inline-flex w-full items-center justify-center gap-[8px] rounded-sm bg-blue-matchday px-[32px] py-[16px] text-body-lg font-medium capitalize tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90"
+        >
+          {contact.form.submitText}
+          <svg class="h-[16px] w-[16px]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </form>
+
+      <p
+        class="contact-form-success hidden rounded-[16px] bg-yellow-tennis p-[24px] text-body-lg text-charcoal-pitch md:col-start-2 md:p-[40px]"
+        data-contact-form-success
+        role="status"
+        aria-live="polite"
+      >
+        {contact.form.successMessage}
+      </p>
     </div>
   </section>
+
+  {ctaBanner && ctaBanner.type === 'cta_banner' && <CTABanner section={ctaBanner} />}
 </BaseLayout>
+
+<script>
+  function initContactForm() {
+    const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+    const success = document.querySelector<HTMLElement>('[data-contact-form-success]');
+    if (!form || !success) return;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      form.classList.add('hidden');
+      success.classList.remove('hidden');
+    });
+  }
+  document.addEventListener('astro:page-load', initContactForm);
+  initContactForm();
+</script>

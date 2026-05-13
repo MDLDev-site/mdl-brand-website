@@ -322,6 +322,65 @@ export interface PricingPageContent {
   faq: PricingFAQ;
 }
 
+// Contact page
+
+export interface ContactBenefit {
+  text: string;
+}
+
+export interface ContactFormField {
+  id: string;
+  label: string;
+  placeholder: string;
+  type: 'text' | 'email' | 'textarea' | 'select';
+  required?: boolean;
+  options?: string[];
+}
+
+export interface ContactPageContent {
+  page: PageMeta;
+  hero: {
+    heading: string;
+    description: string;
+  };
+  benefits: ContactBenefit[];
+  support: {
+    prompt: string;
+    cta: CTAButton;
+  };
+  form: {
+    fields: ContactFormField[];
+    submitText: string;
+    successMessage: string;
+  };
+}
+
+// Legal page
+
+export interface LegalSection {
+  heading: string;
+  body: string;
+}
+
+export interface LegalPageContent {
+  page: PageMeta;
+  hero: {
+    heading: string;
+    lastUpdated: string;
+  };
+  sections: LegalSection[];
+}
+
+// 404 page
+
+export interface NotFoundPageContent {
+  page: PageMeta;
+  heading: string;
+  description: string;
+  imagePath?: string;
+  cta: CTAButton;
+}
+
 export interface FooterColumn {
   title: string;
   links: Array<{

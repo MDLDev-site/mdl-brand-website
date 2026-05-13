@@ -1,0 +1,61 @@
+page:
+  title: "Book a Call — MatchDayLive"
+  description: "Tell us about your organisation and how you'd like to use MatchDayLive. We'll be in touch shortly to walk you through the platform."
+
+hero:
+  heading: "Book a call"
+  description: "Please tell us a little bit about your company and use case, and we'll be in touch soon."
+
+benefits:
+  - text: "View a demo of MatchDayLive"
+  - text: "Find the best plan for your team"
+  - text: "Get help with onboarding"
+
+support:
+  prompt: "Technical issues or product questions?"
+  cta:
+    text: "Contact support"
+    link: "mailto:support@matchdaylive.com"
+
+form:
+  fields:
+    - id: name
+      label: "Full name"
+      placeholder: "Enter your name"
+      type: text
+      required: true
+    - id: email
+      label: "Email"
+      placeholder: "name@example.com"
+      type: email
+      required: true
+    - id: sport
+      label: "Sport"
+      placeholder: "Select"
+      type: select
+      required: false
+      options:
+        - Football
+        - Rugby
+        - Basketball
+        - Cricket
+        - American Football
+        - Soccer
+        - Other
+    - id: organisation
+      label: "Organisation"
+      placeholder: "Enter your organisation"
+      type: text
+      required: false
+    - id: role
+      label: "Role"
+      placeholder: "What is your role in the organisation?"
+      type: text
+      required: false
+    - id: message
+      label: "How can we help you"
+      placeholder: "I'm considering MatchDayLive for my team. I'd like to explore..."
+      type: textarea
+      required: true
+  submitText: "Send message"
+  successMessage: "Thanks — we've received your message and will be in touch shortly."
