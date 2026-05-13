@@ -9,6 +9,7 @@ sections:
       - BROADCASTER
     subtitle: "The all-in-one sports OTT platform for clubs, leagues and federations"
     subheading: "Launch your own branded sports streaming platform with MatchDayLive. Stream live matches, host on-demand content, and unlock new revenue \u2014 all in one powerful OTT solution for sports clubs, leagues and federations."
+    backgroundImage: /images/hero-bg.webp
     cta:
       primary:
         text: See All Features

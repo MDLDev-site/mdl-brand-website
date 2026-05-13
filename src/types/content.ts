@@ -33,6 +33,7 @@ export interface HeroSection {
   heading: string[];
   subtitle?: string;
   subheading: string;
+  backgroundImage?: string;
   cta: {
     primary: CTAButton;
     secondary: CTAButton;

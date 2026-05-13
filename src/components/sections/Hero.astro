@@ -12,12 +12,20 @@ const { section } = Astro.props;
   class="relative overflow-hidden bg-navy-umpire"
   aria-label="Hero"
 >
-  {/* Background gradients */}
+  {/* Background image */}
+  {section.backgroundImage && (
+    <img
+      src={section.backgroundImage}
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 h-full w-full object-cover"
+      loading="eager"
+      decoding="async"
+    />
+  )}
+
+  {/* Background gradients (overlay on top of image) */}
   <div class="absolute inset-0" aria-hidden="true">
-    <div
-      class="absolute inset-0"
-      style="background: radial-gradient(ellipse 80% 60% at 50% 40%, transparent 0%, var(--color-grey) 100%);"
-    ></div>
     <div
       class="absolute inset-0"
       style="background: linear-gradient(180deg, var(--color-navy-umpire) 0%, transparent 40%, transparent 60%, var(--color-navy-umpire) 100%);"
