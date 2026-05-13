@@ -41,22 +41,22 @@ const { section } = Astro.props;
     <div class="relative">
       {/* Case study cards track */}
       <div
-        class="customers-track flex gap-[24px] overflow-x-auto px-[24px] pb-[8px] scrollbar-hide md:px-30"
+        class="customers-track flex gap-[24px] overflow-x-auto overflow-y-visible px-[24px] pt-[8px] pb-[48px] scrollbar-hide md:px-30 md:pb-[64px]"
         role="list"
         style="scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;"
       >
         {section.caseStudies.map((study) => (
           <article
-            class="relative flex h-100 w-[85vw] shrink-0 flex-col overflow-hidden rounded-[16px] md:h-125 md:w-175"
+            class="relative flex h-100 w-[85vw] shrink-0 flex-col overflow-hidden rounded-[16px] shadow-card-lg md:h-125 md:w-175"
             role="listitem"
-            style="scroll-snap-align: start;"
+            style={`scroll-snap-align: start;${study.backgroundColor ? ` background-color: ${study.backgroundColor};` : ''}`}
           >
-            {/* Background image */}
+            {/* Background image (centered to container on all viewports) */}
             {study.backgroundImage && (
               <img
                 src={study.backgroundImage}
                 alt=""
-                class="absolute inset-0 h-full w-full object-cover"
+                class="absolute inset-0 h-full w-full object-cover object-center"
                 loading="lazy"
                 decoding="async"
                 aria-hidden="true"
@@ -83,19 +83,10 @@ const { section } = Astro.props;
                 />
               )}
 
-              {/* Quote + CTA — bottom */}
-              <div class="flex flex-col gap-5">
-                <blockquote class="text-h3 text-white">
-                  {study.quote}
-                </blockquote>
-
-                <a
-                  href={study.cta.link}
-                  class="inline-flex w-fit items-center rounded-sm bg-white px-[24px] py-[12px] font-body text-[14px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-charcoal-pitch transition-colors hover:bg-white/90 md:px-[32px] md:py-3.5 md:text-[16px]"
-                >
-                  {study.cta.text}
-                </a>
-              </div>
+              {/* Quote / Title — bottom */}
+              <blockquote class="text-h3 text-white">
+                {study.quote}
+              </blockquote>
             </div>
           </article>
         ))}

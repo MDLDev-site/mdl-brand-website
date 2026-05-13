@@ -96,7 +96,8 @@ export interface CustomerSection {
     quote: string;
     brandLogo: string;
     brandName: string;
-    backgroundImage: string;
+    backgroundImage?: string;
+    backgroundColor?: string;
     gradientColor: string;
     cta: CTAButton;
   }>;
