@@ -297,6 +297,7 @@ const { calculator, products } = Astro.props;
 
     // Product tabs in calculator
     let activeProduct: ProductId = 'on-demand';
+    let calcInteracted = false;
     const tabs = modal.querySelectorAll<HTMLButtonElement>('.pricing-calc-tab');
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
@@ -308,12 +309,17 @@ const { calculator, products } = Astro.props;
       });
     });
 
-    // Sliders
+    // Sliders — first interaction flips the calcInteracted flag so the
+    // Recommended badge only appears once the user has actively adjusted
+    // values (per designer spec).
     const sliders = modal.querySelectorAll<HTMLInputElement>('.calc-slider');
     sliders.forEach((s) => {
       s.addEventListener('input', () => updateSliderFill(s));
       updateSliderFill(s);
-      s.addEventListener('input', recompute);
+      s.addEventListener('input', () => {
+        calcInteracted = true;
+        recompute();
+      });
     });
 
     function updateSliderFill(slider: HTMLInputElement) {
@@ -360,6 +366,38 @@ const { calculator, products } = Astro.props;
         tierIdx = pickTier(totalBandwidthTB, OD_BANDWIDTH_TB);
       }
       if (planEl) planEl.textContent = TIER_NAMES[tierIdx];
+
+      if (calcInteracted) {
+        applyRecommendation(activeProduct, tierIdx);
+      }
+    }
+
+    /**
+     * Reveal the Recommended badge on the matched plan card and hide all
+     * Most Popular badges, so Recommended takes priority once a calc has
+     * been run. Also moves the product-coloured ring (originally on the
+     * Most Popular card) onto the Recommended card.
+     * Scoped to the active product's grid only.
+     */
+    function applyRecommendation(productId: ProductId, tierIdx: number) {
+      const grid = document.querySelector<HTMLElement>(`[data-product-grid="${productId}"]`);
+      if (!grid) return;
+
+      const ringClass = productId === 'on-demand' ? 'ring-blue-matchday' : 'ring-orange-basketball';
+
+      const cards = grid.querySelectorAll<HTMLElement>('.pricing-plan-card');
+      cards.forEach((card) => {
+        const isMatch = Number(card.dataset.tierIndex) === tierIdx;
+        const recommended = card.querySelector<HTMLElement>('.pricing-tag-recommended');
+        const popular = card.querySelector<HTMLElement>('.pricing-tag-popular');
+
+        recommended?.classList.toggle('hidden', !isMatch);
+        popular?.classList.add('hidden');
+
+        // Move the accent ring to the Recommended card; clear it elsewhere
+        card.classList.toggle(ringClass, isMatch);
+        card.classList.toggle('ring-white/10', !isMatch);
+      });
     }
 
     recompute();
