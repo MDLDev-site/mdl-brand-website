@@ -9,8 +9,9 @@ const { anchors } = Astro.props;
 ---
 
 <nav
-  class="anchor-menu sticky top-20 z-40 bg-navy-umpire shadow-[0px_4px_13px_0px_rgba(22,29,37,0.1),0px_3px_38px_0px_rgba(0,0,0,0.05)]"
+  class="anchor-menu sticky top-0 z-50 bg-navy-umpire shadow-[0px_4px_13px_0px_rgba(22,29,37,0.1),0px_3px_38px_0px_rgba(0,0,0,0.05)]"
   aria-label="Feature sections"
+  data-anchor-menu
 >
   <div class="mx-auto flex max-w-360 items-stretch">
     {/* Scrollable anchors on mobile, flex on desktop */}
@@ -89,6 +90,18 @@ const { anchors } = Astro.props;
 
     window.addEventListener('scroll', updateActive, { passive: true });
     updateActive();
+
+    // Hide the main header when the anchor menu is stuck at the top of the viewport
+    const anchorMenu = document.querySelector<HTMLElement>('[data-anchor-menu]');
+    const siteHeader = document.querySelector<HTMLElement>('.site-header');
+    if (anchorMenu && siteHeader) {
+      const updateHeaderVisibility = () => {
+        const isStuck = anchorMenu.getBoundingClientRect().top <= 0;
+        siteHeader.classList.toggle('-translate-y-full', isStuck);
+      };
+      window.addEventListener('scroll', updateHeaderVisibility, { passive: true });
+      updateHeaderVisibility();
+    }
 
     // Smooth scroll on click
     anchors.forEach((anchor) => {

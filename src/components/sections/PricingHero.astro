@@ -77,17 +77,20 @@ const { hero, products } = Astro.props;
       </span>
     </div>
 
-    {/* Plan cards — one grid per product, only the active one shown */}
-    {products.map((product, i) => (
-      <div
-        class={`pricing-plan-grid grid grid-cols-1 gap-[24px] sm:grid-cols-2 lg:grid-cols-4 ${i === 0 ? '' : 'hidden'}`}
-        data-product-grid={product.id}
-      >
-        {product.tiers.map((tier, idx) => (
-          <PricingPlanCard tier={tier} productId={product.id} tierIndex={idx} />
-        ))}
-      </div>
-    ))}
+    {/* Plan cards — one grid per product, only the active one shown.
+        Sticky so they stay visible as the user scrolls within the hero section. */}
+    <div class="md:sticky md:top-[88px]">
+      {products.map((product, i) => (
+        <div
+          class={`pricing-plan-grid grid grid-cols-1 gap-[24px] sm:grid-cols-2 lg:grid-cols-4 ${i === 0 ? '' : 'hidden'}`}
+          data-product-grid={product.id}
+        >
+          {product.tiers.map((tier, idx) => (
+            <PricingPlanCard tier={tier} productId={product.id} tierIndex={idx} />
+          ))}
+        </div>
+      ))}
+    </div>
 
     {/* Subtext below cards */}
     {hero.cardsSubtext && hero.cardsSubtext.length > 0 && (
