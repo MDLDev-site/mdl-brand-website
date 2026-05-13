@@ -12,6 +12,7 @@ const { calculator, products } = Astro.props;
 <div
   class="pricing-calc-modal fixed inset-0 z-[60] hidden items-start justify-center overflow-y-auto bg-charcoal-pitch/80 p-[16px] backdrop-blur-sm md:items-center md:p-[40px]"
   data-calc-modal
+  data-active-product="on-demand"
   aria-hidden="true"
   role="dialog"
   aria-modal="true"
@@ -107,7 +108,7 @@ const { calculator, products } = Astro.props;
         </p>
         <p class="calc-recommendation font-body text-[14px] text-charcoal-pitch/70">
           {calculator.outputs.recommendationPrefix}
-          <span class="ml-[4px] font-semibold text-orange-basketball" data-calc-plan>—</span>
+          <span class="calc-plan-name ml-[4px] font-semibold" data-calc-plan>—</span>
         </p>
       </div>
 
@@ -182,6 +183,14 @@ const { calculator, products } = Astro.props;
 </div>
 
 <style>
+  /* Calculator accent colour — switches per active product */
+  .pricing-calc-modal[data-active-product='on-demand'] {
+    --calc-accent: var(--color-blue-matchday);
+  }
+  .pricing-calc-modal[data-active-product='live'] {
+    --calc-accent: var(--color-orange-basketball);
+  }
+
   .pricing-calc-tab {
     background-color: rgb(255 255 255 / 0.05);
     color: rgb(255 255 255 / 0.5);
@@ -202,7 +211,12 @@ const { calculator, products } = Astro.props;
     color: inherit;
   }
 
-  /* Range slider — orange filled portion via background-image */
+  /* Plan recommendation text — uses active accent */
+  .calc-plan-name {
+    color: var(--calc-accent);
+  }
+
+  /* Range slider — fill + thumb both use --calc-accent */
   .calc-slider {
     -webkit-appearance: none;
     appearance: none;
@@ -219,7 +233,7 @@ const { calculator, products } = Astro.props;
     height: 16px;
     border-radius: 999px;
     background: white;
-    border: 2px solid var(--color-orange-basketball);
+    border: 2px solid var(--calc-accent);
     cursor: pointer;
   }
   .calc-slider::-moz-range-thumb {
@@ -227,9 +241,8 @@ const { calculator, products } = Astro.props;
     height: 16px;
     border-radius: 999px;
     background: white;
-    border: 2px solid var(--color-orange-basketball);
+    border: 2px solid var(--calc-accent);
     cursor: pointer;
-    border: none;
   }
   .calc-slider::-moz-range-track {
     height: 4px;
@@ -237,7 +250,7 @@ const { calculator, products } = Astro.props;
   }
   .calc-slider::-moz-range-progress {
     height: 4px;
-    background: var(--color-orange-basketball);
+    background: var(--calc-accent);
     border-radius: 999px;
   }
 </style>
@@ -289,6 +302,8 @@ const { calculator, products } = Astro.props;
       tab.addEventListener('click', () => {
         activeProduct = (tab.dataset.calcTab as ProductId) || 'on-demand';
         tabs.forEach((t) => t.classList.toggle('is-active', t === tab));
+        modal!.dataset.activeProduct = activeProduct;
+        sliders.forEach(updateSliderFill);
         recompute();
       });
     });
@@ -306,7 +321,10 @@ const { calculator, products } = Astro.props;
       const max = parseFloat(slider.max);
       const val = parseFloat(slider.value);
       const pct = ((val - min) / (max - min)) * 100;
-      slider.style.background = `linear-gradient(to right, var(--color-orange-basketball) 0%, var(--color-orange-basketball) ${pct}%, rgb(255 255 255 / 0.15) ${pct}%, rgb(255 255 255 / 0.15) 100%)`;
+      const accent = activeProduct === 'live'
+        ? 'var(--color-orange-basketball)'
+        : 'var(--color-blue-matchday)';
+      slider.style.background = `linear-gradient(to right, ${accent} 0%, ${accent} ${pct}%, rgb(255 255 255 / 0.15) ${pct}%, rgb(255 255 255 / 0.15) 100%)`;
     }
 
     function recompute() {
