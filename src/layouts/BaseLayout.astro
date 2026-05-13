@@ -16,6 +16,8 @@ const { title, description, ogImage = '/og-image.png', noindex = false } = Astro
 const nav = await loadYaml<Navigation>('global/navigation.yaml');
 const canonicalURL = new URL(Astro.url.pathname, 'https://matchdaylive.com').href;
 const ogImageURL = `https://matchdaylive.com${ogImage}`;
+const cookitSiteKey = import.meta.env.PUBLIC_COOKIT_SITE_KEY as string | undefined;
+const cookitApiBase = import.meta.env.PUBLIC_COOKIT_API_BASE as string | undefined;
 ---
 
 <!doctype html>
@@ -79,6 +81,16 @@ const ogImageURL = `https://matchdaylive.com${ogImage}`;
 
     <!-- Page-specific structured data slot -->
     <slot name="head" />
+
+    <!-- Cookie consent -->
+    {cookitSiteKey && (
+      <script
+        is:inline
+        src="https://cdn.xax.co.za/cookit.js"
+        data-site-key={cookitSiteKey}
+        data-api-base={cookitApiBase}
+      ></script>
+    )}
   </head>
   <body class="min-h-screen bg-white">
     <Header nav={nav} />
