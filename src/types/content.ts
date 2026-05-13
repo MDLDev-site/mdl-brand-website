@@ -137,6 +137,7 @@ export interface MailingListSection {
   description: string;
   placeholder: string;
   buttonText: string;
+  successMessage?: string;
 }
 
 export interface DiagonalsSection {
