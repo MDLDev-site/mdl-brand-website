@@ -43,7 +43,7 @@ const { section } = Astro.props;
       <div
         class="customers-track flex gap-[24px] overflow-x-auto overflow-y-visible px-[24px] pt-[8px] pb-[48px] scrollbar-hide md:px-30 md:pb-[64px]"
         role="list"
-        style="scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;"
+        style="scroll-snap-type: x mandatory; scroll-padding-left: 24px; -webkit-overflow-scrolling: touch;"
       >
         {section.caseStudies.map((study) => (
           <article
@@ -147,6 +147,21 @@ const { section } = Astro.props;
       }
 
       track.addEventListener('scroll', updateDots);
+
+      // Snap initial scroll to 0 so the first card frame aligns with the
+      // section heading (both share horizontal padding).
+      requestAnimationFrame(() => {
+        track.scrollLeft = 0;
+      });
+
+      // Keep scroll-padding in sync with the responsive section padding so
+      // snapping respects the heading alignment.
+      const updateScrollPadding = () => {
+        const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+        track.style.scrollPaddingLeft = isDesktop ? '120px' : '24px';
+      };
+      updateScrollPadding();
+      window.addEventListener('resize', updateScrollPadding);
 
       const scrollAmount = ((cards[0] as HTMLElement)?.offsetWidth || 700) + 24;
 
