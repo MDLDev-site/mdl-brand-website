@@ -37,7 +37,7 @@ sections:
         alt: Bristol Bears RFC
 
   - type: diagonals
-    variant: white-to-grey
+    variant: grey-to-white
 
   - type: feature
     heading: Make it yours
@@ -97,7 +97,7 @@ sections:
         link: /pricing
 
   - type: diagonals
-    variant: grey-to-white
+    variant: white-to-grey
 
   - type: carousel
     heading: FOR EVERY LEVEL OF THE GAME
@@ -112,7 +112,7 @@ sections:
         description: Offer your clients a turnkey streaming solution. White-label the platform, deliver content at scale, and add a powerful new revenue stream to your production services.
 
   - type: diagonals
-    variant: white-to-grey
+    variant: grey-to-white
 
   - type: grid
     heading: PUTTING FANS FIRST
@@ -145,7 +145,7 @@ sections:
         link: /pricing
 
   - type: diagonals
-    variant: grey-to-white
+    variant: white-to-grey
 
   - type: customers
     heading: BUILT FOR SPORT
@@ -176,7 +176,7 @@ sections:
           link: /case-studies/bristol-bears
 
   - type: diagonals
-    variant: white-to-grey
+    variant: grey-to-white
 
   - type: accordion_features
     heading:
