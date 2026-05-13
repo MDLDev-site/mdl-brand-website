@@ -206,7 +206,7 @@ export interface FeaturesPageContent {
 
 export type PricingProductId = 'on-demand' | 'live';
 export type PricingTagVariant = 'recommended' | 'most-popular';
-export type PricingButtonVariant = 'grey' | 'blue' | 'orange';
+export type PricingButtonVariant = 'grey' | 'blue' | 'orange' | 'product-accent';
 
 export interface PricingDifferentiator {
   label: string;
@@ -245,6 +245,7 @@ export interface PricingHeroData {
     monthlyLabel: string;
     annualLabel: string;
   };
+  cardsSubtext?: string[];
 }
 
 export interface PricingComparisonAvailability {

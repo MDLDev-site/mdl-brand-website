@@ -88,6 +88,15 @@ const { hero, products } = Astro.props;
         ))}
       </div>
     ))}
+
+    {/* Subtext below cards */}
+    {hero.cardsSubtext && hero.cardsSubtext.length > 0 && (
+      <div class="flex flex-col gap-[8px] text-center">
+        {hero.cardsSubtext.map((line) => (
+          <p class="text-body text-white/60">{line}</p>
+        ))}
+      </div>
+    )}
   </div>
 </section>
 
