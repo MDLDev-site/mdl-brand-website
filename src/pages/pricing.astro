@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { loadYaml } from '../lib/yaml-loader';
 import type { PricingPageContent, PageContent } from '../types/content';
 import PricingHero from '../components/sections/PricingHero.astro';
+import PricingPlansSection from '../components/sections/PricingPlansSection.astro';
 import PricingComparisonTable from '../components/sections/PricingComparisonTable.astro';
 import PricingCalculator from '../components/sections/PricingCalculator.astro';
 import PricingFAQ from '../components/sections/PricingFAQ.astro';
@@ -65,8 +66,16 @@ const pricingItemList = {
     <script is:inline type="application/ld+json" set:html={JSON.stringify(pricingFAQ)} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(pricingItemList)} />
   </Fragment>
-  <PricingHero hero={pricing.hero} products={pricing.products} />
-  <PricingComparisonTable comparisons={pricing.comparisons} products={pricing.products} />
+  <PricingHero hero={pricing.hero} />
+
+  {/* Wrapper so the sticky plans section spans both itself and the
+      comparison table — plans stay pinned below the nav as the user
+      reads through the comparison rows. */}
+  <div class="relative">
+    <PricingPlansSection hero={pricing.hero} products={pricing.products} />
+    <PricingComparisonTable comparisons={pricing.comparisons} products={pricing.products} />
+  </div>
+
   <PricingFAQ faq={pricing.faq} />
   {mailingList && mailingList.type === 'mailing_list' && <MailingList section={mailingList} />}
 
