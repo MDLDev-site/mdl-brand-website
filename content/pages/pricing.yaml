@@ -36,7 +36,6 @@ products:
         annualPrice: "£799"
         vatNote: "P/M ANNUALLY EXCL. VAT"
         description: "Scale your reach as your content library and audience continue to grow."
-        tag: { label: "Recommended", variant: recommended }
         buttonVariant: orange
         differentiators:
           - { label: "Bandwidth", value: "5TB p/m" }
@@ -88,7 +87,6 @@ products:
         annualPrice: "£799"
         vatNote: "P/M ANNUALLY EXCL. VAT"
         description: "Scale your live programming as audience and library grow."
-        tag: { label: "Recommended", variant: recommended }
         buttonVariant: orange
         differentiators:
           - { label: "Live Stream Hours", value: "50 hrs p/m" }

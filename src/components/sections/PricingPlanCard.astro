@@ -26,22 +26,15 @@ const productRingClass = productId === 'on-demand'
   ? 'ring-blue-matchday'
   : 'ring-orange-basketball';
 
-const ringClass =
-  tier.tag?.variant === 'most-popular'
-    ? `ring-1 ${productRingClass}`
-    : tier.tag?.variant === 'recommended'
-      ? 'ring-1 ring-white/30'
-      : 'ring-1 ring-white/10';
+// Most Popular gets a product-coloured ring; recommended (set dynamically by
+// the calculator) takes the same product-colour ring via the JS-applied class.
+const ringClass = tier.tag?.variant === 'most-popular'
+  ? `ring-1 ${productRingClass}`
+  : 'ring-1 ring-white/10';
 
-const tagClass =
-  tier.tag?.variant === 'most-popular'
-    ? `${productId === 'on-demand' ? 'bg-blue-matchday' : 'bg-orange-basketball'} text-white`
-    : 'bg-white/20 text-white';
-
-// Hide the "Recommended" tag by default; shown after the calculator runs.
-const tagWrapperClass = tier.tag?.variant === 'recommended'
-  ? 'pricing-tag-recommended hidden'
-  : '';
+const popularTagClass = productId === 'on-demand'
+  ? 'bg-blue-matchday text-white'
+  : 'bg-orange-basketball text-white';
 ---
 
 <div
@@ -50,13 +43,24 @@ const tagWrapperClass = tier.tag?.variant === 'recommended'
   data-tier={tier.id}
   data-tier-index={tierIndex}
 >
-  {tier.tag && (
+  {/* Most Popular badge — static from YAML, hidden when the calculator
+      replaces it with the dynamic Recommended badge */}
+  {tier.tag?.variant === 'most-popular' && (
     <span
-      class={`absolute -top-[12px] left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-[12px] py-[4px] text-body font-medium tracking-[0.24px] ${tagClass} ${tagWrapperClass}`}
+      class={`pricing-tag-popular absolute -top-[12px] left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-[12px] py-[4px] text-body font-medium tracking-[0.24px] ${popularTagClass}`}
     >
       {tier.tag.label}
     </span>
   )}
+
+  {/* Recommended badge — present on every card, hidden by default. The
+      calculator's recompute() reveals the one matching the recommended
+      tier and hides all .pricing-tag-popular badges. */}
+  <span
+    class={`pricing-tag-recommended hidden absolute -top-[12px] left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-[12px] py-[4px] text-body font-medium tracking-[0.24px] ${popularTagClass}`}
+  >
+    Recommended
+  </span>
 
   <div class="flex flex-col items-center gap-[8px] text-center">
     <p class="text-h5 text-white">
