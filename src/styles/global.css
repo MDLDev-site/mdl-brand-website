@@ -185,3 +185,8 @@ body {
   line-height: 1.2;
   letter-spacing: 0;
 }
+
+/* Animatable accordion via max-height. 500px is well above any expected
+ * content height so longer descriptions never clip. */
+.accordion-collapsed { max-height: 0; }
+.accordion-expanded { max-height: 500px; }

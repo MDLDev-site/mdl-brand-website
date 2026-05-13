@@ -12,10 +12,10 @@ interface Props {
   noindex?: boolean;
 }
 
-const { title, description, ogImage = '/og-image.png', noindex = false } = Astro.props;
+const { title, description, ogImage, noindex = false } = Astro.props;
 const nav = await loadYaml<Navigation>('global/navigation.yaml');
 const canonicalURL = new URL(Astro.url.pathname, 'https://matchdaylive.com').href;
-const ogImageURL = `https://matchdaylive.com${ogImage}`;
+const ogImageURL = ogImage ? `https://matchdaylive.com${ogImage}` : null;
 const cookitSiteKey = import.meta.env.PUBLIC_COOKIT_SITE_KEY as string | undefined;
 const cookitApiBase = import.meta.env.PUBLIC_COOKIT_API_BASE as string | undefined;
 ---
@@ -29,7 +29,6 @@ const cookitApiBase = import.meta.env.PUBLIC_COOKIT_API_BASE as string | undefin
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#152644" />
 
     <!-- Open Graph -->
@@ -37,15 +36,15 @@ const cookitApiBase = import.meta.env.PUBLIC_COOKIT_API_BASE as string | undefin
     <meta property="og:description" content={description ?? ''} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:image" content={ogImageURL} />
     <meta property="og:site_name" content="MatchDayLive" />
+    {ogImageURL && <meta property="og:image" content={ogImageURL} />}
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content={ogImageURL ? "summary_large_image" : "summary"} />
     <meta name="twitter:site" content="@matchdaylive" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description ?? ''} />
-    <meta name="twitter:image" content={ogImageURL} />
+    {ogImageURL && <meta name="twitter:image" content={ogImageURL} />}
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

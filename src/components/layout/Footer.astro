@@ -63,7 +63,7 @@ const visibleSocials = footer.socials.filter((s) => s.visible);
               <path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
-          <div class="grid grid-rows-[0fr] overflow-hidden transition-all duration-300" data-footer-panel={idx}>
+          <div class="accordion-collapsed overflow-hidden transition-all duration-300" data-footer-panel={idx}>
             <ul class="flex min-h-0 flex-col gap-[12px] pb-[16px]" role="list">
               {column.links.map((link) => (
                 <li>
@@ -139,15 +139,15 @@ const visibleSocials = footer.socials.filter((s) => s.visible);
         const chevron = toggle.querySelector('svg');
         if (!panel) return;
 
-        const isOpen = panel.classList.contains('grid-rows-[1fr]');
+        const isOpen = panel.classList.contains('accordion-expanded');
         if (isOpen) {
-          panel.classList.remove('grid-rows-[1fr]');
-          panel.classList.add('grid-rows-[0fr]');
+          panel.classList.remove('accordion-expanded');
+          panel.classList.add('accordion-collapsed');
           toggle.setAttribute('aria-expanded', 'false');
           chevron?.classList.remove('rotate-180');
         } else {
-          panel.classList.add('grid-rows-[1fr]');
-          panel.classList.remove('grid-rows-[0fr]');
+          panel.classList.add('accordion-expanded');
+          panel.classList.remove('accordion-collapsed');
           toggle.setAttribute('aria-expanded', 'true');
           chevron?.classList.add('rotate-180');
         }

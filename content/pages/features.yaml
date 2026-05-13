@@ -34,12 +34,10 @@ categories:
         description: "Seamlessly apply your brand identity across all touch-points."
       - title: "On Your Domain"
         description: "Make your fans feel right at home via access on your domain (e.g. fantv.yourdomain.com)"
-        image: /images/features/on-your-domain.png
       - title: "Sponsor Involvement"
         description: "Retain brand partnerships with opportunities to highlight key sponsors."
       - title: "Statement Lines"
         description: "Ensure fans are never in the dark about transactions by customising bank statement descriptions to identify your channel."
-        image: /images/features/statement-lines.png
       - title: "Drag & Drop Channel Builder"
         description: "Maximise engagement and monetisation opportunities through the strategic positioning of Playlists and Collections."
         checks:
@@ -71,7 +69,6 @@ categories:
           - Grow your fanbase
       - title: "Stripe Facilitated Payments"
         description: "Accept payments using a trusted and globally recognised, PCI DSS compliant payment gateway.\n\n- No Stripe Account Required\n- Accept Local and International Cards\n- VISA, Mastercard, Amex, Apple Pay, Google Pay, Link and more\n- Locally trusted payment options"
-        image: /images/features/stripe.png
       - title: "Managed VAT & Sales Taxes"
         description: "Avoid countless hours managing global VAT and Sales Tax obligations."
         checks:
@@ -87,7 +84,6 @@ categories:
           - Bundled
       - title: "User Groups"
         description: "Build bespoke audiences from invited and registered fans and assign access limitations to suit group requirements."
-        image: /images/features/user-groups.png
 
   - id: platform
     heading: "YOUR STREAMING COMMAND CENTRE"
