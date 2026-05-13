@@ -1,0 +1,20 @@
+page:
+  title: "Legal — Matchday Media"
+  description: "Legal information for MatchDayLive, including the main service agreement, privacy policy, cookies policy, and other legal terms."
+
+hero:
+  heading: "Matchday Media Legal"
+
+documents:
+  - slug: terms-of-service
+    title: "Main Service Agreement and Terms of Use"
+    description: "Learn more about the legal terms of Matchday Media."
+  - slug: privacy-policy
+    title: "Privacy policy"
+    description: "Learn more about privacy protection and use of personal data at Matchday Media."
+  - slug: cookies
+    title: "Cookies"
+    description: "Learn more about the cookies used by Matchday Media or our third-party service providers."
+  - slug: legal-terms
+    title: "Legal terms"
+    description: "Learn more about the legal terms of Matchday Media."

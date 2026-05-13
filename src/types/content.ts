@@ -31,7 +31,9 @@ export interface Navigation {
 export interface HeroSection {
   type: 'hero';
   heading: string[];
+  subtitle?: string;
   subheading: string;
+  backgroundImage?: string;
   cta: {
     primary: CTAButton;
     secondary: CTAButton;
@@ -94,7 +96,8 @@ export interface CustomerSection {
     quote: string;
     brandLogo: string;
     brandName: string;
-    backgroundImage: string;
+    backgroundImage?: string;
+    backgroundColor?: string;
     gradientColor: string;
     cta: CTAButton;
   }>;
@@ -115,6 +118,7 @@ export interface AccordionFeaturesSection {
     title: string;
     description?: string;
     learnMoreLink?: string;
+    learnMoreText?: string;
     expanded?: boolean;
   }>;
 }
@@ -133,6 +137,7 @@ export interface MailingListSection {
   description: string;
   placeholder: string;
   buttonText: string;
+  successMessage?: string;
 }
 
 export interface DiagonalsSection {
@@ -186,6 +191,7 @@ export interface FeatureCategory {
   heading: string;
   description: string;
   background: 'white' | 'grey';
+  hideHeading?: boolean;
   features: FeatureRow[];
 }
 
@@ -200,7 +206,7 @@ export interface FeaturesPageContent {
 
 export type PricingProductId = 'on-demand' | 'live';
 export type PricingTagVariant = 'recommended' | 'most-popular';
-export type PricingButtonVariant = 'grey' | 'blue' | 'orange';
+export type PricingButtonVariant = 'grey' | 'blue' | 'orange' | 'product-accent';
 
 export interface PricingDifferentiator {
   label: string;
@@ -239,6 +245,7 @@ export interface PricingHeroData {
     monthlyLabel: string;
     annualLabel: string;
   };
+  cardsSubtext?: string[];
 }
 
 export interface PricingComparisonAvailability {
@@ -315,6 +322,80 @@ export interface PricingPageContent {
   faq: PricingFAQ;
 }
 
+// Contact page
+
+export interface ContactBenefit {
+  text: string;
+}
+
+export interface ContactFormField {
+  id: string;
+  label: string;
+  placeholder: string;
+  type: 'text' | 'email' | 'textarea' | 'select';
+  required?: boolean;
+  options?: string[];
+}
+
+export interface ContactPageContent {
+  page: PageMeta;
+  hero: {
+    heading: string;
+    description: string;
+  };
+  benefits: ContactBenefit[];
+  support: {
+    prompt: string;
+    cta: CTAButton;
+  };
+  form: {
+    fields: ContactFormField[];
+    submitText: string;
+    successMessage: string;
+  };
+}
+
+// Legal — hub + individual document pages
+
+export interface LegalDocumentSummary {
+  slug: string;
+  title: string;
+  description: string;
+}
+
+export interface LegalIndexContent {
+  page: PageMeta;
+  hero: {
+    heading: string;
+  };
+  documents: LegalDocumentSummary[];
+}
+
+export interface LegalSection {
+  heading: string;
+  body: string; // Supports Markdown-ish: **bold**, paragraphs, lists
+}
+
+export interface LegalDocumentContent {
+  slug: string;
+  page: PageMeta;
+  title: string;
+  lastUpdated: string;
+  intro?: string;
+  sections: LegalSection[];
+}
+
+// 404 page
+
+export interface NotFoundPageContent {
+  page: PageMeta;
+  heading: string;
+  description: string;
+  imagePath?: string;
+  imageAlt?: string;
+  cta: CTAButton;
+}
+
 export interface FooterColumn {
   title: string;
   links: Array<{
@@ -323,12 +404,18 @@ export interface FooterColumn {
   }>;
 }
 
+export interface FooterSocial {
+  name: string;
+  href: string;
+  visible: boolean;
+}
+
 export interface Footer {
   columns: FooterColumn[];
-  copyright: string;
-  legal: CTAButton;
-  socials: Array<{
-    platform: string;
-    href: string;
-  }>;
+  socials: FooterSocial[];
+  bottom: {
+    copyright: string;
+    legalLinkText: string;
+    legalLinkHref: string;
+  };
 }

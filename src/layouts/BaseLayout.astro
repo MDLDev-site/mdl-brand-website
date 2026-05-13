@@ -8,10 +8,16 @@ import type { Navigation } from '../types/content';
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
+  noindex?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, ogImage, noindex = false } = Astro.props;
 const nav = await loadYaml<Navigation>('global/navigation.yaml');
+const canonicalURL = new URL(Astro.url.pathname, 'https://matchdaylive.com').href;
+const ogImageURL = ogImage ? `https://matchdaylive.com${ogImage}` : null;
+const cookitSiteKey = import.meta.env.PUBLIC_COOKIT_SITE_KEY as string | undefined;
+const cookitApiBase = import.meta.env.PUBLIC_COOKIT_API_BASE as string | undefined;
 ---
 
 <!doctype html>
@@ -20,13 +26,70 @@ const nav = await loadYaml<Navigation>('global/navigation.yaml');
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description ?? ''} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#152644" />
 
-    <!-- Google Fonts: preconnect -->
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description ?? ''} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content="MatchDayLive" />
+    {ogImageURL && <meta property="og:image" content={ogImageURL} />}
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content={ogImageURL ? "summary_large_image" : "summary"} />
+    <meta name="twitter:site" content="@matchdaylive" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description ?? ''} />
+    {ogImageURL && <meta name="twitter:image" content={ogImageURL} />}
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <title>{title}</title>
+
+    <!-- Organization JSON-LD -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "MatchDayLive",
+      "legalName": "Matchday Media",
+      "url": "https://matchdaylive.com",
+      "logo": { "@type": "ImageObject", "url": "https://matchdaylive.com/logo.svg" },
+      "description": "MatchDayLive is an all-in-one OTT streaming platform for sports organisations. Launch a branded live-streaming and on-demand sports media platform with subscriptions, pay-per-view, fan analytics, and global CDN delivery.",
+      "contactPoint": { "@type": "ContactPoint", "contactType": "sales", "url": "https://matchdaylive.com/contact", "areaServed": "Worldwide" },
+      "sameAs": [
+        "https://x.com/matchdaylive",
+        "https://instagram.com/matchdaylive",
+        "https://youtube.com/matchdaylive",
+        "https://linkedin.com/company/matchdaylive"
+      ]
+    })} />
+
+    <!-- WebSite JSON-LD -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "MatchDayLive",
+      "url": "https://matchdaylive.com"
+    })} />
+
+    <!-- Page-specific structured data slot -->
+    <slot name="head" />
+
+    <!-- Cookie consent -->
+    {cookitSiteKey && (
+      <script
+        is:inline
+        src="https://cdn.xax.co.za/cookit.js"
+        data-site-key={cookitSiteKey}
+        data-api-base={cookitApiBase}
+      ></script>
+    )}
   </head>
   <body class="min-h-screen bg-white">
     <Header nav={nav} />

@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = "About MatchDayLive — Matchday Media";
+const description = "MatchDayLive is built by Matchday Media, a UK sports technology company helping clubs, leagues and federations own their streaming and fan relationships.";
+---
+
+<BaseLayout title={title} description={description}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "About MatchDayLive",
+      "url": "https://matchdaylive.com/about",
+      "description": description,
+      "about": {
+        "@type": "Organization",
+        "name": "Matchday Media",
+        "legalName": "Matchday Media",
+        "url": "https://matchdaylive.com",
+        "description": "Matchday Media is a UK sports technology company that builds and operates MatchDayLive, an all-in-one OTT streaming platform for sports organisations.",
+        "areaServed": "Worldwide",
+        "knowsAbout": ["Sports streaming", "OTT platform", "Sports media", "Video on demand", "Live streaming"]
+      }
+    })} />
+  </Fragment>
+
+  <!-- Hero -->
+  <section class="bg-linear-to-b from-charcoal-pitch to-navy-umpire px-6 pb-20 pt-40 md:pb-30 md:pt-45">
+    <div class="mx-auto max-w-200 text-center text-white">
+      <h1 class="font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] md:text-[72px]">
+        About MatchDayLive
+      </h1>
+      <p class="mx-auto mt-6 max-w-130 font-body text-[18px] leading-[1.5] text-white/80 md:text-[20px]">
+        Built by Matchday Media — a sports technology company with one mission: to give every sports organisation the tools to own their content, their fans, and their revenue.
+      </p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="bg-white px-6 py-20 md:py-30">
+    <div class="mx-auto max-w-160 space-y-12 font-body text-[16px] leading-[1.7] text-text-primary">
+
+      <div>
+        <h2 class="mb-4 font-heading text-[32px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch">
+          Who We Are
+        </h2>
+        <p>
+          Matchday Media is a United Kingdom–based sports technology company. We build and operate MatchDayLive — an all-in-one OTT streaming platform that gives sports clubs, leagues and federations everything they need to launch their own branded streaming channel.
+        </p>
+        <p class="mt-4">
+          We exist because we believe sports organisations should not have to give away their content, their audience data, or a significant share of their revenue to platform intermediaries. MatchDayLive puts control back where it belongs — with the sport itself.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="mb-4 font-heading text-[32px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch">
+          What We Build
+        </h2>
+        <p>
+          MatchDayLive is a white-label OTT platform. Sports organisations launch a fully branded streaming channel on their own domain — complete with live broadcasts, on-demand libraries, subscriptions, pay-per-view, fan analytics, and Sports Alliance SSO.
+        </p>
+        <p class="mt-4">
+          The platform is used by organisations including Bristol City FC, Super League Basketball, Bristol Bears RFC, and others across the UK and beyond.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="mb-4 font-heading text-[32px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch">
+          Our Approach
+        </h2>
+        <p>
+          We handle the infrastructure — AWS-powered delivery, global CDN, Stripe payments, geographic content controls, and GDPR-compliant data management — so that sports organisations can focus entirely on their content and their fans.
+        </p>
+        <p class="mt-4">
+          Every plan comes with onboarding support, branding setup, and access to our support team. No setup fees. No hidden costs.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="mb-4 font-heading text-[32px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch">
+          Get In Touch
+        </h2>
+        <p>
+          Want to learn more about what MatchDayLive can do for your organisation?
+        </p>
+        <div class="mt-6 flex flex-col gap-4 sm:flex-row">
+          <a
+            href="/contact"
+            class="inline-flex items-center justify-center rounded-sm bg-blue-matchday px-8 py-4 font-body text-[16px] font-medium capitalize tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90"
+          >
+            Book a Call
+          </a>
+          <a
+            href="/pricing"
+            class="inline-flex items-center justify-center rounded-sm border border-charcoal-pitch/20 px-8 py-4 font-body text-[16px] font-medium capitalize tracking-[2px] text-charcoal-pitch transition-colors hover:bg-grey"
+          >
+            View Pricing
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

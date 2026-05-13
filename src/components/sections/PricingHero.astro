@@ -14,22 +14,22 @@ const { hero, products } = Astro.props;
   <div class="mx-auto flex max-w-300 flex-col gap-[40px] px-[24px] md:gap-15 md:px-[64px]">
     {/* Title */}
     <div class="flex flex-col items-center gap-[16px] text-center text-white">
-      <h1 class="font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] text-white md:text-[80px] md:tracking-[0.8px]">
+      <h1 class="text-h1 text-white">
         {hero.heading}
       </h1>
-      <p class="max-w-150 font-body text-[16px] font-normal leading-[1.4] text-white/80 md:text-[18px]">
+      <p class="max-w-150 text-body-lg text-white/80">
         {hero.description}
       </p>
     </div>
 
     {/* Calculator prompt + button */}
     <div class="flex flex-col items-center justify-center gap-[16px] md:flex-row">
-      <p class="font-subheading text-[14px] font-semibold tracking-[-0.28px] text-white md:text-[16px]">
+      <p class="text-body-lg font-semibold text-white">
         {hero.calculatorPrompt}
       </p>
       <button
         type="button"
-        class="pricing-calc-trigger inline-flex items-center gap-[12px] rounded-sm border border-white/20 bg-white/5 px-[24px] py-[12px] font-body text-[14px] font-medium text-white transition-colors hover:bg-white/10"
+        class="pricing-calc-trigger inline-flex items-center gap-[12px] rounded-sm border border-white/20 bg-white/5 px-[24px] py-[12px] text-body font-medium text-white transition-colors hover:bg-white/10"
         data-calc-trigger
       >
         <svg class="h-[16px] w-[16px]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -48,10 +48,10 @@ const { hero, products } = Astro.props;
           class={`pricing-product-tab group flex flex-col items-center gap-[16px] rounded-[16px] px-[24px] py-[40px] text-center transition-colors ${i === 0 ? 'is-active' : ''}`}
           data-product-tab={product.id}
         >
-          <span class="product-tab-label font-heading text-[36px] font-medium uppercase leading-[0.9] tracking-[-0.5px] md:text-[50px] md:tracking-[-1px]">
+          <span class="product-tab-label text-h3">
             {product.tabLabel}
           </span>
-          <span class="product-tab-desc max-w-110 font-body text-[14px] font-normal leading-[1.4] md:text-[16px]">
+          <span class="product-tab-desc max-w-110 text-body-lg">
             {product.description}
           </span>
         </button>
@@ -60,7 +60,7 @@ const { hero, products } = Astro.props;
 
     {/* Billing toggle */}
     <div class="flex items-center justify-center gap-[16px]">
-      <span class="billing-label font-body text-[14px] font-medium text-white" data-billing-label="monthly">
+      <span class="billing-label text-body font-medium text-white" data-billing-label="monthly">
         {hero.billingToggle.monthlyLabel}
       </span>
       <button
@@ -72,22 +72,34 @@ const { hero, products } = Astro.props;
       >
         <span class="billing-thumb absolute left-[2px] h-[20px] w-[20px] rounded-full bg-orange-basketball transition-transform"></span>
       </button>
-      <span class="billing-label font-body text-[14px] font-medium text-white/60" data-billing-label="annual">
+      <span class="billing-label text-body font-medium text-white/60" data-billing-label="annual">
         {hero.billingToggle.annualLabel}
       </span>
     </div>
 
-    {/* Plan cards — one grid per product, only the active one shown */}
-    {products.map((product, i) => (
-      <div
-        class={`pricing-plan-grid grid grid-cols-1 gap-[24px] sm:grid-cols-2 lg:grid-cols-4 ${i === 0 ? '' : 'hidden'}`}
-        data-product-grid={product.id}
-      >
-        {product.tiers.map((tier, idx) => (
-          <PricingPlanCard tier={tier} productId={product.id} tierIndex={idx} />
+    {/* Plan cards — one grid per product, only the active one shown.
+        Sticky so they stay visible as the user scrolls within the hero section. */}
+    <div class="md:sticky md:top-[88px]">
+      {products.map((product, i) => (
+        <div
+          class={`pricing-plan-grid grid grid-cols-1 gap-[24px] sm:grid-cols-2 lg:grid-cols-4 ${i === 0 ? '' : 'hidden'}`}
+          data-product-grid={product.id}
+        >
+          {product.tiers.map((tier, idx) => (
+            <PricingPlanCard tier={tier} productId={product.id} tierIndex={idx} />
+          ))}
+        </div>
+      ))}
+    </div>
+
+    {/* Subtext below cards */}
+    {hero.cardsSubtext && hero.cardsSubtext.length > 0 && (
+      <div class="flex flex-col gap-[8px] text-center">
+        {hero.cardsSubtext.map((line) => (
+          <p class="text-body text-white/60">{line}</p>
         ))}
       </div>
-    ))}
+    )}
   </div>
 </section>
 

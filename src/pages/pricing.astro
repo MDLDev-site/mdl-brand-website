@@ -12,9 +12,59 @@ const pricing = await loadYaml<PricingPageContent>('pages/pricing.yaml');
 
 const home = await loadYaml<PageContent>('pages/home.yaml');
 const mailingList = home.sections.find((s) => s.type === 'mailing_list');
+
+const pricingWebPage = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": pricing.page.title,
+  "description": pricing.page.description,
+  "url": "https://matchdaylive.com/pricing",
+  "isPartOf": { "@type": "WebSite", "url": "https://matchdaylive.com" },
+};
+
+const pricingFAQ = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": pricing.faq.items.map((item) => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer,
+    },
+  })),
+};
+
+// Build pricing ItemList dynamically from YAML — never hardcode prices
+let position = 0;
+const pricingItemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "MatchDayLive Sports Streaming Pricing Plans",
+  "description": "Tiered pricing for sports clubs to global federations. On-Demand and Live & On-Demand products.",
+  "itemListElement": pricing.products.flatMap((product) =>
+    product.tiers.map((tier) => ({
+      "@type": "ListItem",
+      "position": ++position,
+      "item": {
+        "@type": "Offer",
+        "name": `${product.tabLabel} — ${tier.name}`,
+        "description": tier.description,
+        "price": tier.annualPrice.replace(/[£,]/g, ''),
+        "priceCurrency": "GBP",
+        "seller": { "@type": "Organization", "name": "MatchDayLive" }
+      }
+    }))
+  ),
+};
 ---
 
 <BaseLayout title={pricing.page.title} description={pricing.page.description}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(pricingWebPage)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(pricingFAQ)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(pricingItemList)} />
+  </Fragment>
   <PricingHero hero={pricing.hero} products={pricing.products} />
   <PricingComparisonTable comparisons={pricing.comparisons} products={pricing.products} />
   <PricingFAQ faq={pricing.faq} />

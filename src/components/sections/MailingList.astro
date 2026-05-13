@@ -6,16 +6,17 @@ interface Props {
 }
 
 const { section } = Astro.props;
+const successMessage = section.successMessage ?? 'Thank you for subscribing.';
 ---
 
 <section class="bg-navy-umpire" aria-label="Newsletter signup">
   <div class="mx-auto flex max-w-360 flex-col gap-[32px] px-[24px] py-[64px] md:px-30 md:py-20">
-    <h4 class="text-center font-heading text-[28px] font-medium uppercase leading-[0.9] tracking-[-1px] text-white md:text-left md:font-subheading md:text-[32px] md:tracking-[-3px] md:text-yellow-tennis">
+    <h4 class="text-h4 text-center text-white md:text-left md:text-yellow-tennis">
       {section.heading}
     </h4>
 
     <form
-      class="flex w-full flex-col gap-[24px] md:flex-row md:items-end md:gap-[24px]"
+      class="mailing-list-form flex w-full flex-col gap-[24px] md:flex-row md:items-end md:gap-[24px]"
       data-mailing-list-form
     >
       <div class="flex-1">
@@ -24,8 +25,8 @@ const { section } = Astro.props;
           id="mailing-list-name"
           type="text"
           name="firstName"
-          placeholder="Al"
-          class="w-full border-b border-white/40 bg-transparent px-0 py-[12px] font-body text-[14px] text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
+          placeholder="First name"
+          class="mailing-input w-full border-b border-white/40 bg-transparent px-0 py-[12px] text-body text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
           autocomplete="given-name"
         />
       </div>
@@ -36,8 +37,8 @@ const { section } = Astro.props;
           id="mailing-list-surname"
           type="text"
           name="surname"
-          placeholder="Your surname"
-          class="w-full border-b border-white/40 bg-transparent px-0 py-[12px] font-body text-[14px] text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
+          placeholder="Surname"
+          class="mailing-input w-full border-b border-white/40 bg-transparent px-0 py-[12px] text-body text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
           autocomplete="family-name"
         />
       </div>
@@ -49,7 +50,7 @@ const { section } = Astro.props;
           type="text"
           name="company"
           placeholder="Company name (optional)"
-          class="w-full border-b border-white/40 bg-transparent px-0 py-[12px] font-body text-[14px] text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
+          class="mailing-input w-full border-b border-white/40 bg-transparent px-0 py-[12px] text-body text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
         />
       </div>
 
@@ -60,18 +61,56 @@ const { section } = Astro.props;
           type="email"
           name="email"
           required
-          placeholder="Your email address"
-          class="w-full border-b border-white/40 bg-transparent px-0 py-[12px] font-body text-[14px] text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
+          placeholder={section.placeholder}
+          class="mailing-input w-full border-b border-white/40 bg-transparent px-0 py-[12px] text-body text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
           autocomplete="email"
         />
       </div>
 
       <button
         type="submit"
-        class="w-full shrink-0 rounded-sm bg-blue-matchday px-[32px] py-3.5 font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90 md:w-auto"
+        class="w-full shrink-0 rounded-sm bg-blue-matchday px-[32px] py-3.5 text-body-lg font-medium capitalize tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90 md:w-auto"
       >
         {section.buttonText}
       </button>
     </form>
+
+    <p
+      class="mailing-list-success hidden text-body-lg text-white"
+      data-mailing-list-success
+      role="status"
+      aria-live="polite"
+    >
+      {successMessage}
+    </p>
   </div>
 </section>
+
+<style>
+  /* Override browser autofill background fill so inputs stay transparent */
+  .mailing-input:-webkit-autofill,
+  .mailing-input:-webkit-autofill:hover,
+  .mailing-input:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0 1000px var(--color-navy-umpire) inset;
+    caret-color: white;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+</style>
+
+<script>
+  function initMailingListForms() {
+    const forms = document.querySelectorAll<HTMLFormElement>('[data-mailing-list-form]');
+    forms.forEach((form) => {
+      const success = form.parentElement?.querySelector<HTMLElement>('[data-mailing-list-success]');
+      if (!success) return;
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        form.classList.add('hidden');
+        success.classList.remove('hidden');
+      });
+    });
+  }
+  document.addEventListener('astro:page-load', initMailingListForms);
+  initMailingListForms();
+</script>

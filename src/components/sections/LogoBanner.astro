@@ -10,11 +10,11 @@ const { section } = Astro.props;
 
 <section class="bg-grey" aria-label="Trusted partners">
   <div class="mx-auto flex max-w-360 flex-col items-center gap-[32px] px-[24px] pt-[24px] pb-[64px] md:px-30">
-    <h4 class="text-center font-heading text-[20px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch md:font-subheading md:text-[24px] md:tracking-[-0.96px]">
+    <h4 class="text-h4 text-center text-charcoal-pitch">
       {section.heading}
     </h4>
 
-    <ul class="grid grid-cols-4 items-center justify-items-center gap-x-[16px] gap-y-[24px] md:flex md:flex-wrap md:justify-center md:gap-10" role="list">
+    <ul class="flex flex-wrap items-center justify-center gap-x-[16px] gap-y-[24px] md:gap-10" role="list">
       {section.logos.map((logo) => (
         <li class="flex items-center justify-center">
           {logo.src ? (

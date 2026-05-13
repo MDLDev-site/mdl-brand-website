@@ -12,7 +12,7 @@ const { section } = Astro.props;
   <div class="mx-auto max-w-360">
     {/* Header row */}
     <div class="flex items-end justify-between px-[24px] pb-[48px] md:px-30">
-      <h2 class="font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch md:text-[80px] md:tracking-[1px]">
+      <h2 class="text-h1 text-charcoal-pitch">
         {section.heading}
       </h2>
 
@@ -38,51 +38,25 @@ const { section } = Astro.props;
       </div>
     </div>
 
-    {/* Cards container with decorative circles */}
     <div class="relative">
-      {/* Decorative orange circle outlines */}
-      <div class="pointer-events-none absolute inset-0 hidden overflow-hidden md:block" aria-hidden="true">
-        <svg class="absolute -top-10 left-10 h-20 w-20" viewBox="0 0 80 80" fill="none">
-          <circle cx="40" cy="40" r="38" stroke="var(--color-orange-basketball)" stroke-width="2" opacity="0.4" />
-        </svg>
-        <svg class="absolute -top-5 left-50 h-15 w-15" viewBox="0 0 60 60" fill="none">
-          <circle cx="30" cy="30" r="28" stroke="var(--color-orange-basketball)" stroke-width="2" opacity="0.3" />
-        </svg>
-        <svg class="absolute top-2.5 left-85 h-12.5 w-12.5" viewBox="0 0 50 50" fill="none">
-          <circle cx="25" cy="25" r="23" stroke="var(--color-orange-basketball)" stroke-width="2" opacity="0.3" />
-        </svg>
-        <svg class="absolute -top-7.5 right-50 h-17.5 w-17.5" viewBox="0 0 70 70" fill="none">
-          <circle cx="35" cy="35" r="33" stroke="var(--color-orange-basketball)" stroke-width="2" opacity="0.3" />
-        </svg>
-        <svg class="absolute -top-2.5 right-15 h-15 w-15" viewBox="0 0 60 60" fill="none">
-          <circle cx="30" cy="30" r="28" stroke="var(--color-orange-basketball)" stroke-width="2" opacity="0.4" />
-        </svg>
-        <svg class="absolute top-5 -right-2.5 h-12.5 w-12.5" viewBox="0 0 50 50" fill="none">
-          <circle cx="25" cy="25" r="23" stroke="var(--color-orange-basketball)" stroke-width="2" opacity="0.3" />
-        </svg>
-        <svg class="absolute -top-12.5 left-125 h-22.5 w-22.5" viewBox="0 0 90 90" fill="none">
-          <circle cx="45" cy="45" r="43" stroke="var(--color-orange-basketball)" stroke-width="2" opacity="0.25" />
-        </svg>
-      </div>
-
       {/* Case study cards track */}
       <div
-        class="customers-track flex gap-[24px] overflow-x-auto px-[24px] pb-[8px] scrollbar-hide md:px-30"
+        class="customers-track flex gap-[24px] overflow-x-auto overflow-y-visible px-[24px] pt-[8px] pb-[48px] scrollbar-hide md:px-30 md:pb-[64px]"
         role="list"
         style="scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;"
       >
         {section.caseStudies.map((study) => (
           <article
-            class="relative flex h-100 w-[85vw] shrink-0 flex-col overflow-hidden rounded-[16px] md:h-125 md:w-175"
+            class="relative flex h-100 w-[85vw] shrink-0 flex-col overflow-hidden rounded-[16px] shadow-card-lg md:h-125 md:w-175"
             role="listitem"
-            style="scroll-snap-align: start;"
+            style={`scroll-snap-align: start;${study.backgroundColor ? ` background-color: ${study.backgroundColor};` : ''}`}
           >
-            {/* Background image */}
+            {/* Background image (centered to container on all viewports) */}
             {study.backgroundImage && (
               <img
                 src={study.backgroundImage}
                 alt=""
-                class="absolute inset-0 h-full w-full object-cover"
+                class="absolute inset-0 h-full w-full object-cover object-center"
                 loading="lazy"
                 decoding="async"
                 aria-hidden="true"
@@ -109,19 +83,10 @@ const { section } = Astro.props;
                 />
               )}
 
-              {/* Quote + CTA — bottom */}
-              <div class="flex flex-col gap-5">
-                <blockquote class="font-heading text-[24px] font-medium uppercase leading-[0.9] tracking-[-0.5px] text-white md:text-[36px]">
-                  {study.quote}
-                </blockquote>
-
-                <a
-                  href={study.cta.link}
-                  class="inline-flex w-fit items-center rounded-sm bg-white px-[24px] py-[12px] font-body text-[14px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-charcoal-pitch transition-colors hover:bg-white/90 md:px-[32px] md:py-3.5 md:text-[16px]"
-                >
-                  {study.cta.text}
-                </a>
-              </div>
+              {/* Quote / Title — bottom */}
+              <blockquote class="text-h3 text-white">
+                {study.quote}
+              </blockquote>
             </div>
           </article>
         ))}

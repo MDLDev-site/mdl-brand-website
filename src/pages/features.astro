@@ -15,9 +15,21 @@ const features = await loadYaml<FeaturesPageContent>('pages/features.yaml');
 const home = await loadYaml<PageContent>('pages/home.yaml');
 const ctaBanner = home.sections.find((s) => s.type === 'cta_banner');
 const mailingList = home.sections.find((s) => s.type === 'mailing_list');
+
+const featuresWebPage = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": features.page.title,
+  "description": features.page.description,
+  "url": "https://matchdaylive.com/features",
+  "isPartOf": { "@type": "WebSite", "url": "https://matchdaylive.com" },
+};
 ---
 
 <BaseLayout title={features.page.title} description={features.page.description}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(featuresWebPage)} />
+  </Fragment>
   {/* Hero */}
   <FeaturesHero hero={features.hero} />
 

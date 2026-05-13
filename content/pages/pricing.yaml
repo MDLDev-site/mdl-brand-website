@@ -1,15 +1,18 @@
 page:
-  title: "Pricing — MatchDayLive"
-  description: "Tiered pricing built for sport — from grassroots clubs to global federations. Choose the plan that fits your audience, content and growth."
+  title: "Sports Streaming Pricing Plans — MatchDayLive"
+  description: "Tiered pricing for sports clubs to global federations. On-Demand from £399/mo, Live & On-Demand from £399/mo. No setup fees."
 
 hero:
-  heading: "Pricing"
+  heading: "Sports Streaming Pricing Plans"
   description: "Our tiered pricing plans are built to support all levels of the game, from grassroots clubs to global federations."
   calculatorPrompt: "Not sure which plan to choose?"
   calculatorButton: "Calculate Usage"
   billingToggle:
     monthlyLabel: "Monthly"
     annualLabel: "Annual (save 20%)"
+  cardsSubtext:
+    - "For billing cycles, data and bandwidth expiration, and overages, read more."
+    - "Displayed prices are in pound sterling (GBP) and exclusive of VAT and other taxes (added at checkout if applicable)."
 
 products:
   - id: on-demand
@@ -57,7 +60,7 @@ products:
         annualPrice: "£1599"
         vatNote: "P/M ANNUALLY EXCL. VAT"
         description: "Unrestricted scale for federations, leagues and broadcasters."
-        buttonVariant: grey
+        buttonVariant: product-accent
         differentiators:
           - { label: "Bandwidth", value: "Unlimited" }
           - { label: "Storage Capacity", value: "Unlimited" }
@@ -111,7 +114,7 @@ products:
         annualPrice: "£1599"
         vatNote: "P/M ANNUALLY EXCL. VAT"
         description: "Unlimited streaming for federations, leagues and broadcasters."
-        buttonVariant: grey
+        buttonVariant: product-accent
         differentiators:
           - { label: "Live Stream Hours", value: "Unlimited" }
           - { label: "Bandwidth", value: "Unlimited" }
@@ -143,7 +146,7 @@ comparisons:
             values: [{ value: true }, { value: true }, { value: true }, { value: true }]
           - label: "Custom domain"
             values: [{ value: false }, { value: true }, { value: true }, { value: true }]
-          - label: "White-label apps"
+          - label: "Full white-label customisation"
             values: [{ value: false }, { value: false }, { value: true }, { value: true }]
       - id: monetisation
         heading: "Monetisation"
@@ -168,12 +171,8 @@ comparisons:
       - id: fan-experience
         heading: "Fan experience"
         rows:
-          - label: "iOS & Android apps"
+          - label: "Chromecast & AirPlay casting"
             values: [{ value: true }, { value: true }, { value: true }, { value: true }]
-          - label: "Smart TV apps"
-            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
-          - label: "Multi-language UI"
-            values: [{ value: false }, { value: false }, { value: true }, { value: true }]
       - id: scalability
         heading: "Scalability"
         rows:
@@ -184,11 +183,9 @@ comparisons:
       - id: security
         heading: "Security"
         rows:
-          - label: "DRM (Widevine / FairPlay)"
+          - label: "Content geo-restrictions"
             values: [{ value: false }, { value: true }, { value: true }, { value: true }]
-          - label: "Geo-restrictions"
-            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
-          - label: "SSO / SAML"
+          - label: "Sports Alliance SSO"
             values: [{ value: false }, { value: false }, { value: false }, { value: true }]
 
   - productId: live
@@ -213,7 +210,7 @@ comparisons:
             values: [{ value: true }, { value: true }, { value: true }, { value: true }]
           - label: "Custom domain"
             values: [{ value: false }, { value: true }, { value: true }, { value: true }]
-          - label: "White-label apps"
+          - label: "Full white-label customisation"
             values: [{ value: false }, { value: false }, { value: true }, { value: true }]
       - id: monetisation
         heading: "Monetisation"
@@ -236,10 +233,8 @@ comparisons:
       - id: fan-experience
         heading: "Fan experience"
         rows:
-          - label: "iOS & Android apps"
+          - label: "Chromecast & AirPlay casting"
             values: [{ value: true }, { value: true }, { value: true }, { value: true }]
-          - label: "Smart TV apps"
-            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
       - id: scalability
         heading: "Scalability"
         rows:
@@ -250,11 +245,9 @@ comparisons:
       - id: security
         heading: "Security"
         rows:
-          - label: "DRM (Widevine / FairPlay)"
+          - label: "Content geo-restrictions"
             values: [{ value: false }, { value: true }, { value: true }, { value: true }]
-          - label: "Geo-restrictions"
-            values: [{ value: false }, { value: true }, { value: true }, { value: true }]
-          - label: "SSO / SAML"
+          - label: "Sports Alliance SSO"
             values: [{ value: false }, { value: false }, { value: false }, { value: true }]
 
 calculator:

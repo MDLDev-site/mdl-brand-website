@@ -15,7 +15,7 @@ const navLinks = [
 ];
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 p-[16px]">
+<header class="site-header fixed top-0 left-0 right-0 z-50 bg-navy-umpire p-[16px] transition-[translate] duration-200">
   <div class="relative mx-auto max-w-360">
     <nav
       class="flex items-center justify-between rounded-[16px] bg-[rgba(22,29,37,0.9)] px-[24px] py-[12px] backdrop-blur-md"
@@ -33,7 +33,7 @@ const navLinks = [
             {link.hasDropdown ? (
               <button
                 type="button"
-                class="nav-dropdown-trigger flex items-center gap-[4px] rounded-md px-[8px] py-[4px] font-body text-[16px] font-medium capitalize tracking-[-0.16px] text-white transition-colors hover:bg-white/10"
+                class="nav-dropdown-trigger flex items-center gap-[4px] rounded-md px-[8px] py-[4px] text-body-lg font-medium capitalize tracking-[-0.16px] text-white transition-colors hover:bg-white/10"
                 data-dropdown={link.text.toLowerCase()}
                 aria-expanded="false"
                 aria-haspopup="true"
@@ -52,7 +52,7 @@ const navLinks = [
             ) : (
               <a
                 href={link.href}
-                class="flex items-center gap-[4px] rounded-md px-[8px] py-[4px] font-body text-[16px] font-medium capitalize tracking-[-0.16px] text-white transition-colors hover:bg-white/10"
+                class="flex items-center gap-[4px] rounded-md px-[8px] py-[4px] text-body-lg font-medium capitalize tracking-[-0.16px] text-white transition-colors hover:bg-white/10"
               >
                 {link.text}
               </a>
@@ -65,13 +65,13 @@ const navLinks = [
       <div class="hidden items-center gap-[12px] lg:flex">
         <a
           href="/sign-in"
-          class="rounded-sm border border-white px-[32px] py-[16px] font-body text-[16px] font-medium uppercase tracking-[0.32px] text-white transition-colors hover:bg-white/10"
+          class="rounded-sm border border-white px-[32px] py-[16px] text-body-lg font-medium uppercase tracking-[0.32px] text-white transition-colors hover:bg-white/10"
         >
           Sign in
         </a>
         <a
           href="/book-a-call"
-          class="rounded-sm bg-blue-matchday px-[32px] py-[16px] font-body text-[16px] font-medium uppercase tracking-[0.32px] text-white transition-colors hover:bg-blue-matchday/90"
+          class="rounded-sm bg-blue-matchday px-[32px] py-[16px] text-body-lg font-medium uppercase tracking-[0.32px] text-white transition-colors hover:bg-blue-matchday/90"
         >
           Book a call
         </a>
@@ -79,15 +79,56 @@ const navLinks = [
 
       <!-- Mobile menu button -->
       <button
-        class="flex items-center justify-center rounded-md p-[8px] text-white lg:hidden"
-        aria-label="Open menu"
+        class="mobile-menu-trigger flex items-center justify-center rounded-md p-[8px] text-white lg:hidden"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu-panel"
         type="button"
       >
-        <svg class="h-[24px] w-[24px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <svg class="hamburger-icon h-[24px] w-[24px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg class="close-icon hidden h-[24px] w-[24px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
     </nav>
+
+    <!-- Mobile menu panel -->
+    <div
+      id="mobile-menu-panel"
+      class="mobile-menu-panel pointer-events-none absolute left-0 right-0 top-full z-40 mt-[8px] opacity-0 transition-all duration-200 lg:hidden"
+      aria-hidden="true"
+    >
+      <div class="mx-[16px] flex flex-col gap-[16px] rounded-[16px] bg-[rgba(22,29,37,0.95)] p-[24px] backdrop-blur-md">
+        <ul class="flex flex-col gap-[4px]" role="list">
+          {navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href.startsWith('#') ? '/' : link.href}
+                class="block rounded-md px-[12px] py-[12px] text-body-lg font-medium capitalize text-white transition-colors hover:bg-white/10"
+              >
+                {link.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div class="flex flex-col gap-[12px] border-t border-white/10 pt-[16px]">
+          <a
+            href="/sign-in"
+            class="rounded-sm border border-white px-[24px] py-[12px] text-center text-body-lg font-medium uppercase tracking-[0.32px] text-white transition-colors hover:bg-white/10"
+          >
+            Sign in
+          </a>
+          <a
+            href="/contact"
+            class="rounded-sm bg-blue-matchday px-[24px] py-[12px] text-center text-body-lg font-medium uppercase tracking-[0.32px] text-white transition-colors hover:bg-blue-matchday/90"
+          >
+            Book a call
+          </a>
+        </div>
+      </div>
+    </div>
 
     <!-- Products dropdown panel -->
     <div
@@ -99,20 +140,15 @@ const navLinks = [
         <!-- On-Demand -->
         <div class="flex flex-1 flex-col gap-[16px] p-[24px]">
           <div class="flex items-center gap-[16px]">
-            <!-- Play icon (blue triangle) -->
-            <div class="flex h-[32px] w-[32px] items-center justify-center">
-              <svg class="h-5 w-5" viewBox="0 0 20 20" fill="none">
-                <path d="M4 3.5L16 10L4 16.5V3.5Z" fill="var(--color-blue-matchday)" />
-              </svg>
-            </div>
-            <h4 class="font-subheading text-[32px] font-medium uppercase leading-none tracking-[-0.96px] text-white">
+            <img src="/images/icons/product-vod.svg" alt="" class="h-[32px] w-[32px]" aria-hidden="true" />
+            <h4 class="text-h4 text-white">
               On-Demand
             </h4>
           </div>
-          <p class="font-body text-[14px] font-normal leading-normal text-white">
+          <p class="text-body text-white">
             From match replays to exclusive interviews, control how your content is organised, published, and monetised all from one platform.
           </p>
-          <a href="/products/on-demand" class="group inline-flex items-center gap-[8px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:text-yellow-tennis">
+          <a href="/products/on-demand" class="group inline-flex items-center gap-[8px] text-body-lg font-medium capitalize tracking-[0.32px] text-white transition-colors hover:text-yellow-tennis">
             Learn more
             <svg class="h-[16px] w-[16px] transition-transform group-hover:translate-x-[4px]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -123,18 +159,15 @@ const navLinks = [
         <!-- Live & On-Demand -->
         <div class="flex flex-1 flex-col gap-[16px] p-[24px]">
           <div class="flex items-center gap-[16px]">
-            <!-- Live dot icon (orange/red circle) -->
-            <div class="flex h-[24px] w-[24px] items-center justify-center">
-              <div class="h-[16px] w-[16px] rounded-full bg-orange-basketball"></div>
-            </div>
-            <h4 class="font-subheading text-[32px] font-medium uppercase leading-none tracking-[-0.96px] text-white">
+            <img src="/images/icons/product-live.svg" alt="" class="h-[24px] w-[24px]" aria-hidden="true" />
+            <h4 class="text-h4 text-white">
               Live & On-Demand
             </h4>
           </div>
-          <p class="font-body text-[14px] font-normal leading-normal text-white">
+          <p class="text-body text-white">
             Deliver smooth, low-latency live broadcasts with professional-grade quality whether it's a packed stadium or a behind-the-scenes moment.
           </p>
-          <a href="/products/live" class="group inline-flex items-center gap-[8px] font-body text-[16px] font-medium capitalize leading-[1.1] tracking-[0.32px] text-white transition-colors hover:text-yellow-tennis">
+          <a href="/products/live" class="group inline-flex items-center gap-[8px] text-body-lg font-medium capitalize tracking-[0.32px] text-white transition-colors hover:text-yellow-tennis">
             Learn more
             <svg class="h-[16px] w-[16px] transition-transform group-hover:translate-x-[4px]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -200,4 +233,42 @@ const navLinks = [
 
   document.addEventListener('astro:page-load', initNavDropdowns);
   initNavDropdowns();
+
+  function initMobileMenu() {
+    const trigger = document.querySelector<HTMLButtonElement>('.mobile-menu-trigger');
+    const panel = document.querySelector<HTMLElement>('.mobile-menu-panel');
+    const hamburgerIcon = trigger?.querySelector<SVGElement>('.hamburger-icon');
+    const closeIcon = trigger?.querySelector<SVGElement>('.close-icon');
+    if (!trigger || !panel || !hamburgerIcon || !closeIcon) return;
+
+    function setOpen(open: boolean) {
+      trigger!.setAttribute('aria-expanded', String(open));
+      panel!.setAttribute('aria-hidden', String(!open));
+      panel!.classList.toggle('opacity-0', !open);
+      panel!.classList.toggle('opacity-100', open);
+      panel!.classList.toggle('pointer-events-none', !open);
+      panel!.classList.toggle('pointer-events-auto', open);
+      hamburgerIcon!.classList.toggle('hidden', open);
+      closeIcon!.classList.toggle('hidden', !open);
+    }
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+      setOpen(!isOpen);
+    });
+
+    // Close when clicking a link inside
+    panel.querySelectorAll('a').forEach((a) => {
+      a.addEventListener('click', () => setOpen(false));
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  }
+
+  document.addEventListener('astro:page-load', initMobileMenu);
+  initMobileMenu();
 </script>

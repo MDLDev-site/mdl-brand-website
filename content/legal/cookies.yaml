@@ -1,0 +1,36 @@
+slug: cookies
+page:
+  title: "Cookies Policy — MatchDayLive"
+  description: "How MatchDayLive and our third-party providers use cookies and similar technologies on matchdaylive.com."
+
+title: "Cookies"
+lastUpdated: "April 2026"
+
+intro: "This Cookies Policy explains what cookies are, how Matchday Media uses them on matchdaylive.com, and how you can manage your preferences."
+
+sections:
+  - heading: "1. What are cookies?"
+    body: "Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work, or work more efficiently, and to provide information to the site owners."
+
+  - heading: "2. How we use cookies"
+    body: |
+      We use cookies to:
+
+      - Remember your consent preferences
+      - Measure traffic and usage via Google Analytics 4
+      - Power video playback analytics via Bitmovin
+      - Provide customer support via Intercom
+
+      You can manage all non-essential cookie preferences via the Cookit consent banner that appears when you first visit the site. You can re-open the preferences at any time from the floating consent button.
+
+  - heading: "3. Third-party cookies"
+    body: |
+      Some cookies on matchdaylive.com are set by third parties:
+
+      - **Google Analytics 4** — analytics
+      - **Bitmovin** — video playback metrics
+      - **Intercom** — support chat
+      - **Stripe** — payment processing
+
+  - heading: "4. Contact"
+    body: "For cookie-related questions, contact privacy@matchdaylive.com."

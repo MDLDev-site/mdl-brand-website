@@ -9,24 +9,39 @@ interface Props {
 
 const { tier, productId, tierIndex } = Astro.props;
 
+const productAccentClass = productId === 'on-demand'
+  ? 'bg-blue-matchday text-white hover:bg-blue-matchday/90'
+  : 'bg-orange-basketball text-white hover:bg-orange-basketball/90';
+
 const buttonClass =
   tier.buttonVariant === 'orange'
     ? 'bg-orange-basketball text-white hover:bg-orange-basketball/90'
     : tier.buttonVariant === 'blue'
       ? 'bg-blue-matchday text-white hover:bg-blue-matchday/90'
-      : 'bg-white/10 text-white hover:bg-white/20';
+      : tier.buttonVariant === 'product-accent'
+        ? productAccentClass
+        : 'bg-white/10 text-white hover:bg-white/20';
+
+const productRingClass = productId === 'on-demand'
+  ? 'ring-blue-matchday'
+  : 'ring-orange-basketball';
 
 const ringClass =
-  tier.tag?.variant === 'recommended'
-    ? 'ring-1 ring-orange-basketball'
-    : tier.tag?.variant === 'most-popular'
+  tier.tag?.variant === 'most-popular'
+    ? `ring-1 ${productRingClass}`
+    : tier.tag?.variant === 'recommended'
       ? 'ring-1 ring-white/30'
       : 'ring-1 ring-white/10';
 
 const tagClass =
-  tier.tag?.variant === 'recommended'
-    ? 'bg-orange-basketball text-white'
+  tier.tag?.variant === 'most-popular'
+    ? `${productId === 'on-demand' ? 'bg-blue-matchday' : 'bg-orange-basketball'} text-white`
     : 'bg-white/20 text-white';
+
+// Hide the "Recommended" tag by default; shown after the calculator runs.
+const tagWrapperClass = tier.tag?.variant === 'recommended'
+  ? 'pricing-tag-recommended hidden'
+  : '';
 ---
 
 <div
@@ -37,14 +52,14 @@ const tagClass =
 >
   {tier.tag && (
     <span
-      class={`absolute -top-[12px] left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-[12px] py-[4px] font-body text-[12px] font-medium tracking-[0.24px] ${tagClass}`}
+      class={`absolute -top-[12px] left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-[12px] py-[4px] text-body font-medium tracking-[0.24px] ${tagClass} ${tagWrapperClass}`}
     >
       {tier.tag.label}
     </span>
   )}
 
   <div class="flex flex-col items-center gap-[8px] text-center">
-    <p class="font-subheading text-[12px] font-semibold uppercase tracking-[0.24px] text-white">
+    <p class="text-h5 text-white">
       {tier.name}
     </p>
     <div class="flex items-baseline gap-[8px]">
@@ -55,7 +70,7 @@ const tagClass =
       >
         {tier.monthlyPrice}
       </span>
-      <span class="flex flex-col text-left font-body text-[10px] font-medium uppercase tracking-[0.2px] text-white/60">
+      <span class="flex flex-col text-left text-note font-medium uppercase text-white/60">
         <span
           class="pricing-price-strike line-through"
           data-monthly-strike={tier.annualPrice}
@@ -70,8 +85,14 @@ const tagClass =
 
   <a
     href={tier.cta.link}
-    class={`mt-[16px] inline-flex w-full items-center justify-center rounded-sm px-[24px] py-[12px] font-body text-[14px] font-medium leading-[1.1] transition-colors ${buttonClass}`}
+    class={`mt-[16px] inline-flex w-full items-center justify-center rounded-sm px-[24px] py-[12px] text-body font-medium transition-colors ${buttonClass}`}
   >
     {tier.cta.text}
   </a>
+
+  {tier.description && (
+    <p class="mt-[12px] text-body text-white/60 text-center">
+      {tier.description}
+    </p>
+  )}
 </div>

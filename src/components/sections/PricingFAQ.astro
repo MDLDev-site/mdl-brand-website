@@ -12,15 +12,15 @@ const { faq } = Astro.props;
   <div class="mx-auto grid max-w-360 grid-cols-1 gap-[40px] px-[24px] md:grid-cols-[1fr_2fr] md:gap-15 md:px-30">
     {/* Left: heading + description + CTA */}
     <div class="flex flex-col gap-[24px]">
-      <h2 class="font-heading text-[40px] font-medium uppercase leading-[0.9] tracking-[-1px] text-white md:text-[60px] md:tracking-[-2px]">
+      <h2 class="text-h2 text-white">
         {faq.heading}
       </h2>
-      <p class="font-body text-[14px] font-normal leading-[1.4] text-white/70 md:text-[16px]">
+      <p class="text-body-lg text-white/70">
         {faq.description}
       </p>
       <a
         href={faq.cta.link}
-        class="inline-flex w-fit items-center justify-center rounded-sm bg-blue-matchday px-[24px] py-[12px] font-body text-[14px] font-medium leading-[1.1] tracking-[0.28px] text-white transition-colors hover:bg-blue-matchday/90"
+        class="inline-flex w-fit items-center justify-center rounded-sm bg-blue-matchday px-[24px] py-[12px] text-body font-medium leading-[1.1] tracking-[0.28px] text-white transition-colors hover:bg-blue-matchday/90"
       >
         {faq.cta.text}
       </a>
@@ -31,7 +31,7 @@ const { faq } = Astro.props;
       {faq.items.map((item) => (
         <details class="pricing-faq-item group border-b border-white/10 py-[16px]">
           <summary class="flex cursor-pointer list-none items-center justify-between gap-[16px]">
-            <span class="font-body text-[14px] font-medium text-white md:text-[16px]">
+            <span class="text-body-lg font-medium text-white">
               {item.question}
             </span>
             <svg
@@ -43,7 +43,7 @@ const { faq } = Astro.props;
               <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </summary>
-          <p class="mt-[12px] font-body text-[13px] font-normal leading-[1.5] text-white/70 md:text-[14px]">
+          <p class="mt-[12px] text-body text-white/70">
             {item.answer}
           </p>
         </details>

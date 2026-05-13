@@ -5,9 +5,13 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://matchdaylive.com',
+  site: process.env.SITE_URL ?? 'https://matchdaylive.com',
   vite: {
     plugins: [tailwindcss()],
   },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/CLAUDE'),
+    }),
+  ],
 });

@@ -7,7 +7,9 @@ sections:
     heading:
       - BECOME THE
       - BROADCASTER
-    subheading: "Launch your own branded Live-Streaming and On-Demand sports media platform in minutes. Engage your fans, own your content and unlock new revenue \u2014 all in one powerful solution."
+    subtitle: "The all-in-one sports OTT platform for clubs, leagues and federations"
+    subheading: "Launch your own branded sports streaming platform with MatchDayLive. Stream live matches, host on-demand content, and unlock new revenue \u2014 all in one powerful OTT solution for sports clubs, leagues and federations."
+    backgroundImage: /images/hero-bg.webp
     cta:
       primary:
         text: See All Features
@@ -20,26 +22,26 @@ sections:
     heading: A central hub for all your Live & On-Demand video content
     logos:
       - src: /images/logos/partner-1.png
-        alt: Partner 1
+        alt: Bristol City FC
       - src: /images/logos/partner-2.png
-        alt: Partner 2
+        alt: Chesterfield FC
       - src: /images/logos/partner-3.png
-        alt: Partner 3
+        alt: Super League Basketball
       - src: /images/logos/partner-4.png
-        alt: Partner 4
+        alt: Bristol Flyers
       - src: /images/logos/partner-5.png
-        alt: Partner 5
+        alt: Newcastle Eagles Basketball
       - src: /images/logos/partner-6.png
-        alt: Partner 6
+        alt: Bristol Pitbulls
       - src: /images/logos/partner-7.png
-        alt: Partner 7
+        alt: Bristol Bears RFC
 
   - type: diagonals
-    variant: white-to-grey
+    variant: grey-to-white
 
   - type: feature
     heading: Make it yours
-    description: "Your own branded OTT.\nEnsuring fans feel right at home."
+    description: "Your own white-label OTT platform.\nEnsuring fans feel right at home."
     features:
       - text: A central branded hub for all your Live & On-Demand video content
       - text: A seamless fan experience on your domain - live.yourdomain.com
@@ -62,7 +64,7 @@ sections:
     features:
       - text: Offer your fans Free, Freemium and Premium content to appeal to all
       - text: Once-off or recurring subscriptions and PPV (Pay-Per-View) pricing
-      - text: Create curated On-Demand playlists and collections
+      - text: Manage promotions and discounts to drive fan subscriptions
       - text: Promote adoption through special offer and promotional discounts
     image: /images/features/turn-passion-into-profit.png
     imageAlt: Monetisation dashboard showing revenue streams
@@ -81,7 +83,7 @@ sections:
     features:
       - text: Evolve your content with data-driven insights that grows fan engagement
       - text: Turn sales data into strategy with detailed commercial breakdowns
-      - text: Create curated On-Demand playlists and collections
+      - text: Track content performance and fan engagement trends
       - text: Work with fans to produce content that continues to engage
     image: /images/features/understand-fans.png
     imageAlt: Analytics dashboard showing fan engagement data
@@ -95,7 +97,7 @@ sections:
         link: /pricing
 
   - type: diagonals
-    variant: grey-to-white
+    variant: white-to-grey
 
   - type: carousel
     heading: FOR EVERY LEVEL OF THE GAME
@@ -110,24 +112,24 @@ sections:
         description: Offer your clients a turnkey streaming solution. White-label the platform, deliver content at scale, and add a powerful new revenue stream to your production services.
 
   - type: diagonals
-    variant: white-to-grey
+    variant: grey-to-white
 
   - type: grid
     heading: PUTTING FANS FIRST
-    description: "A premium end-to-end viewing experience across all devices. Whether on the couch or on the move."
+    description: "A premium end-to-end viewing experience across all devices on your own sports OTT platform. Whether on the couch or on the move."
     features:
       - icon: hd
         title: 1080P HD Quality
         description: Stream every moment in crisp 1080p HD, bringing fans closer to the action.
       - icon: cast
         title: Smart TV Casting
-        description: An intelligent player which allows fans to cast their Live & On-Demand content to larger screen formats for vieweing.
+        description: An intelligent player which allows fans to cast their Live & On-Demand content to larger screen formats for viewing.
       - icon: vod
         title: Live to On-Demand
         description: Instant live to on-demand recordings ensuring fans can watch live, catch up later, or rewatch the moments that matter.
       - icon: latency
         title: Low Latency
-        description: Live action with virtually no delay - fans stay ahead with our low-latency streams.
+        description: "Live action with virtually no delay — fans stay ahead with our low-latency HLS adaptive bitrate streams."
       - icon: data
         title: Data-Friendly
         description: Skip straight to the action - our HLS format delivers fast, data-friendly viewing from any point, without the wait.
@@ -143,7 +145,7 @@ sections:
         link: /pricing
 
   - type: diagonals
-    variant: grey-to-white
+    variant: white-to-grey
 
   - type: customers
     heading: BUILT FOR SPORT
@@ -154,7 +156,7 @@ sections:
         backgroundImage: /images/customers/customer-1-bg.png
         gradientColor: "#e41e26"
         cta:
-          text: Read Story
+          text: Read Bristol City's story
           link: /case-studies/bristol-city
       - quote: '"Regional expansion, global customers"'
         brandLogo: /images/customers/customer-2-logo.png
@@ -162,7 +164,7 @@ sections:
         backgroundImage: /images/customers/customer-2-bg.png
         gradientColor: "#ff633d"
         cta:
-          text: Read Story
+          text: Read Super League Basketball's story
           link: /case-studies/super-league-basketball
       - quote: '"A platform built for the future of sport"'
         brandLogo: /images/customers/customer-3-logo.png
@@ -170,11 +172,11 @@ sections:
         backgroundImage: /images/customers/customer-3-bg.png
         gradientColor: "#152644"
         cta:
-          text: Read Story
+          text: Read Bristol Bears' story
           link: /case-studies/bristol-bears
 
   - type: diagonals
-    variant: white-to-grey
+    variant: grey-to-white
 
   - type: accordion_features
     heading:
@@ -198,24 +200,30 @@ sections:
         link: /pricing
     items:
       - title: DRM+
-        description: Industry-leading digital rights management protects your premium content from piracy and unauthorised redistribution across all devices.
+        description: Protect your premium content with geographic access controls. Restrict viewing to specific countries or regions, ensuring your broadcasting rights and territorial agreements are fully honoured.
         learnMoreLink: /features/drm
+        learnMoreText: Explore DRM+ protection
+        expanded: true
       - title: Stripe Payments
         description: Secure, global payment processing powered by Stripe. Accept cards, Apple Pay, Google Pay, and local payment methods in 135+ currencies.
         learnMoreLink: /features/payments
+        learnMoreText: Discover Stripe payments
       - title: 24/7 Fan Support
-        description: "Support that never sleeps. Intelligent AI agents provide instant, 24/7 help for your fans, resolving queries in seconds -with seamless escalation to human agents when needed."
+        description: "Support that never sleeps. Real-time fan support via Intercom chat — resolving login issues, payment queries and playback problems around the clock, with seamless escalation to your support team."
         learnMoreLink: /features/support
-        expanded: true
+        learnMoreText: See 24/7 fan support
       - title: Scale Infinitely
         description: Whether it's 100 viewers or 100,000, the platform scales automatically to handle any audience size without buffering or downtime.
         learnMoreLink: /features/scale
+        learnMoreText: Learn about infinite scaling
       - title: Global CDN
         description: Content is delivered via a worldwide network of edge servers, ensuring fast load times and reliable streaming for fans anywhere on the planet.
         learnMoreLink: /features/cdn
+        learnMoreText: Discover global CDN delivery
       - title: GDPR & Data Privacy
         description: Fully GDPR-compliant with robust data protection policies. Your fans' data is stored securely and handled in accordance with international privacy regulations.
         learnMoreLink: /features/privacy
+        learnMoreText: Understand data privacy
 
   - type: cta_banner
     heading:
