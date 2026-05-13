@@ -14,10 +14,10 @@ const bgClass = category.background === 'grey' ? 'bg-grey' : 'bg-white';
     <div class="mx-auto max-w-360 px-[24px] md:px-30">
       {/* Section header */}
       <div class="mb-[48px] md:mb-25">
-        <h2 class="font-heading text-[28px] font-medium uppercase leading-[1.15] tracking-[-0.5px] text-charcoal-pitch sm:text-[36px] md:text-[50px] md:tracking-[-1px]">
+        <h2 class="text-h3 text-charcoal-pitch">
           {category.heading}
         </h2>
-        <p class="mt-[16px] max-w-147.5 font-body text-[14px] font-normal leading-[1.4] text-text-primary md:text-[18px]">
+        <p class="mt-[16px] max-w-147.5 text-body-lg text-text-primary">
           {category.description}
         </p>
       </div>
@@ -27,12 +27,12 @@ const bgClass = category.background === 'grey' ? 'bg-grey' : 'bg-white';
         {category.features.map((feature) => (
           <div class="flex flex-col gap-[16px] border-b border-[rgba(21,38,68,0.05)] py-[16px] md:flex-row md:items-start md:gap-13">
             {/* Title column — fixed width on desktop */}
-            <p class="shrink-0 font-body text-[14px] font-bold leading-normal text-text-primary md:w-48.75">
+            <p class="shrink-0 text-body font-bold text-text-primary md:w-48.75">
               {feature.title}
             </p>
 
             {/* Description column — flex */}
-            <div class="min-w-0 flex-1 font-body text-[14px] font-normal leading-normal text-text-primary">
+            <div class="min-w-0 flex-1 text-body text-text-primary">
               <Fragment set:html={feature.description
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\n\n/g, '<br><br>')
@@ -51,7 +51,7 @@ const bgClass = category.background === 'grey' ? 'bg-grey' : 'bg-white';
                           <path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                       </div>
-                      <span class="font-body text-[14px] font-normal leading-normal text-text-primary">
+                      <span class="text-body text-text-primary">
                         {check}
                       </span>
                     </div>

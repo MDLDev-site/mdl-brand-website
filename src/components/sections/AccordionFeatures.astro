@@ -11,7 +11,7 @@ const { section } = Astro.props;
 <section class="bg-navy-umpire" aria-label={section.heading.join(' ')}>
   <div class="mx-auto flex max-w-360 flex-col gap-[64px] px-[24px] py-20 md:gap-25 md:p-30">
     {/* Top: heading */}
-    <h2 class="max-w-200 font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] text-white md:text-[80px] md:tracking-[1px]">
+    <h2 class="text-h1 max-w-200 text-white">
       {section.heading.map((line) => (
         <span class="block">{line}</span>
       ))}
@@ -23,10 +23,10 @@ const { section } = Astro.props;
         <div class="flex items-stretch gap-[12px] md:gap-[16px]">
           <div class="w-[4px] shrink-0 rounded-full bg-yellow-tennis md:w-[8px]" aria-hidden="true"></div>
           <div class="flex flex-col gap-[4px]">
-            <span class="font-heading text-[28px] font-medium uppercase leading-[1.15] tracking-[-0.5px] text-white md:text-[50px]">
+            <span class="text-h3 text-white">
               {stat.value}
             </span>
-            <span class="font-body text-[12px] font-normal leading-[1.4] text-white/60 md:text-[14px]">
+            <span class="text-body text-white/60">
               {stat.label}
             </span>
           </div>
@@ -78,7 +78,7 @@ const { section } = Astro.props;
                 aria-expanded={item.expanded ? 'true' : 'false'}
                 aria-controls={`accordion-panel-${index}`}
               >
-                <h4 class="font-heading-semi text-[24px] font-medium uppercase leading-none tracking-[-0.96px] text-white md:text-[32px]">
+                <h4 class="text-h4 text-white">
                   {item.title}
                 </h4>
               </button>
@@ -93,14 +93,14 @@ const { section } = Astro.props;
               >
                 <div class="flex flex-col gap-[16px] pb-[24px] pl-[24px] pr-[16px]">
                   {item.description && (
-                    <p class="font-body text-[14px] font-normal leading-normal text-white/60">
+                    <p class="text-body text-white/60">
                       {item.description}
                     </p>
                   )}
                   {item.learnMoreLink && (
                     <a
                       href={item.learnMoreLink}
-                      class="inline-flex items-center gap-[4px] font-body text-[14px] font-medium text-yellow-tennis transition-colors hover:text-yellow-tennis/80"
+                      class="inline-flex items-center gap-[4px] text-body font-medium text-yellow-tennis transition-colors hover:text-yellow-tennis/80"
                     >
                       {item.learnMoreText ?? 'Learn more'}
                       <svg class="h-3.5 w-3.5" viewBox="0 0 14 14" fill="none" aria-hidden="true">

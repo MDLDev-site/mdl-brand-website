@@ -16,13 +16,13 @@ const { hero } = Astro.props;
 
   <div class="relative mx-auto flex max-w-300 flex-col items-center gap-12.5 overflow-hidden px-[24px] pb-25 pt-40 md:pb-35 md:pt-45">
     <div class="flex w-full flex-col items-center gap-[24px] text-center text-white">
-      <h1 class="w-full font-heading text-[36px] font-medium uppercase leading-[0.9] tracking-[-1px] text-white sm:text-[50px] md:text-[80px] md:tracking-[0.8px]">
+      <h1 class="text-h1 w-full text-white">
         {hero.heading.map((line) => (
           <span class="block">{line}</span>
         ))}
       </h1>
 
-      <p class="max-w-170 font-body text-[16px] font-normal leading-[1.4] text-white/80 md:text-[20px]">
+      <p class="max-w-170 text-body-lg text-white/80">
         {hero.description}
       </p>
     </div>

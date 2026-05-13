@@ -10,7 +10,7 @@ const { section } = Astro.props;
 
 <section class="bg-navy-umpire" aria-label="Newsletter signup">
   <div class="mx-auto flex max-w-360 flex-col gap-[32px] px-[24px] py-[64px] md:px-30 md:py-20">
-    <h4 class="text-center font-heading text-[28px] font-medium uppercase leading-[0.9] tracking-[-1px] text-white md:text-left md:font-subheading md:text-[32px] md:tracking-[-3px] md:text-yellow-tennis">
+    <h4 class="text-h4 text-center text-white md:text-left md:text-yellow-tennis">
       {section.heading}
     </h4>
 
@@ -25,7 +25,7 @@ const { section } = Astro.props;
           type="text"
           name="firstName"
           placeholder="Al"
-          class="w-full border-b border-white/40 bg-transparent px-0 py-[12px] font-body text-[14px] text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
+          class="w-full border-b border-white/40 bg-transparent px-0 py-[12px] text-body text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
           autocomplete="given-name"
         />
       </div>
@@ -37,7 +37,7 @@ const { section } = Astro.props;
           type="text"
           name="surname"
           placeholder="Your surname"
-          class="w-full border-b border-white/40 bg-transparent px-0 py-[12px] font-body text-[14px] text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
+          class="w-full border-b border-white/40 bg-transparent px-0 py-[12px] text-body text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
           autocomplete="family-name"
         />
       </div>
@@ -49,7 +49,7 @@ const { section } = Astro.props;
           type="text"
           name="company"
           placeholder="Company name (optional)"
-          class="w-full border-b border-white/40 bg-transparent px-0 py-[12px] font-body text-[14px] text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
+          class="w-full border-b border-white/40 bg-transparent px-0 py-[12px] text-body text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
         />
       </div>
 
@@ -61,7 +61,7 @@ const { section } = Astro.props;
           name="email"
           required
           placeholder="Your email address"
-          class="w-full border-b border-white/40 bg-transparent px-0 py-[12px] font-body text-[14px] text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
+          class="w-full border-b border-white/40 bg-transparent px-0 py-[12px] text-body text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
           autocomplete="email"
         />
       </div>

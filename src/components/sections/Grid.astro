@@ -12,11 +12,11 @@ const { section } = Astro.props;
   <div class="mx-auto flex max-w-360 flex-col gap-[64px] px-[24px] py-20 md:gap-25 md:px-30 md:py-25">
     {/* Top: heading + description + buttons */}
     <div class="flex max-w-150 flex-col gap-[24px]">
-      <h2 class="font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch md:text-[80px] md:tracking-[1px]">
+      <h2 class="text-h1 text-charcoal-pitch">
         {section.heading}
       </h2>
 
-      <p class="font-body text-[18px] font-normal leading-[1.4] text-text-primary">
+      <p class="text-body-lg text-text-primary">
         {section.description}
       </p>
 
@@ -66,11 +66,11 @@ const { section } = Astro.props;
             </div>
           )}
 
-          <h4 class="font-heading-semi text-[24px] font-medium uppercase leading-none tracking-[-0.96px] text-charcoal-pitch md:text-[32px]">
+          <h4 class="text-h4 text-charcoal-pitch">
             {feature.title}
           </h4>
 
-          <p class="font-body text-[14px] font-normal leading-normal text-charcoal-pitch/60">
+          <p class="text-body text-charcoal-pitch/60">
             {feature.description}
           </p>
         </div>

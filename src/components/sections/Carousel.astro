@@ -12,7 +12,7 @@ const { section } = Astro.props;
   <div class="mx-auto max-w-360">
     {/* Header row */}
     <div class="flex items-end justify-between px-[24px] pb-[48px] md:px-30">
-      <h2 class="max-w-150 font-heading text-[50px] font-medium uppercase leading-[0.9] tracking-[-1px] text-charcoal-pitch md:text-[80px] md:tracking-[1px]">
+      <h2 class="text-h1 max-w-150 text-charcoal-pitch">
         {section.heading}
       </h2>
 
@@ -51,10 +51,10 @@ const { section } = Astro.props;
           style="scroll-snap-align: start;"
         >
           <div class="flex flex-1 flex-col gap-[16px] px-[32px] pt-[48px] pb-9 md:px-[48px] md:pt-[64px] md:pb-[48px]">
-            <h3 class="font-heading text-[36px] font-medium uppercase leading-[1.15] tracking-[-0.5px] text-charcoal-pitch md:text-[50px]">
+            <h3 class="text-h4 text-charcoal-pitch">
               {card.title}
             </h3>
-            <p class="font-body text-[16px] font-normal leading-[1.4] text-text-primary md:text-[18px]">
+            <p class="text-body-lg text-text-primary">
               {card.description}
             </p>
           </div>

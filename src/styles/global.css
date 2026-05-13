@@ -74,3 +74,114 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* ==============================================
+ * Typography utilities — Figma node 219:13470
+ * Mobile-first; md: breakpoint at 768px = desktop
+ * ============================================== */
+
+/* H1 — Barlow Condensed Medium, UPPERCASE
+ * Mobile: 50px / 90% / -1%   Desktop: 80px / 90% / +1% */
+.text-h1 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 50px;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+@media (min-width: 768px) {
+  .text-h1 {
+    font-size: 80px;
+    letter-spacing: 0.01em;
+  }
+}
+
+/* H2 — UPPERCASE
+ * Mobile: Barlow Semi Condensed 30px / 110% / -3%
+ * Desktop: Barlow Condensed 60px / 90% / -3% */
+.text-h2 {
+  font-family: var(--font-subheading);
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+@media (min-width: 768px) {
+  .text-h2 {
+    font-family: var(--font-heading);
+    font-size: 60px;
+    line-height: 0.9;
+  }
+}
+
+/* H3 — Barlow Condensed Medium, UPPERCASE
+ * Mobile: 28px / 115% / -1%   Desktop: 50px / 115% / -1% */
+.text-h3 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+@media (min-width: 768px) {
+  .text-h3 {
+    font-size: 50px;
+  }
+}
+
+/* H4 — Barlow Semi Condensed Medium, UPPERCASE
+ * Mobile: 24px / 100% / -3%   Desktop: 32px / 100% / -3% */
+.text-h4 {
+  font-family: var(--font-subheading);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+@media (min-width: 768px) {
+  .text-h4 {
+    font-size: 32px;
+  }
+}
+
+/* H5 — Barlow Semi Condensed Medium, UPPERCASE
+ * 18px / 145% / 0 (no responsive variant) */
+.text-h5 {
+  font-family: var(--font-subheading);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.45;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+/* Body Large — Inter Regular  18px / 140% / 0 */
+.text-body-lg {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+/* Body — Inter Regular  14px / 150% / 0 */
+.text-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+/* Note — Inter Regular  10px / 120% / 0 */
+.text-note {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
