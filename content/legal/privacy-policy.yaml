@@ -1,0 +1,72 @@
+slug: privacy-policy
+page:
+  title: "Privacy Policy — MatchDayLive"
+  description: "How Matchday Media collects, uses and protects your personal data when you use MatchDayLive."
+
+title: "Privacy policy"
+lastUpdated: "April 2026"
+
+intro: "This Privacy Policy describes how Matchday Media (\"we\", \"us\", \"our\") collects, uses, and protects your personal data when you use the MatchDayLive platform at matchdaylive.com. By using our services, you agree to the collection and use of information in accordance with this policy."
+
+sections:
+  - heading: "1. Who We Are"
+    body: |
+      MatchDayLive is operated by Matchday Media, a company registered in the United Kingdom. We are the data controller for personal data collected through **matchdaylive.com**.
+
+      For data enquiries, contact us at: privacy@matchdaylive.com
+
+  - heading: "2. Data We Collect"
+    body: |
+      When you use MatchDayLive or enquire about our platform, we may collect:
+
+      - Contact information (name, email address, organisation name)
+      - Account credentials for the MatchDayLive management platform
+      - Payment information — processed exclusively by Stripe (we do not store card data)
+      - Usage data and analytics (page views, feature usage, session data)
+      - Video playback metrics (via Bitmovin analytics)
+      - Support conversation history (via Intercom)
+
+  - heading: "3. How We Use Your Data"
+    body: |
+      - To provide and operate the MatchDayLive platform
+      - To process payments and manage billing
+      - To provide customer support
+      - To send product updates and relevant communications (with your consent)
+      - To improve our platform through analytics
+      - To comply with legal obligations
+
+  - heading: "4. Third-Party Processors"
+    body: |
+      We use the following trusted third-party services to operate our platform:
+
+      - **Stripe** — payment processing (PCI DSS Level 1 certified)
+      - **Amazon Web Services (CloudFront, S3, Lambda)** — content delivery and infrastructure
+      - **Intercom** — customer support chat
+      - **Google Analytics 4** — website analytics
+      - **Bitmovin** — video player and playback analytics
+
+      Each provider is bound by appropriate data processing agreements.
+
+  - heading: "5. Your Rights (UK GDPR)"
+    body: |
+      Under UK GDPR, you have the right to:
+
+      - Access the personal data we hold about you
+      - Correct inaccurate data
+      - Request erasure of your data
+      - Object to or restrict processing
+      - Data portability
+      - Withdraw consent at any time (where processing is based on consent)
+
+      To exercise any of these rights, contact privacy@matchdaylive.com.
+
+  - heading: "6. Data Retention"
+    body: "We retain personal data for as long as necessary to provide our services and comply with legal obligations. Account data is deleted within 90 days of account closure upon request."
+
+  - heading: "7. Contact"
+    body: |
+      For any privacy-related queries or to exercise your rights:
+
+      **Email:** privacy@matchdaylive.com
+
+      You also have the right to lodge a complaint with the Information Commissioner's Office (ICO) at https://ico.org.uk.

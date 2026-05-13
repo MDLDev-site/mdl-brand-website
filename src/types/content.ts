@@ -355,19 +355,33 @@ export interface ContactPageContent {
   };
 }
 
-// Legal page
+// Legal — hub + individual document pages
 
-export interface LegalSection {
-  heading: string;
-  body: string;
+export interface LegalDocumentSummary {
+  slug: string;
+  title: string;
+  description: string;
 }
 
-export interface LegalPageContent {
+export interface LegalIndexContent {
   page: PageMeta;
   hero: {
     heading: string;
-    lastUpdated: string;
   };
+  documents: LegalDocumentSummary[];
+}
+
+export interface LegalSection {
+  heading: string;
+  body: string; // Supports Markdown-ish: **bold**, paragraphs, lists
+}
+
+export interface LegalDocumentContent {
+  slug: string;
+  page: PageMeta;
+  title: string;
+  lastUpdated: string;
+  intro?: string;
   sections: LegalSection[];
 }
 
