@@ -40,13 +40,13 @@ const { section } = Astro.props;
 
     {/* Cards track */}
     <div
-      class="carousel-track flex gap-[24px] overflow-x-auto px-[24px] pb-[8px] scrollbar-hide md:px-30"
+      class="carousel-track flex gap-[24px] overflow-x-auto overflow-y-visible px-[24px] pt-[8px] pb-[48px] scrollbar-hide md:px-30 md:pb-[64px]"
       role="list"
       style="scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;"
     >
       {section.cards.map((card) => (
         <article
-          class="flex w-75 shrink-0 flex-col rounded-md border-t-8 border-blue-matchday bg-white shadow-card-lg md:w-95"
+          class="flex w-75 shrink-0 flex-col rounded-md border-t-8 border-blue-matchday bg-white shadow-card md:w-95"
           role="listitem"
           style="scroll-snap-align: start;"
         >
