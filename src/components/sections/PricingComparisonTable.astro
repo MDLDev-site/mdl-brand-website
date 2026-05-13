@@ -32,7 +32,11 @@ function findProduct(productId: string) {
                   <span class="font-subheading text-[10px] font-semibold uppercase tracking-[0.2px] text-charcoal-pitch md:text-[12px]">
                     {tier.name}
                   </span>
-                  <span class="hidden font-heading text-[20px] font-medium leading-none text-charcoal-pitch md:inline">
+                  <span
+                    class="pricing-price hidden font-heading text-[20px] font-medium leading-none text-charcoal-pitch md:inline"
+                    data-monthly={tier.monthlyPrice}
+                    data-annual={tier.annualPrice}
+                  >
                     {tier.monthlyPrice}
                   </span>
                   <a
