@@ -93,6 +93,7 @@ categories:
     heading: "YOUR STREAMING COMMAND CENTRE"
     description: "A central hub for all your Live & On-Demand video content — built to power your channel end-to-end."
     background: white
+    hideHeading: true
     features:
       - title: "Content Management"
         description: "Upload, organise and schedule your entire content library from a single, intuitive dashboard. Publish instantly or plan ahead with scheduled releases."

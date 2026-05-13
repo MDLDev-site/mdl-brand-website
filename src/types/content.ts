@@ -191,6 +191,7 @@ export interface FeatureCategory {
   heading: string;
   description: string;
   background: 'white' | 'grey';
+  hideHeading?: boolean;
   features: FeatureRow[];
 }
 
