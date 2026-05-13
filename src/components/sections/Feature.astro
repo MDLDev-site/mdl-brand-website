@@ -70,12 +70,12 @@ const isImageLeft = section.imagePosition === 'left';
     </div>
 
     {/* Image side */}
-    <div class="relative flex flex-1 items-center justify-center overflow-hidden bg-grey px-[24px] pb-[48px] md:px-0 md:pb-0">
+    <div class="relative flex items-center justify-center bg-grey px-[24px] pb-[48px] md:flex-1 md:overflow-hidden md:px-0 md:pb-0">
       {section.image ? (
         <img
           src={section.image}
           alt={section.imageAlt}
-          class="h-auto w-full max-w-125 object-contain md:h-full md:max-w-none md:object-cover"
+          class="mx-auto block h-auto w-full max-w-125 object-contain md:h-full md:max-w-160 md:object-contain md:p-10"
           loading="lazy"
           decoding="async"
         />
@@ -85,7 +85,7 @@ const isImageLeft = section.imagePosition === 'left';
           role="img"
           aria-label={section.imageAlt}
         >
-          <span class="font-body text-[14px] text-charcoal-pitch/30">Feature Image</span>
+          <span class="text-body text-charcoal-pitch/30">Feature Image</span>
         </div>
       )}
     </div>
