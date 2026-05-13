@@ -392,6 +392,7 @@ export interface NotFoundPageContent {
   heading: string;
   description: string;
   imagePath?: string;
+  imageAlt?: string;
   cta: CTAButton;
 }
 

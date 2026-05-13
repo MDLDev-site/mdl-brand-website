@@ -1,0 +1,12 @@
+page:
+  title: "Page not found — MatchDayLive"
+  description: "The content you're looking for can't be found. It may have been moved or removed."
+
+heading: "404"
+description: "The content you're looking for can't be found. It may have been moved or removed. Let's get you back on track."
+imagePath: "/images/404.gif"
+imageAlt: "404 glitch animation"
+
+cta:
+  text: "Go Home"
+  link: "/"

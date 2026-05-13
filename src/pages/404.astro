@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { loadYaml } from '../lib/yaml-loader';
+import type { NotFoundPageContent } from '../types/content';
+
+const notFound = await loadYaml<NotFoundPageContent>('pages/404.yaml');
+---
+
+<BaseLayout title={notFound.page.title} description={notFound.page.description} noindex={true}>
+  <section class="bg-charcoal-pitch px-[24px] pb-20 pt-35 md:pb-30 md:pt-45 md:px-30">
+    <div class="mx-auto flex max-w-200 flex-col items-center gap-[40px] text-center">
+      {notFound.imagePath && (
+        <img
+          src={notFound.imagePath}
+          alt={notFound.imageAlt ?? ''}
+          class="h-auto w-full max-w-150"
+          loading="eager"
+          decoding="async"
+        />
+      )}
+
+      <h1 class="text-h1 text-white">{notFound.heading}</h1>
+
+      <p class="max-w-130 text-body-lg text-white/80">
+        {notFound.description}
+      </p>
+
+      <a
+        href={notFound.cta.link}
+        class="group inline-flex items-center justify-center gap-[8px] rounded-sm bg-blue-matchday px-[32px] py-[16px] text-body-lg font-medium capitalize tracking-[2px] text-white transition-colors hover:bg-blue-matchday/90"
+      >
+        {notFound.cta.text}
+        <svg class="h-[16px] w-[16px] transition-transform group-hover:translate-x-[4px]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+    </div>
+  </section>
+</BaseLayout>
