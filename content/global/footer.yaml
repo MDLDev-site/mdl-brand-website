@@ -1,0 +1,56 @@
+columns:
+  - title: Features
+    links:
+      - text: Brandability
+        href: /features#brandability
+      - text: Monetisation
+        href: /features#monetisation
+      - text: Platform
+        href: /features#platform
+      - text: Insights
+        href: /features#insights
+      - text: Fan experience
+        href: /features#fan-experience
+      - text: Scalability
+        href: /features#scalability
+      - text: Security
+        href: /features#security
+  - title: Products
+    links:
+      - text: On-Demand
+        href: /pricing
+      - text: Live & On-Demand
+        href: /pricing
+  - title: Resources
+    links:
+      - text: About
+        href: /about
+      - text: Pricing
+        href: /pricing
+      - text: Live Estimator Calculator
+        href: /pricing
+  - title: Help
+    links:
+      - text: Contact
+        href: /contact
+
+# Socials — set visible:true to render. Keep all entries here so the CMS
+# can flip them on without a code change.
+socials:
+  - name: X
+    href: https://x.com/matchdaylive
+    visible: false
+  - name: Instagram
+    href: https://instagram.com/matchdaylive
+    visible: false
+  - name: YouTube
+    href: https://youtube.com/matchdaylive
+    visible: false
+  - name: LinkedIn
+    href: https://www.linkedin.com/company/matchday-media-group/
+    visible: true
+
+bottom:
+  copyright: "© Matchday Media. All rights reserved"
+  legalLinkText: Legal
+  legalLinkHref: /legal

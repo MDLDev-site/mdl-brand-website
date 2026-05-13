@@ -328,12 +328,18 @@ export interface FooterColumn {
   }>;
 }
 
+export interface FooterSocial {
+  name: string;
+  href: string;
+  visible: boolean;
+}
+
 export interface Footer {
   columns: FooterColumn[];
-  copyright: string;
-  legal: CTAButton;
-  socials: Array<{
-    platform: string;
-    href: string;
-  }>;
+  socials: FooterSocial[];
+  bottom: {
+    copyright: string;
+    legalLinkText: string;
+    legalLinkHref: string;
+  };
 }
