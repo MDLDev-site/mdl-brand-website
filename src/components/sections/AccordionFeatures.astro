@@ -21,7 +21,7 @@ const { section } = Astro.props;
     <div class="grid grid-cols-2 gap-[24px] md:flex md:gap-[64px]">
       {section.stats.map((stat) => (
         <div class="flex items-stretch gap-[12px] md:gap-[16px]">
-          <div class="w-[4px] shrink-0 rounded-full bg-yellow-tennis md:w-[8px]" aria-hidden="true"></div>
+          <div class="w-[4px] shrink-0 bg-yellow-tennis md:w-[8px]" aria-hidden="true"></div>
           <div class="flex flex-col gap-[4px]">
             <span class="text-h3 text-white">
               {stat.value}
@@ -86,12 +86,12 @@ const { section } = Astro.props;
               <div
                 id={`accordion-panel-${index}`}
                 class:list={[
-                  'accordion-panel overflow-hidden transition-all duration-300',
-                  item.expanded ? 'max-h-75 opacity-100' : 'max-h-0 opacity-0',
+                  'accordion-panel grid overflow-hidden transition-all duration-300',
+                  item.expanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
                 ]}
                 role="region"
               >
-                <div class="flex flex-col gap-[16px] pb-[24px] pl-[24px] pr-[16px]">
+                <div class="flex min-h-0 flex-col gap-[16px] pb-[24px] pl-[24px] pr-[16px]">
                   {item.description && (
                     <p class="text-body text-white/60">
                       {item.description}
@@ -173,8 +173,8 @@ const { section } = Astro.props;
             const otherPanel = otherItem.querySelector<HTMLElement>('.accordion-panel');
             if (otherButton) otherButton.setAttribute('aria-expanded', 'false');
             if (otherPanel) {
-              otherPanel.classList.remove('max-h-[300px]', 'opacity-100');
-              otherPanel.classList.add('max-h-0', 'opacity-0');
+              otherPanel.classList.remove('grid-rows-[1fr]', 'opacity-100');
+              otherPanel.classList.add('grid-rows-[0fr]', 'opacity-0');
             }
           });
 
@@ -191,8 +191,8 @@ const { section } = Astro.props;
             item.classList.add('border-yellow-tennis');
             item.classList.remove('border-transparent');
             button.setAttribute('aria-expanded', 'true');
-            panel.classList.add('max-h-[300px]', 'opacity-100');
-            panel.classList.remove('max-h-0', 'opacity-0');
+            panel.classList.add('grid-rows-[1fr]', 'opacity-100');
+            panel.classList.remove('grid-rows-[0fr]', 'opacity-0');
 
             // Show matching illustration
             const targetIllustration = accordion.closest('section')?.querySelector(`[data-illustration-index="${itemIndex}"]`);
