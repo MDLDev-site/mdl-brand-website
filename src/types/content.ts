@@ -249,6 +249,10 @@ export interface PricingHeroData {
     annualLabel: string;
   };
   cardsSubtext?: string[];
+  cardsSubtextLink?: {
+    matchText: string;
+    href: string;
+  };
 }
 
 export interface PricingComparisonAvailability {

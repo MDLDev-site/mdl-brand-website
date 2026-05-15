@@ -47,13 +47,27 @@ function findProduct(productId: string) {
             </div>
           </div>
 
-          {/* Groups */}
-          {comparison.groups.map((group) => (
-            <div class="mb-[32px]">
-              <h3 class="mb-[12px] font-subheading text-[14px] font-semibold uppercase tracking-[0.28px] text-charcoal-pitch md:text-[16px]">
-                {group.heading}
-              </h3>
-              <div class="flex flex-col">
+          {/* Groups — collapsible accordions per DEV-2276. First group
+              opens by default so the table reads as before above-the-fold. */}
+          {comparison.groups.map((group, gIdx) => (
+            <details
+              class="pricing-comparison-group group mb-[16px] border-b border-charcoal-pitch/10"
+              open={gIdx === 0}
+            >
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-[16px] py-[16px]">
+                <h3 class="font-subheading text-[14px] font-semibold uppercase tracking-[0.28px] text-charcoal-pitch md:text-[16px]">
+                  {group.heading}
+                </h3>
+                <svg
+                  class="h-5 w-5 shrink-0 text-charcoal-pitch transition-transform group-open:rotate-45"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </summary>
+              <div class="flex flex-col pb-[16px]">
                 {group.rows.map((row) => (
                   <div class="grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] items-center gap-[8px] border-b border-charcoal-pitch/5 py-[10px] md:gap-[16px]">
                     <span class="font-body text-[12px] font-normal leading-tight text-text-primary md:text-[14px]">
@@ -81,7 +95,7 @@ function findProduct(productId: string) {
                   </div>
                 ))}
               </div>
-            </div>
+            </details>
           ))}
         </div>
       );

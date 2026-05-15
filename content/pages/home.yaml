@@ -68,7 +68,7 @@ sections:
       - text: Promote adoption through special offer and promotional discounts
     image: /images/features/turn-passion-into-profit.png
     imageAlt: Monetisation dashboard showing revenue streams
-    imagePosition: left
+    imagePosition: right
     cta:
       primary:
         text: See All Features
@@ -95,9 +95,6 @@ sections:
       secondary:
         text: View Pricing
         link: /pricing
-
-  - type: diagonals
-    variant: white-to-grey
 
   - type: carousel
     heading: FOR EVERY LEVEL OF THE GAME
@@ -182,7 +179,7 @@ sections:
           link: /contact
 
   - type: diagonals
-    variant: grey-to-white
+    variant: color-strips
 
   - type: accordion_features
     heading:
@@ -207,29 +204,29 @@ sections:
     items:
       - title: DRM+
         description: Protect your premium content with geographic access controls. Restrict viewing to specific countries or regions, ensuring your broadcasting rights and territorial agreements are fully honoured.
-        learnMoreLink: /features/drm
-        learnMoreText: Explore DRM+ protection
+        learnMoreLink: /features#scalability
+        learnMoreText: Learn More
         expanded: true
       - title: Stripe Payments
         description: Secure, global payment processing powered by Stripe. Accept cards, Apple Pay, Google Pay, and local payment methods in 135+ currencies.
-        learnMoreLink: /features/payments
-        learnMoreText: Discover Stripe payments
+        learnMoreLink: /features#scalability
+        learnMoreText: Learn More
       - title: 24/7 Fan Support
         description: "Support that never sleeps. Real-time fan support via Intercom chat — resolving login issues, payment queries and playback problems around the clock, with seamless escalation to your support team."
-        learnMoreLink: /features/support
-        learnMoreText: See 24/7 fan support
+        learnMoreLink: /features#scalability
+        learnMoreText: Learn More
       - title: Scale Infinitely
         description: Whether it's 100 viewers or 100,000, the platform scales automatically to handle any audience size without buffering or downtime.
-        learnMoreLink: /features/scale
-        learnMoreText: Learn about infinite scaling
+        learnMoreLink: /features#scalability
+        learnMoreText: Learn More
       - title: Global CDN
         description: Content is delivered via a worldwide network of edge servers, ensuring fast load times and reliable streaming for fans anywhere on the planet.
-        learnMoreLink: /features/cdn
-        learnMoreText: Discover global CDN delivery
+        learnMoreLink: /features#scalability
+        learnMoreText: Learn More
       - title: GDPR & Data Privacy
         description: Fully GDPR-compliant with robust data protection policies. Your fans' data is stored securely and handled in accordance with international privacy regulations.
-        learnMoreLink: /features/privacy
-        learnMoreText: Understand data privacy
+        learnMoreLink: /features#scalability
+        learnMoreText: Learn More
 
   - type: cta_banner
     heading:
