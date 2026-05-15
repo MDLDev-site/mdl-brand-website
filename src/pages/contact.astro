@@ -25,7 +25,10 @@ const contactWebPage = {
     <script is:inline type="application/ld+json" set:html={JSON.stringify(contactWebPage)} />
   </Fragment>
 
-  <section class="bg-charcoal-pitch py-20 pt-35 md:py-30 md:pt-45">
+  {/* Contact section — gradient bg per DEV-2287 (navy-umpire to
+      charcoal-pitch); form moved out of the white container per
+      DEV-2288, fields tightened, labels white. */}
+  <section class="contact-section py-20 pt-35 md:py-30 md:pt-45">
     <div class="mx-auto grid max-w-300 grid-cols-1 gap-[64px] px-[24px] md:grid-cols-2 md:gap-25 md:px-[64px]">
       {/* Left: copy + benefits + support prompt */}
       <div class="flex flex-col gap-[40px]">
@@ -64,14 +67,14 @@ const contactWebPage = {
         </div>
       </div>
 
-      {/* Right: form */}
+      {/* Right: form — no container, fields on the gradient bg per DEV-2288 */}
       <form
-        class="contact-form flex flex-col gap-[24px] rounded-[16px] bg-white p-[24px] md:p-[40px]"
+        class="contact-form flex flex-col gap-[16px]"
         data-contact-form
       >
         {contact.form.fields.map((field) => (
-          <div class="flex flex-col gap-[8px]">
-            <label for={`contact-${field.id}`} class="text-body font-bold text-text-primary">
+          <div class="flex flex-col gap-[6px]">
+            <label for={`contact-${field.id}`} class="text-body font-medium text-white">
               {field.label}
               {field.required && <span class="text-orange-basketball" aria-hidden="true"> *</span>}
             </label>
@@ -82,14 +85,14 @@ const contactWebPage = {
                 placeholder={field.placeholder}
                 required={field.required}
                 rows="5"
-                class="rounded-sm border border-charcoal-pitch/15 bg-white px-[16px] py-[12px] text-body text-charcoal-pitch placeholder:text-charcoal-pitch/40 focus:border-blue-matchday focus:outline-none"
+                class="rounded-sm border border-white/20 bg-white/5 px-[16px] py-[12px] text-body text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
               ></textarea>
             ) : field.type === 'select' ? (
               <select
                 id={`contact-${field.id}`}
                 name={field.id}
                 required={field.required}
-                class="rounded-sm border border-charcoal-pitch/15 bg-white px-[16px] py-[12px] text-body text-charcoal-pitch focus:border-blue-matchday focus:outline-none"
+                class="rounded-sm border border-white/20 bg-white/5 px-[16px] py-[12px] text-body text-white focus:border-yellow-tennis focus:outline-none"
               >
                 <option value="">{field.placeholder}</option>
                 {field.options?.map((opt) => (
@@ -103,7 +106,7 @@ const contactWebPage = {
                 type={field.type}
                 placeholder={field.placeholder}
                 required={field.required}
-                class="rounded-sm border border-charcoal-pitch/15 bg-white px-[16px] py-[12px] text-body text-charcoal-pitch placeholder:text-charcoal-pitch/40 focus:border-blue-matchday focus:outline-none"
+                class="rounded-sm border border-white/20 bg-white/5 px-[16px] py-[12px] text-body text-white placeholder:text-white/40 focus:border-yellow-tennis focus:outline-none"
               />
             )}
           </div>
@@ -131,8 +134,31 @@ const contactWebPage = {
     </div>
   </section>
 
+  {/* Diagonal between contact section and footer per DEV-2290.
+      Navy umpire top → Charcoal Pitch bottom. */}
+  <div class="relative h-10 md:h-20 overflow-hidden bg-charcoal-pitch" aria-hidden="true">
+    <svg
+      class="absolute inset-0 h-full w-full"
+      viewBox="0 0 1200 109"
+      preserveAspectRatio="none"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M0 0H1200L0 109V0Z" fill="var(--color-navy-umpire)" />
+    </svg>
+  </div>
+
   {ctaBanner && ctaBanner.type === 'cta_banner' && <CTABanner section={ctaBanner} />}
 </BaseLayout>
+
+<style>
+  /* DEV-2287 — gradient bg replacing solid charcoal-pitch.
+     Bottom ends in navy-umpire so it flows into the diagonal added
+     for DEV-2290 (navy-umpire top → charcoal-pitch bottom). */
+  .contact-section {
+    background: linear-gradient(180deg, var(--color-charcoal-pitch) 0%, var(--color-navy-umpire) 100%);
+  }
+</style>
 
 <script>
   function initContactForm() {
