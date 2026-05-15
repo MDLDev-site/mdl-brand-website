@@ -150,30 +150,36 @@ sections:
   - type: customers
     heading: BUILT FOR SPORT
     caseStudies:
+      # Case-study pages don't exist for launch — link points to /contact
+      # so the "Read Story" CTA baked into the pre-composed images leads
+      # somewhere useful. Update link when case-studies/<slug> is built.
       - quote: '"The Netflix of the sporting world"'
         brandLogo: /images/customers/customer-1-logo.png
         brandName: Bristol City
         backgroundImage: /images/customers/customer-1-bg.png
         gradientColor: "#e41e26"
+        preComposed: true
         cta:
           text: Read Bristol City's story
-          link: /case-studies/bristol-city
+          link: /contact
       - quote: '"Regional expansion, global customers"'
         brandLogo: /images/customers/customer-2-logo.png
         brandName: Super League Basketball
         backgroundImage: /images/customers/customer-2-bg.png
         gradientColor: "#ff633d"
+        preComposed: true
         cta:
           text: Read Super League Basketball's story
-          link: /case-studies/super-league-basketball
+          link: /contact
       - quote: '"A platform built for the future of sport"'
         brandLogo: /images/customers/customer-3-logo.png
         brandName: Bristol Bears
         backgroundImage: /images/customers/customer-3-bg.png
         gradientColor: "#152644"
+        preComposed: true
         cta:
           text: Read Bristol Bears' story
-          link: /case-studies/bristol-bears
+          link: /contact
 
   - type: diagonals
     variant: grey-to-white
