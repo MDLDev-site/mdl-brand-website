@@ -6,6 +6,15 @@ interface Props {
 }
 
 const { section } = Astro.props;
+
+const accordionImages = [
+  '/images/accordion/drm.png',
+  '/images/accordion/stripe.png',
+  '/images/accordion/support.png',
+  '/images/accordion/scale.png',
+  '/images/accordion/cdn.png',
+  '/images/accordion/gdpr.png',
+];
 ---
 
 <section class="bg-navy-umpire" aria-label={section.heading.join(' ')}>
@@ -108,6 +117,18 @@ const { section } = Astro.props;
                       </svg>
                     </a>
                   )}
+                  {/* Mobile-only illustration — sits below the Learn More
+                      link, centered. Desktop uses the sticky illustration
+                      column to the right (DEV-2237). */}
+                  {accordionImages[index] && (
+                    <img
+                      src={accordionImages[index]}
+                      alt={item.title}
+                      class="mx-auto mt-[8px] block h-auto w-full max-w-[320px] md:hidden"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -115,17 +136,11 @@ const { section } = Astro.props;
         </div>
       </div>
 
-      {/* Illustration area — sticky so it stays in view as accordion items expand */}
+      {/* Illustration area — sticky so it stays in view as accordion items
+          expand. Sized larger per Natalia's feedback (DEV-2235). */}
       <div class="hidden flex-1 items-center justify-center md:sticky md:top-25 md:flex">
-        <div class="relative h-100 w-full max-w-125 rounded-[16px] overflow-hidden">
-          {[
-            '/images/accordion/drm.png',
-            '/images/accordion/stripe.png',
-            '/images/accordion/support.png',
-            '/images/accordion/scale.png',
-            '/images/accordion/cdn.png',
-            '/images/accordion/gdpr.png',
-          ].map((src, i) => {
+        <div class="relative h-140 w-full max-w-160 rounded-[16px] overflow-hidden">
+          {accordionImages.map((src, i) => {
             const expandedIndex = section.items.findIndex(item => item.expanded);
             const defaultActive = expandedIndex >= 0 ? expandedIndex : 0;
             return (

@@ -13,6 +13,9 @@ hero:
   cardsSubtext:
     - "For billing cycles, data and bandwidth expiration, and overages, read more."
     - "Displayed prices are in pound sterling (GBP) and exclusive of VAT and other taxes (added at checkout if applicable)."
+  cardsSubtextLink:
+    matchText: "read more"
+    href: "/contact"
 
 products:
   - id: on-demand
@@ -36,7 +39,7 @@ products:
         annualPrice: "£799"
         vatNote: "P/M ANNUALLY EXCL. VAT"
         description: "Scale your reach as your content library and audience continue to grow."
-        buttonVariant: orange
+        buttonVariant: grey
         differentiators:
           - { label: "Bandwidth", value: "5TB p/m" }
           - { label: "Storage Capacity", value: "5TB" }
@@ -87,7 +90,7 @@ products:
         annualPrice: "£799"
         vatNote: "P/M ANNUALLY EXCL. VAT"
         description: "Scale your live programming as audience and library grow."
-        buttonVariant: orange
+        buttonVariant: grey
         differentiators:
           - { label: "Live Stream Hours", value: "50 hrs p/m" }
           - { label: "Bandwidth", value: "10TB p/m" }
