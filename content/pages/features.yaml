@@ -25,6 +25,25 @@ anchors:
     label: Security
 
 categories:
+  - id: platform
+    heading: "YOUR STREAMING COMMAND CENTRE"
+    description: "A central hub for all your Live & On-Demand video content — built to power your channel end-to-end."
+    background: white
+    hideHeading: true
+    features:
+      - title: "Content Management"
+        description: "Upload, organise and schedule your entire content library from a single, intuitive dashboard. Publish instantly or plan ahead with scheduled releases."
+      - title: "Adaptive Web Player"
+        description: "A responsive web player that delivers smooth 1080p HD playback on desktop and mobile browsers — automatically selecting the best quality for each fan's connection."
+      - title: "Chromecast & AirPlay"
+        description: "Fans can cast Live & On-Demand content directly from the web player to their TV via Chromecast or AirPlay — no app download required."
+        checks:
+          - Google Chromecast
+          - Apple AirPlay
+          - Cast from any browser
+      - title: "Channel Builder"
+        description: "Design your channel homepage with a drag-and-drop builder. Curate playlists, highlight live events, and strategically promote featured content."
+
   - id: brandability
     heading: "YOUR OWN BRANDED OTT"
     description: "Take full ownership of your Live & On-Demand content, branded and on your domain."
@@ -84,25 +103,6 @@ categories:
           - Bundled
       - title: "User Groups"
         description: "Build bespoke audiences from invited and registered fans and assign access limitations to suit group requirements."
-
-  - id: platform
-    heading: "YOUR STREAMING COMMAND CENTRE"
-    description: "A central hub for all your Live & On-Demand video content — built to power your channel end-to-end."
-    background: white
-    hideHeading: true
-    features:
-      - title: "Content Management"
-        description: "Upload, organise and schedule your entire content library from a single, intuitive dashboard. Publish instantly or plan ahead with scheduled releases."
-      - title: "Adaptive Web Player"
-        description: "A responsive web player that delivers smooth 1080p HD playback on desktop and mobile browsers — automatically selecting the best quality for each fan's connection."
-      - title: "Chromecast & AirPlay"
-        description: "Fans can cast Live & On-Demand content directly from the web player to their TV via Chromecast or AirPlay — no app download required."
-        checks:
-          - Google Chromecast
-          - Apple AirPlay
-          - Cast from any browser
-      - title: "Channel Builder"
-        description: "Design your channel homepage with a drag-and-drop builder. Curate playlists, highlight live events, and strategically promote featured content."
 
   - id: insights
     heading: "UNDERSTAND FANS LIKE NEVER BEFORE"

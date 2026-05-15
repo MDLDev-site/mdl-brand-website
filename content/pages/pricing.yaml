@@ -255,34 +255,79 @@ calculator:
   heading: "Not sure which plan to choose?"
   description: "Share an estimate of your expected viewership so that we can recommend the plan that best fits your needs."
   productPrompt: "Tell us more about the features you're interested in. This will help us recommend the perfect plan tailored to your club's unique needs."
-  sliders:
-    - id: stream-length
-      label: "Average length of stream"
-      tooltip: "What is the average length of each of your live streams in hours, from the moment you go live to the moment you end your stream. Consider what occurs before and after the fixture or event (e.g. pre/post match shows, interviews) which would add to the length of your stream."
-      min: 0
-      max: 10
-      step: 0.5
-      default: 2
-      ticks: [0, 2, 4, 6, 8, 10]
-      unit: "hrs"
-    - id: fans-per-stream
-      label: "Estimated fans per stream"
-      tooltip: "What volume of fans do you estimate to watch each of your live streams?"
-      min: 0
-      max: 5000
-      step: 50
-      default: 1000
-      ticks: [0, 100, 250, 1000, 2500, 5000]
-    - id: streams-per-month
-      label: "Estimated live streams per month"
-      tooltip: "How many times per month do you plan to live stream to your fan base? Consider not only fixtures, but also events like press conferences, player announcements and fan forums."
-      min: 0
-      max: 60
-      step: 1
-      default: 4
-      ticks: [0, 5, 10, 20, 40, 60]
+  # Slider sets per product (DEV-2283/2285).
+  # On-Demand uses 2 OD-specific sliders; Live & OD uses live sliders
+  # plus an optional collapsible "Refine On-Demand Consumption" group
+  # containing the same OD sliders so users can fine-tune.
+  productSliders:
+    on-demand:
+      sliders:
+        - id: estimated-subscribers
+          label: "Estimated subscribers"
+          tooltip: "How many paying subscribers do you expect on your platform per month?"
+          min: 0
+          max: 10000
+          step: 100
+          default: 1000
+          ticks: [0, 500, 1000, 2500, 5000, 10000]
+        - id: videos-per-week
+          label: "Videos uploaded per week"
+          tooltip: "How many on-demand videos do you plan to upload each week (highlights, interviews, replays, shows)?"
+          min: 0
+          max: 50
+          step: 1
+          default: 5
+          ticks: [0, 5, 10, 20, 35, 50]
+    live:
+      sliders:
+        - id: stream-length
+          label: "Average length of stream"
+          tooltip: "What is the average length of each of your live streams in hours, from the moment you go live to the moment you end your stream. Consider what occurs before and after the fixture or event (e.g. pre/post match shows, interviews) which would add to the length of your stream."
+          min: 0
+          max: 10
+          step: 0.5
+          default: 2
+          ticks: [0, 2, 4, 6, 8, 10]
+          unit: "hrs"
+        - id: fans-per-stream
+          label: "Estimated fans per stream"
+          tooltip: "What volume of fans do you estimate to watch each of your live streams?"
+          min: 0
+          max: 5000
+          step: 50
+          default: 1000
+          ticks: [0, 100, 250, 1000, 2500, 5000]
+        - id: streams-per-month
+          label: "Estimated live streams per month"
+          tooltip: "How many times per month do you plan to live stream to your fan base? Consider not only fixtures, but also events like press conferences, player announcements and fan forums."
+          min: 0
+          max: 60
+          step: 1
+          default: 4
+          ticks: [0, 5, 10, 20, 40, 60]
+      refineOnDemand:
+        label: "Refine On-Demand Consumption"
+        helper: "Adjust if you want to factor in on-demand library activity for the Live & On-Demand product."
+        sliders:
+          - id: estimated-subscribers
+            label: "Estimated subscribers"
+            tooltip: "How many paying subscribers do you expect to consume on-demand content alongside your live broadcasts?"
+            min: 0
+            max: 10000
+            step: 100
+            default: 1000
+            ticks: [0, 500, 1000, 2500, 5000, 10000]
+          - id: videos-per-week
+            label: "Videos uploaded per week"
+            tooltip: "How many on-demand videos accompany your live broadcasts each week (highlights, interviews, replays, shows)?"
+            min: 0
+            max: 50
+            step: 1
+            default: 5
+            ticks: [0, 5, 10, 20, 35, 50]
   outputs:
     consumptionLabel: "This is your estimated consumption"
+    consumptionEmpty: "Drag all sliders to view your estimated consumption"
     recommendationPrefix: "We recommend the"
     hoursLabel: "Live stream hours"
     hoursTooltip: "This is how many hours of live streaming you plan to do per month."

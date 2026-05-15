@@ -59,60 +59,153 @@ const { calculator, products } = Astro.props;
       ))}
     </div>
 
-    {/* Sliders */}
-    <div class="mt-[24px] grid grid-cols-1 gap-[24px] md:grid-cols-3 md:gap-[32px]">
-      {calculator.sliders.map((slider) => (
-        <div class="flex flex-col gap-[12px]">
-          <div class="flex items-center gap-[6px]">
-            <label
-              for={`calc-slider-${slider.id}`}
-              class="font-body text-[13px] font-medium text-white"
-            >
-              {slider.label}
-            </label>
-            <button
-              type="button"
-              class="calc-tooltip-trigger relative flex h-[16px] w-[16px] items-center justify-center text-white/60 hover:text-white"
-              data-tooltip={slider.tooltip}
-              aria-label="More info"
-            >
-              <svg class="h-[14px] w-[14px]" viewBox="0 0 16 16" fill="none">
-                <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2" />
-                <path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
-                <circle cx="8" cy="5" r="0.6" fill="currentColor" />
-              </svg>
-            </button>
+    {/* Per-product slider sets — only the active product's sliders are
+        visible. DEV-2283/2285. */}
+    {products.map((product, i) => {
+      const productSet = calculator.productSliders[product.id];
+      if (!productSet) return null;
+      return (
+        <div
+          class={`calc-product-sliders mt-[24px] ${i === 0 ? '' : 'hidden'}`}
+          data-product-sliders={product.id}
+        >
+          <div class="grid grid-cols-1 gap-[24px] md:grid-cols-3 md:gap-[32px]">
+            {productSet.sliders.map((slider) => (
+              <div class="flex flex-col gap-[12px]">
+                <div class="flex items-center gap-[6px]">
+                  <label
+                    for={`calc-${product.id}-${slider.id}`}
+                    class="font-body text-[13px] font-medium text-white"
+                  >
+                    {slider.label}
+                  </label>
+                  <button
+                    type="button"
+                    class="calc-tooltip-trigger relative flex h-[16px] w-[16px] items-center justify-center text-white/60 hover:text-white"
+                    data-tooltip={slider.tooltip}
+                    aria-label="More info"
+                  >
+                    <svg class="h-[14px] w-[14px]" viewBox="0 0 16 16" fill="none">
+                      <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2" />
+                      <path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                      <circle cx="8" cy="5" r="0.6" fill="currentColor" />
+                    </svg>
+                  </button>
+                </div>
+                <input
+                  id={`calc-${product.id}-${slider.id}`}
+                  type="range"
+                  class="calc-slider"
+                  min={slider.min}
+                  max={slider.max}
+                  step={slider.step}
+                  value={slider.default}
+                  data-slider={slider.id}
+                  data-slider-product={product.id}
+                />
+                <div class="flex justify-between font-body text-[10px] font-medium text-white/60">
+                  {slider.ticks.map((t) => (<span>{t}</span>))}
+                </div>
+              </div>
+            ))}
           </div>
-          <input
-            id={`calc-slider-${slider.id}`}
-            type="range"
-            class="calc-slider"
-            min={slider.min}
-            max={slider.max}
-            step={slider.step}
-            value={slider.default}
-            data-slider={slider.id}
-          />
-          <div class="flex justify-between font-body text-[10px] font-medium text-white/60">
-            {slider.ticks.map((t) => (<span>{t}</span>))}
-          </div>
-        </div>
-      ))}
-    </div>
 
-    {/* Output panel */}
+          {/* Refine On-Demand Consumption — collapsible sub-group only
+              shown for the Live & On-Demand product. DEV-2285. */}
+          {productSet.refineOnDemand && (
+            <details class="calc-refine-od group mt-[24px] rounded-[12px] border border-white/10 bg-white/5 p-[16px] md:p-[20px]">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-[12px]">
+                <span class="font-body text-[14px] font-semibold text-white">
+                  {productSet.refineOnDemand.label}
+                </span>
+                <svg
+                  class="h-5 w-5 shrink-0 text-white/70 transition-transform group-open:rotate-45"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </summary>
+              {productSet.refineOnDemand.helper && (
+                <p class="mt-[8px] font-body text-[12px] leading-[1.5] text-white/60">
+                  {productSet.refineOnDemand.helper}
+                </p>
+              )}
+              <div class="mt-[16px] grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[24px]">
+                {productSet.refineOnDemand.sliders.map((slider) => (
+                  <div class="flex flex-col gap-[12px]">
+                    <div class="flex items-center gap-[6px]">
+                      <label
+                        for={`calc-${product.id}-refine-${slider.id}`}
+                        class="font-body text-[13px] font-medium text-white"
+                      >
+                        {slider.label}
+                      </label>
+                      <button
+                        type="button"
+                        class="calc-tooltip-trigger relative flex h-[16px] w-[16px] items-center justify-center text-white/60 hover:text-white"
+                        data-tooltip={slider.tooltip}
+                        aria-label="More info"
+                      >
+                        <svg class="h-[14px] w-[14px]" viewBox="0 0 16 16" fill="none">
+                          <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2" />
+                          <path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                          <circle cx="8" cy="5" r="0.6" fill="currentColor" />
+                        </svg>
+                      </button>
+                    </div>
+                    <input
+                      id={`calc-${product.id}-refine-${slider.id}`}
+                      type="range"
+                      class="calc-slider"
+                      min={slider.min}
+                      max={slider.max}
+                      step={slider.step}
+                      value={slider.default}
+                      data-slider={slider.id}
+                      data-slider-product={product.id}
+                      data-slider-refine="true"
+                    />
+                    <div class="flex justify-between font-body text-[10px] font-medium text-white/60">
+                      {slider.ticks.map((t) => (<span>{t}</span>))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </details>
+          )}
+        </div>
+      );
+    })}
+
+    {/* Output panel — shows helper text until all sliders interacted with
+        (DEV-2284); recommendation tier appears once interaction is
+        complete. The Recommended badge on the matching plan card is
+        gated on the same flag (DEV-2286 — algorithm pending Alex/Dawie). */}
     <div class="mt-[24px] flex flex-col gap-[16px] rounded-[12px] bg-white px-[24px] py-[20px] md:flex-row md:items-center md:justify-between">
       <div class="flex flex-col gap-[4px]">
         <p class="font-body text-[14px] font-semibold text-charcoal-pitch">
           {calculator.outputs.consumptionLabel}
         </p>
-        <p class="calc-recommendation font-body text-[14px] text-charcoal-pitch/70">
+        {/* Empty state — visible until all sliders touched */}
+        <p
+          class="calc-empty-state font-body text-[12px] font-medium leading-[1.4] text-charcoal-pitch/60"
+          data-calc-empty
+        >
+          {calculator.outputs.consumptionEmpty ?? 'Drag all sliders to view your estimated consumption'}
+        </p>
+        {/* Recommendation — hidden until all sliders touched */}
+        <p
+          class="calc-recommendation hidden font-body text-[14px] text-charcoal-pitch/70"
+          data-calc-recommendation
+        >
           {calculator.outputs.recommendationPrefix}
           <span class="calc-plan-name ml-[4px] font-semibold" data-calc-plan>—</span>
         </p>
       </div>
 
-      <div class="flex gap-[24px] md:gap-[40px]">
+      <div class="calc-figures flex gap-[24px] opacity-40 transition-opacity md:gap-[40px]" data-calc-figures>
         <div class="flex flex-col gap-[4px]">
           <div class="flex items-center gap-[6px]">
             <span class="font-body text-[12px] font-medium text-charcoal-pitch/70">
@@ -132,7 +225,7 @@ const { calculator, products } = Astro.props;
             </button>
           </div>
           <p class="font-heading text-[24px] font-medium leading-none text-charcoal-pitch">
-            <span data-calc-hours>0</span> <span class="text-[14px]">hrs</span>
+            <span data-calc-hours>—</span> <span class="text-[14px]">hrs</span>
           </p>
         </div>
         <div class="flex flex-col gap-[4px]">
@@ -154,7 +247,7 @@ const { calculator, products } = Astro.props;
             </button>
           </div>
           <p class="font-heading text-[24px] font-medium leading-none text-charcoal-pitch">
-            <span data-calc-bandwidth>0</span> <span class="text-[14px]">TB</span>
+            <span data-calc-bandwidth>—</span> <span class="text-[14px]">TB</span>
           </p>
         </div>
       </div>
@@ -216,6 +309,12 @@ const { calculator, products } = Astro.props;
     color: var(--calc-accent);
   }
 
+  /* Output panel state — figures fade in once the user has touched
+     all sliders (DEV-2284) */
+  .calc-figures.is-ready {
+    opacity: 1;
+  }
+
   /* Range slider — fill + thumb both use --calc-accent */
   .calc-slider {
     -webkit-appearance: none;
@@ -258,15 +357,20 @@ const { calculator, products } = Astro.props;
 <script>
   type ProductId = 'on-demand' | 'live';
 
-  // Plan thresholds — tier index (0=Launch, 1=Growth, 2=Scale, 3=Unlimited)
+  // Plan thresholds — tier index (0=Launch, 1=Growth, 2=Scale, 3=Unlimited).
+  // NB: these are the tentative thresholds inherited from the previous
+  // calculator. Final algorithm pending input from Alex/Dawie (DEV-2286).
   const OD_BANDWIDTH_TB = [1, 5, 20, Infinity];
   const LIVE_BANDWIDTH_TB = [2, 10, 40, Infinity];
   const LIVE_HOURS = [10, 50, 200, Infinity];
   const TIER_NAMES = ['Launch Plan', 'Growth Plan', 'Scale Plan', 'Unlimited Plan'];
 
-  // 1080p HLS averages ~5 Mbps. Bandwidth (TB) per fan-hour at 1080p:
-  // 5 Mbps * 3600s = 18 Gb = 2.25 GB. Convert to TB: / 1024.
+  // 1080p HLS averages ~5 Mbps. Bandwidth (GB) per fan-hour: 2.25.
   const GB_PER_FAN_HOUR_1080P = 2.25;
+  // Per-subscriber on-demand watch-hour assumption (TBD with Alex/Dawie).
+  const OD_HOURS_PER_SUBSCRIBER_PER_MONTH = 4;
+  // Avg. minutes per uploaded video (impacts library bandwidth).
+  const OD_AVG_VIDEO_MINUTES = 5;
 
   function pickTier(value: number, thresholds: number[]) {
     for (let i = 0; i < thresholds.length; i++) {
@@ -279,7 +383,6 @@ const { calculator, products } = Astro.props;
     const modal = document.querySelector<HTMLElement>('[data-calc-modal]');
     if (!modal) return;
 
-    // Open trigger handled in PricingHero. Bind close + escape.
     const close = () => {
       modal.classList.add('hidden');
       modal.classList.remove('flex');
@@ -295,29 +398,53 @@ const { calculator, products } = Astro.props;
       if (e.key === 'Escape' && !modal.classList.contains('hidden')) close();
     });
 
-    // Product tabs in calculator
     let activeProduct: ProductId = 'on-demand';
-    let calcInteracted = false;
+    // Per-product touched sets — only sliders for the active product
+    // (excluding the optional Refine sub-group which is opt-in) need
+    // to be touched before the recommendation reveals.
+    const touched: Record<ProductId, Set<string>> = {
+      'on-demand': new Set(),
+      'live': new Set(),
+    };
+
+    function setActiveProduct(productId: ProductId) {
+      activeProduct = productId;
+      modal!.dataset.activeProduct = productId;
+      // Show only the matching slider set
+      modal!.querySelectorAll<HTMLElement>('[data-product-sliders]').forEach((el) => {
+        el.classList.toggle('hidden', el.dataset.productSliders !== productId);
+      });
+      // Restyle visible sliders with new accent colour
+      modal!.querySelectorAll<HTMLInputElement>('.calc-slider').forEach(updateSliderFill);
+      recompute();
+    }
+
     const tabs = modal.querySelectorAll<HTMLButtonElement>('.pricing-calc-tab');
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
-        activeProduct = (tab.dataset.calcTab as ProductId) || 'on-demand';
+        const id = (tab.dataset.calcTab as ProductId) || 'on-demand';
         tabs.forEach((t) => t.classList.toggle('is-active', t === tab));
-        modal!.dataset.activeProduct = activeProduct;
-        sliders.forEach(updateSliderFill);
-        recompute();
+        setActiveProduct(id);
       });
     });
 
-    // Sliders — first interaction flips the calcInteracted flag so the
-    // Recommended badge only appears once the user has actively adjusted
-    // values (per designer spec).
-    const sliders = modal.querySelectorAll<HTMLInputElement>('.calc-slider');
-    sliders.forEach((s) => {
-      s.addEventListener('input', () => updateSliderFill(s));
+    function requiredSliderIdsFor(productId: ProductId): string[] {
+      const visible = modal!.querySelector<HTMLElement>(`[data-product-sliders="${productId}"]`);
+      if (!visible) return [];
+      return Array.from(
+        visible.querySelectorAll<HTMLInputElement>('.calc-slider:not([data-slider-refine])')
+      ).map((el) => el.dataset.slider!).filter(Boolean);
+    }
+
+    // Sliders — track touched state per product, recompute on input.
+    const allSliders = modal.querySelectorAll<HTMLInputElement>('.calc-slider');
+    allSliders.forEach((s) => {
       updateSliderFill(s);
       s.addEventListener('input', () => {
-        calcInteracted = true;
+        const id = s.dataset.slider;
+        const productScope = (s.dataset.sliderProduct as ProductId) || activeProduct;
+        if (id) touched[productScope].add(id);
+        updateSliderFill(s);
         recompute();
       });
     });
@@ -333,79 +460,102 @@ const { calculator, products } = Astro.props;
       slider.style.background = `linear-gradient(to right, ${accent} 0%, ${accent} ${pct}%, rgb(255 255 255 / 0.15) ${pct}%, rgb(255 255 255 / 0.15) 100%)`;
     }
 
-    function recompute() {
-      const length = parseFloat(
-        (modal!.querySelector('[data-slider="stream-length"]') as HTMLInputElement)?.value ?? '0'
-      );
-      const fans = parseFloat(
-        (modal!.querySelector('[data-slider="fans-per-stream"]') as HTMLInputElement)?.value ?? '0'
-      );
-      const streams = parseFloat(
-        (modal!.querySelector('[data-slider="streams-per-month"]') as HTMLInputElement)?.value ?? '0'
-      );
+    function readSlider(id: string, scopeRefine = false): number {
+      const sel = `.calc-product-sliders[data-product-sliders="${activeProduct}"]:not(.hidden) input[data-slider="${id}"]${
+        scopeRefine ? '[data-slider-refine]' : ':not([data-slider-refine])'
+      }`;
+      const el = modal!.querySelector<HTMLInputElement>(sel);
+      return el ? parseFloat(el.value || '0') : 0;
+    }
 
-      const liveHours = length * streams;
-      // Bandwidth = liveHours * fans * GB_PER_FAN_HOUR_1080P / 1024 (GB → TB)
-      const liveBandwidthTB = (liveHours * fans * GB_PER_FAN_HOUR_1080P) / 1024;
-      // On-demand factor: assume 1.3x for replays/highlights
-      const totalBandwidthTB = liveBandwidthTB * 1.3;
+    function recompute() {
+      const required = requiredSliderIdsFor(activeProduct);
+      const allTouched = required.length > 0 && required.every((id) => touched[activeProduct].has(id));
+
+      // Toggle empty state vs recommendation + figures
+      const emptyEl = modal!.querySelector<HTMLElement>('[data-calc-empty]');
+      const recEl = modal!.querySelector<HTMLElement>('[data-calc-recommendation]');
+      const figsEl = modal!.querySelector<HTMLElement>('[data-calc-figures]');
+      emptyEl?.classList.toggle('hidden', allTouched);
+      recEl?.classList.toggle('hidden', !allTouched);
+      figsEl?.classList.toggle('is-ready', allTouched);
+
+      let liveHours = 0;
+      let totalBandwidthTB = 0;
+      let tierIdx = 0;
+
+      if (activeProduct === 'on-demand') {
+        const subscribers = readSlider('estimated-subscribers');
+        const videosPerWeek = readSlider('videos-per-week');
+        // Library bandwidth from uploaded videos consumed by subscribers.
+        // TENTATIVE — final formula pending Alex/Dawie (DEV-2286).
+        const monthlyVideoHours = (videosPerWeek * 4 * OD_AVG_VIDEO_MINUTES) / 60;
+        const watchHoursPerMonth = subscribers * OD_HOURS_PER_SUBSCRIBER_PER_MONTH;
+        totalBandwidthTB = (watchHoursPerMonth * GB_PER_FAN_HOUR_1080P) / 1024;
+        // OD has no live hours — keep 0; the figure still displays.
+        liveHours = monthlyVideoHours;
+        tierIdx = pickTier(totalBandwidthTB, OD_BANDWIDTH_TB);
+      } else {
+        const length = readSlider('stream-length');
+        const fans = readSlider('fans-per-stream');
+        const streams = readSlider('streams-per-month');
+        liveHours = length * streams;
+        const liveBwTB = (liveHours * fans * GB_PER_FAN_HOUR_1080P) / 1024;
+        // Optional Refine OD inputs add to total bandwidth if user has
+        // opened/touched them; otherwise default 1.3x replay multiplier.
+        const refineSubs = readSlider('estimated-subscribers', true);
+        const refineVideos = readSlider('videos-per-week', true);
+        const refineTouched = touched['live'].has('estimated-subscribers')
+          || touched['live'].has('videos-per-week');
+        const odBwTB = refineTouched
+          ? (refineSubs * OD_HOURS_PER_SUBSCRIBER_PER_MONTH * GB_PER_FAN_HOUR_1080P) / 1024
+            + (refineVideos * 4 * OD_AVG_VIDEO_MINUTES * GB_PER_FAN_HOUR_1080P) / (60 * 1024)
+          : liveBwTB * 0.3;
+        totalBandwidthTB = liveBwTB + odBwTB;
+        const bwTier = pickTier(totalBandwidthTB, LIVE_BANDWIDTH_TB);
+        const hoursTier = pickTier(liveHours, LIVE_HOURS);
+        tierIdx = Math.max(bwTier, hoursTier);
+      }
 
       const hoursEl = modal!.querySelector('[data-calc-hours]');
       const bwEl = modal!.querySelector('[data-calc-bandwidth]');
       const planEl = modal!.querySelector('[data-calc-plan]');
-
-      if (hoursEl) hoursEl.textContent = String(Math.round(liveHours));
-      if (bwEl) bwEl.textContent = totalBandwidthTB.toFixed(1);
-
-      let tierIdx: number;
-      if (activeProduct === 'live') {
-        const bwTier = pickTier(totalBandwidthTB, LIVE_BANDWIDTH_TB);
-        const hoursTier = pickTier(liveHours, LIVE_HOURS);
-        tierIdx = Math.max(bwTier, hoursTier);
-      } else {
-        tierIdx = pickTier(totalBandwidthTB, OD_BANDWIDTH_TB);
-      }
+      if (hoursEl) hoursEl.textContent = allTouched ? String(Math.round(liveHours)) : '—';
+      if (bwEl) bwEl.textContent = allTouched ? totalBandwidthTB.toFixed(1) : '—';
       if (planEl) planEl.textContent = TIER_NAMES[tierIdx];
 
-      if (calcInteracted) {
-        applyRecommendation(activeProduct, tierIdx);
-      }
+      if (allTouched) applyRecommendation(activeProduct, tierIdx);
+      else clearRecommendation(activeProduct);
     }
 
-    /**
-     * Reveal the Recommended badge on the matched plan card and hide all
-     * Most Popular badges, so Recommended takes priority once a calc has
-     * been run. Also moves the product-coloured ring (originally on the
-     * Most Popular card) onto the Recommended card.
-     * Scoped to the active product's grid only.
-     */
     function applyRecommendation(productId: ProductId, tierIdx: number) {
       const grid = document.querySelector<HTMLElement>(`[data-product-grid="${productId}"]`);
       if (!grid) return;
-
       const ringClass = productId === 'on-demand' ? 'ring-blue-matchday' : 'ring-orange-basketball';
-
       const cards = grid.querySelectorAll<HTMLElement>('.pricing-plan-card');
       cards.forEach((card) => {
         const isMatch = Number(card.dataset.tierIndex) === tierIdx;
         const recommended = card.querySelector<HTMLElement>('.pricing-tag-recommended');
         const popular = card.querySelector<HTMLElement>('.pricing-tag-popular');
-
         recommended?.classList.toggle('hidden', !isMatch);
         popular?.classList.add('hidden');
-
-        // Move the accent ring to the Recommended card; clear it elsewhere
         card.classList.toggle(ringClass, isMatch);
         card.classList.toggle('ring-white/10', !isMatch);
       });
     }
 
-    recompute();
+    function clearRecommendation(productId: ProductId) {
+      const grid = document.querySelector<HTMLElement>(`[data-product-grid="${productId}"]`);
+      if (!grid) return;
+      grid.querySelectorAll<HTMLElement>('.pricing-tag-recommended').forEach((el) => el.classList.add('hidden'));
+      grid.querySelectorAll<HTMLElement>('.pricing-tag-popular').forEach((el) => el.classList.remove('hidden'));
+    }
+
+    setActiveProduct('on-demand');
 
     // Tooltips — single floating element, positioned next to the trigger
     const tooltip = modal.querySelector<HTMLElement>('[data-calc-tooltip]');
     if (!tooltip) return;
-
     const triggers = modal.querySelectorAll<HTMLButtonElement>('.calc-tooltip-trigger');
 
     function show(trigger: HTMLElement) {
