@@ -100,6 +100,9 @@ export interface CustomerSection {
     backgroundColor?: string;
     gradientColor: string;
     cta: CTAButton;
+    // When true, the backgroundImage already contains the full card design
+    // (gradient, brand logo, quote). The component skips its own overlays.
+    preComposed?: boolean;
   }>;
 }
 

@@ -45,51 +45,71 @@ const { section } = Astro.props;
         role="list"
         style="scroll-snap-type: x mandatory; scroll-padding-left: 24px; -webkit-overflow-scrolling: touch;"
       >
-        {section.caseStudies.map((study) => (
-          <article
-            class="relative flex h-100 w-[85vw] shrink-0 flex-col overflow-hidden rounded-[16px] shadow-card-lg md:h-125 md:w-175"
-            role="listitem"
-            style={`scroll-snap-align: start;${study.backgroundColor ? ` background-color: ${study.backgroundColor};` : ''}`}
-          >
-            {/* Background image (centered to container on all viewports) */}
-            {study.backgroundImage && (
-              <img
-                src={study.backgroundImage}
-                alt=""
-                class="absolute inset-0 h-full w-full object-cover object-center"
-                loading="lazy"
-                decoding="async"
+        {section.caseStudies.map((study) => {
+          const cardClass = 'relative flex aspect-[16/9] w-[85vw] shrink-0 flex-col overflow-hidden rounded-[16px] shadow-card-lg md:w-175';
+          const cardStyle = `scroll-snap-align: start;${study.backgroundColor ? ` background-color: ${study.backgroundColor};` : ''}`;
+
+          // Background image (used in both pre-composed and overlay modes)
+          const backgroundImage = study.backgroundImage ? (
+            <img
+              src={study.backgroundImage}
+              alt={study.preComposed ? `${study.brandName}: ${study.quote}` : ''}
+              class="absolute inset-0 h-full w-full object-cover object-top"
+              loading="lazy"
+              decoding="async"
+              aria-hidden={study.preComposed ? undefined : 'true'}
+            />
+          ) : null;
+
+          // Overlays only render when bg image is NOT pre-composed.
+          const overlays = !study.preComposed ? (
+            <>
+              <div
+                class="absolute inset-0"
+                style={`background: linear-gradient(0deg, ${study.gradientColor || 'rgba(22,29,37,0.9)'} 0%, ${study.gradientColor}99 40%, transparent 80%);`}
                 aria-hidden="true"
-              />
-            )}
+              ></div>
+              <div class="relative z-10 flex h-full flex-col justify-between p-[24px] md:p-10">
+                {study.brandLogo && (
+                  <img
+                    src={study.brandLogo}
+                    alt={study.brandName}
+                    class="h-15 w-15 object-contain md:h-20 md:w-20"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+                <blockquote class="text-h3 text-white">
+                  {study.quote}
+                </blockquote>
+              </div>
+            </>
+          ) : null;
 
-            {/* Gradient overlay — brand color from bottom */}
-            <div
-              class="absolute inset-0"
-              style={`background: linear-gradient(0deg, ${study.gradientColor || 'rgba(22,29,37,0.9)'} 0%, ${study.gradientColor}99 40%, transparent 80%);`}
-              aria-hidden="true"
-            ></div>
-
-            {/* Content */}
-            <div class="relative z-10 flex h-full flex-col justify-between p-[24px] md:p-10">
-              {/* Brand logo — top left */}
-              {study.brandLogo && (
-                <img
-                  src={study.brandLogo}
-                  alt={study.brandName}
-                  class="h-15 w-15 object-contain md:h-20 md:w-20"
-                  loading="lazy"
-                  decoding="async"
-                />
-              )}
-
-              {/* Quote / Title — bottom */}
-              <blockquote class="text-h3 text-white">
-                {study.quote}
-              </blockquote>
-            </div>
-          </article>
-        ))}
+          // Pre-composed cards: the entire card IS the link (Read Story is
+          // baked into the image). Wrap as <a> so any click navigates.
+          // Non-pre-composed cards: keep <article> with overlay + future CTA button.
+          return study.preComposed ? (
+            <a
+              href={study.cta.link}
+              class={`${cardClass} cursor-pointer transition-transform hover:scale-[1.01]`}
+              style={cardStyle}
+              aria-label={`${study.brandName} case study — ${study.quote}`}
+            >
+              {backgroundImage}
+            </a>
+          ) : (
+            <article
+              class={cardClass}
+              role="listitem"
+              style={cardStyle}
+              aria-label={`${study.brandName} case study`}
+            >
+              {backgroundImage}
+              {overlays}
+            </article>
+          );
+        })}
       </div>
     </div>
 
