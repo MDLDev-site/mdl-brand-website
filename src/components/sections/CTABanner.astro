@@ -71,8 +71,13 @@ const { section } = Astro.props;
     </div>
   </div>
 
-  {/* Bottom diagonal decorative strips */}
-  <div class="relative h-10 md:h-27.25 overflow-hidden" aria-hidden="true">
+  {/* Bottom diagonal decorative strips — overlap upward onto the player
+       image area on desktop (DEV-2267). Negative margin pulls the
+       diagonal layer up so it visually crosses the image. */}
+  <div
+    class="relative h-10 md:-mt-25 md:h-40 overflow-hidden pointer-events-none"
+    aria-hidden="true"
+  >
     {/* Colour strips — yellow, blue, light blue */}
     <svg class="absolute bottom-0 left-0 z-2 h-full w-[72%]" viewBox="0 0 863 118" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M863 0L0.00140381 94.5556V118.235L863 41.9754V0Z" fill="var(--color-yellow-tennis)" />
