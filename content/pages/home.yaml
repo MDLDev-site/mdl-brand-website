@@ -146,36 +146,37 @@ sections:
 
   - type: customers
     heading: BUILT FOR SPORT
+    # Dynamic CMS-driven case study cards per DEV-2301.
+    # Each card composed of background image + linear gradient overlay
+    # (left=brand colour, right=transparent) + logo + quote + button.
+    # Assets exported from Figma node 202:18690.
     caseStudies:
-      # Case-study pages don't exist for launch — link points to /contact
-      # so the "Read Story" CTA baked into the pre-composed images leads
-      # somewhere useful. Update link when case-studies/<slug> is built.
       - quote: '"The Netflix of the sporting world"'
-        brandLogo: /images/customers/customer-1-logo.png
+        brandLogo: /images/customers/bristol-city-logo.png
         brandName: Bristol City
-        backgroundImage: /images/customers/customer-1-bg.png
-        gradientColor: "#e41e26"
-        preComposed: true
+        backgroundImage: /images/customers/bristol-city-bg.jpg
+        gradientColor: "#E21A23"
+        preComposed: false
         cta:
-          text: Read Bristol City's story
+          text: Read story
           link: /contact
       - quote: '"Regional expansion, global customers"'
-        brandLogo: /images/customers/customer-2-logo.png
+        brandLogo: /images/customers/super-league-basketball-logo.png
         brandName: Super League Basketball
-        backgroundImage: /images/customers/customer-2-bg.png
-        gradientColor: "#ff633d"
-        preComposed: true
+        backgroundImage: /images/customers/super-league-basketball-bg.jpg
+        gradientColor: "#F4663E"
+        preComposed: false
         cta:
-          text: Read Super League Basketball's story
+          text: Read story
           link: /contact
       - quote: '"A platform built for the future of sport"'
-        brandLogo: /images/customers/customer-3-logo.png
-        brandName: Bristol Bears
-        backgroundImage: /images/customers/customer-3-bg.png
-        gradientColor: "#152644"
-        preComposed: true
+        brandLogo: /images/customers/uefa-champions-league-logo.png
+        brandName: UEFA Champions League
+        backgroundImage: /images/customers/uefa-champions-league-bg.jpg
+        gradientColor: "#173CBA"
+        preComposed: false
         cta:
-          text: Read Bristol Bears' story
+          text: Read story
           link: /contact
 
   - type: diagonals
