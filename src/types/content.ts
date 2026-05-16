@@ -145,7 +145,7 @@ export interface MailingListSection {
 
 export interface DiagonalsSection {
   type: 'diagonals';
-  variant: 'grey-to-white' | 'white-to-grey' | 'color-strips';
+  variant: 'grey-to-white' | 'white-to-grey' | 'color-strips' | 'white-to-navy';
 }
 
 export type Section =
@@ -249,6 +249,10 @@ export interface PricingHeroData {
     annualLabel: string;
   };
   cardsSubtext?: string[];
+  cardsSubtextLink?: {
+    matchText: string;
+    href: string;
+  };
 }
 
 export interface PricingComparisonAvailability {
@@ -285,13 +289,26 @@ export interface PricingCalculatorSlider {
   unit?: string;
 }
 
+export interface PricingCalculatorRefineGroup {
+  label: string;
+  helper?: string;
+  sliders: PricingCalculatorSlider[];
+}
+
+export interface PricingCalculatorProductSliders {
+  sliders: PricingCalculatorSlider[];
+  refineOnDemand?: PricingCalculatorRefineGroup;
+}
+
 export interface PricingCalculator {
   heading: string;
   description: string;
   productPrompt: string;
-  sliders: PricingCalculatorSlider[];
+  // Per-product slider sets — keyed by PricingProductId
+  productSliders: Record<PricingProductId, PricingCalculatorProductSliders>;
   outputs: {
     consumptionLabel: string;
+    consumptionEmpty?: string;
     recommendationPrefix: string;
     hoursLabel: string;
     hoursTooltip: string;

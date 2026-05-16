@@ -10,8 +10,8 @@ const { section } = Astro.props;
 
 <section class="bg-grey py-20 md:py-30" aria-label={section.heading}>
   <div class="mx-auto max-w-360">
-    {/* Header row */}
-    <div class="flex items-end justify-between px-[24px] pb-[48px] md:px-30">
+    {/* Header row — padding aligns with the carousel track (DEV-2300) */}
+    <div class="flex items-end justify-between px-[32px] pb-[48px] md:px-30">
       <h2 class="text-h1 text-charcoal-pitch">
         {section.heading}
       </h2>
@@ -39,37 +39,65 @@ const { section } = Astro.props;
     </div>
 
     <div class="relative">
-      {/* Case study cards track */}
+      {/* Case study cards track — DEV-2300 sets card dims:
+          mobile width = calc(100vw - 64px), desktop width = calc(100vw - 240px),
+          height fixed 500px on both. No white container around (DEV-2299) so
+          drop card shadows and tighten track padding. */}
       <div
-        class="customers-track flex gap-[24px] overflow-x-auto overflow-y-visible px-[24px] pt-[8px] pb-[48px] scrollbar-hide md:px-30 md:pb-[64px]"
+        class="customers-track flex gap-[24px] overflow-x-auto overflow-y-visible px-[32px] scrollbar-hide md:px-30"
         role="list"
-        style="scroll-snap-type: x mandatory; scroll-padding-left: 24px; -webkit-overflow-scrolling: touch;"
+        style="scroll-snap-type: x mandatory; scroll-padding-left: 32px; -webkit-overflow-scrolling: touch;"
       >
         {section.caseStudies.map((study) => {
-          const cardClass = 'relative flex aspect-[16/9] w-[85vw] shrink-0 flex-col overflow-hidden rounded-[16px] shadow-card-lg md:w-175';
+          // Card: bg image + horizontal gradient (brand colour left -> transparent
+          // right, per Figma 202:18690) + logo + quote + button. Always rendered
+          // dynamically from CMS (preComposed retained as a fallback only).
+          const cardClass = 'customer-card group relative flex shrink-0 flex-col overflow-hidden rounded-[16px] shadow-card-lg cursor-pointer transition-transform hover:scale-[1.01]';
           const cardStyle = `scroll-snap-align: start;${study.backgroundColor ? ` background-color: ${study.backgroundColor};` : ''}`;
 
-          // Background image (used in both pre-composed and overlay modes)
           const backgroundImage = study.backgroundImage ? (
             <img
               src={study.backgroundImage}
               alt={study.preComposed ? `${study.brandName}: ${study.quote}` : ''}
-              class="absolute inset-0 h-full w-full object-cover object-top"
+              class="absolute inset-0 h-full w-full object-cover object-center"
               loading="lazy"
               decoding="async"
               aria-hidden={study.preComposed ? undefined : 'true'}
             />
           ) : null;
 
-          // Overlays only render when bg image is NOT pre-composed.
-          const overlays = !study.preComposed ? (
-            <>
+          // preComposed = legacy single-image cards (kept for back-compat).
+          // Default = dynamic overlay with bg + gradient + logo + heading + button.
+          if (study.preComposed) {
+            return (
+              <a
+                href={study.cta.link}
+                class={cardClass}
+                style={cardStyle}
+                aria-label={`${study.brandName} case study — ${study.quote}`}
+              >
+                {backgroundImage}
+              </a>
+            );
+          }
+
+          const gradientColor = study.gradientColor || '#152644';
+          return (
+            <a
+              href={study.cta.link}
+              class={cardClass}
+              style={cardStyle}
+              aria-label={`${study.brandName} case study — ${study.quote}`}
+            >
+              {backgroundImage}
+              {/* Linear gradient overlay: brand colour on the left, fading to
+                  transparent on the right. Matches Figma 202:18687/8/9. */}
               <div
                 class="absolute inset-0"
-                style={`background: linear-gradient(0deg, ${study.gradientColor || 'rgba(22,29,37,0.9)'} 0%, ${study.gradientColor}99 40%, transparent 80%);`}
+                style={`background: linear-gradient(90deg, ${gradientColor} 0%, transparent 100%);`}
                 aria-hidden="true"
               ></div>
-              <div class="relative z-10 flex h-full flex-col justify-between p-[24px] md:p-10">
+              <div class="relative z-10 flex h-full flex-col justify-between p-[32px] md:p-[40px]">
                 {study.brandLogo && (
                   <img
                     src={study.brandLogo}
@@ -79,42 +107,28 @@ const { section } = Astro.props;
                     decoding="async"
                   />
                 )}
-                <blockquote class="text-h3 text-white">
-                  {study.quote}
-                </blockquote>
+                <div class="flex flex-col gap-[24px]">
+                  <blockquote class="text-h3 max-w-110 text-white">
+                    {study.quote}
+                  </blockquote>
+                  {study.cta?.text && (
+                    <span class="inline-flex w-fit items-center gap-[8px] rounded-sm bg-white px-[24px] py-[12px] text-body-lg font-medium text-charcoal-pitch transition-colors group-hover:bg-yellow-tennis">
+                      {study.cta.text}
+                      <svg class="h-[16px] w-[16px] transition-transform group-hover:translate-x-[4px]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </span>
+                  )}
+                </div>
               </div>
-            </>
-          ) : null;
-
-          // Pre-composed cards: the entire card IS the link (Read Story is
-          // baked into the image). Wrap as <a> so any click navigates.
-          // Non-pre-composed cards: keep <article> with overlay + future CTA button.
-          return study.preComposed ? (
-            <a
-              href={study.cta.link}
-              class={`${cardClass} cursor-pointer transition-transform hover:scale-[1.01]`}
-              style={cardStyle}
-              aria-label={`${study.brandName} case study — ${study.quote}`}
-            >
-              {backgroundImage}
             </a>
-          ) : (
-            <article
-              class={cardClass}
-              role="listitem"
-              style={cardStyle}
-              aria-label={`${study.brandName} case study`}
-            >
-              {backgroundImage}
-              {overlays}
-            </article>
           );
         })}
       </div>
     </div>
 
-    {/* Pagination dots */}
-    <div class="flex items-center justify-center gap-[8px] pt-[32px]" aria-hidden="true">
+    {/* Pagination dots — 24px below the cards (DEV-2299) */}
+    <div class="flex items-center justify-center gap-[8px] pt-[24px]" aria-hidden="true">
       {section.caseStudies.map((_, i) => (
         <div
           class:list={[
@@ -136,6 +150,20 @@ const { section } = Astro.props;
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  /* Card dims per DEV-2300 — full viewport width minus the side padding
+     so the card sits flush within the section margins. Fixed 500px tall
+     across breakpoints. */
+  .customer-card {
+    width: calc(100vw - 64px);
+    height: 500px;
+  }
+  @media (min-width: 768px) {
+    .customer-card {
+      width: calc(100vw - 240px);
+      max-width: 1200px;
+    }
+  }
 </style>
 
 <script>
@@ -148,7 +176,7 @@ const { section } = Astro.props;
 
       const prevBtn = section.querySelector<HTMLButtonElement>('.customers-prev');
       const nextBtn = section.querySelector<HTMLButtonElement>('.customers-next');
-      const cards = track.querySelectorAll('article');
+      const cards = track.querySelectorAll<HTMLElement>('.customer-card');
       const dots = section.querySelectorAll('.customers-dot');
 
       function updateDots() {
@@ -175,10 +203,11 @@ const { section } = Astro.props;
       });
 
       // Keep scroll-padding in sync with the responsive section padding so
-      // snapping respects the heading alignment.
+      // snapping respects the heading alignment (DEV-2300 widened the cards
+      // so the track padding bumped to 32px mobile / 120px desktop).
       const updateScrollPadding = () => {
         const isDesktop = window.matchMedia('(min-width: 768px)').matches;
-        track.style.scrollPaddingLeft = isDesktop ? '120px' : '24px';
+        track.style.scrollPaddingLeft = isDesktop ? '120px' : '32px';
       };
       updateScrollPadding();
       window.addEventListener('resize', updateScrollPadding);

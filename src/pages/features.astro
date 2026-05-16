@@ -64,8 +64,14 @@ const featuresWebPage = {
     .filter((c) => c.features.length === 0)
     .map((c) => <div id={c.id}></div>)}
 
-  {/* CTA Banner — reuse from home page */}
-  {ctaBanner && ctaBanner.type === 'cta_banner' && <CTABanner section={ctaBanner} />}
+  {/* White-to-navy diagonal between the last feature (white) and the
+      CTA banner (navy-umpire). DEV-2324. */}
+  {ctaBanner && ctaBanner.type === 'cta_banner' && (
+    <>
+      <Diagonals section={{ type: 'diagonals', variant: 'white-to-navy' }} />
+      <CTABanner section={ctaBanner} />
+    </>
+  )}
 
   {/* Mailing List — reuse from home page */}
   {mailingList && mailingList.type === 'mailing_list' && <MailingList section={mailingList} />}

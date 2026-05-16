@@ -13,7 +13,10 @@ const { hero, products } = Astro.props;
 {/* Sticky wrapper — sticks below the nav (88px) and stays as the user
     scrolls past into the comparison table (parent in pricing.astro
     extends the sticky context). */}
-<section class="pricing-plans-section sticky top-[88px] z-20 bg-charcoal-pitch shadow-[0px_4px_20px_0px_rgba(0,0,0,0.4)]">
+<section
+  class="pricing-plans-section sticky top-[88px] z-20 bg-charcoal-pitch shadow-[0px_4px_20px_0px_rgba(0,0,0,0.4)]"
+  data-active-product="on-demand"
+>
   <div class="mx-auto flex max-w-300 flex-col gap-[24px] px-[24px] py-[24px] md:gap-[32px] md:px-[64px] md:py-[32px]">
     {/* Product tab cards */}
     <div class="grid grid-cols-1 gap-[16px] md:grid-cols-2 md:gap-[24px]">
@@ -45,7 +48,7 @@ const { hero, products } = Astro.props;
         aria-checked="false"
         data-billing-toggle
       >
-        <span class="billing-thumb absolute left-[2px] h-[20px] w-[20px] rounded-full bg-orange-basketball transition-transform"></span>
+        <span class="billing-thumb absolute left-[2px] h-[20px] w-[20px] rounded-full transition-[transform,background-color]"></span>
       </button>
       <span class="billing-label text-body font-medium text-white/60" data-billing-label="annual">
         {hero.billingToggle.annualLabel}
@@ -64,12 +67,28 @@ const { hero, products } = Astro.props;
       </div>
     ))}
 
-    {/* Subtext below cards */}
+    {/* Subtext below cards. cardsSubtextLink (optional) lets a single
+        substring within the lines be rendered as an anchor — used by the
+        billing/data overages explainer (DEV-2280). */}
     {hero.cardsSubtext && hero.cardsSubtext.length > 0 && (
       <div class="flex flex-col gap-[4px] text-center">
-        {hero.cardsSubtext.map((line) => (
-          <p class="text-body text-white/60">{line}</p>
-        ))}
+        {hero.cardsSubtext.map((line) => {
+          const link = hero.cardsSubtextLink;
+          if (link && link.matchText && line.includes(link.matchText)) {
+            const [before, after] = line.split(link.matchText);
+            return (
+              <p class="text-body text-white/60">
+                {before}
+                <a
+                  href={link.href}
+                  class="font-medium text-white underline underline-offset-2 transition-colors hover:text-yellow-tennis"
+                >{link.matchText}</a>
+                {after}
+              </p>
+            );
+          }
+          return <p class="text-body text-white/60">{line}</p>;
+        })}
       </div>
     )}
   </div>
@@ -102,6 +121,14 @@ const { hero, products } = Astro.props;
     transform: translateX(20px);
   }
 
+  /* Billing toggle thumb colour follows the active product (DEV-2281) */
+  .pricing-plans-section[data-active-product='live'] .billing-thumb {
+    background-color: var(--color-orange-basketball);
+  }
+  .pricing-plans-section[data-active-product='on-demand'] .billing-thumb {
+    background-color: var(--color-blue-matchday);
+  }
+
   /* When sticky and scrolled, compress the section to give comparison
      more room. .is-condensed is set by JS via IntersectionObserver. */
   .pricing-plans-section.is-condensed .pricing-product-tab {
@@ -118,6 +145,7 @@ const { hero, products } = Astro.props;
     const tabs = document.querySelectorAll<HTMLButtonElement>('.pricing-product-tab');
     const grids = document.querySelectorAll<HTMLElement>('[data-product-grid]');
 
+    const plansSection = document.querySelector<HTMLElement>('.pricing-plans-section');
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         const productId = tab.dataset.productTab;
@@ -126,6 +154,9 @@ const { hero, products } = Astro.props;
         grids.forEach((g) =>
           g.classList.toggle('hidden', g.dataset.productGrid !== productId)
         );
+        // Track active product on the section so CSS (toggle thumb colour
+        // for DEV-2281, etc.) can react.
+        if (plansSection) plansSection.dataset.activeProduct = productId;
       });
     });
 
@@ -151,7 +182,9 @@ const { hero, products } = Astro.props;
         document.querySelectorAll<HTMLElement>('.pricing-price-strike').forEach((el) => {
           const v = next ? el.dataset.annualStrike : el.dataset.monthlyStrike;
           if (v) el.textContent = v;
-          el.classList.toggle('opacity-0', !next);
+          // DEV-2277 — on monthly the strike should not reserve layout
+          // space (otherwise the VAT text reads off-centre next to the price)
+          el.classList.toggle('hidden', !next);
         });
         document.querySelectorAll<HTMLElement>('.pricing-price-vat').forEach((el) => {
           const v = next ? el.dataset.annualVat : el.dataset.monthlyVat;
@@ -159,10 +192,11 @@ const { hero, products } = Astro.props;
         });
       });
 
-      // Initial: monthly selected, hide strike-through
+      // Initial: monthly selected, hide strike-through entirely so the
+      // VAT text centres next to the price (DEV-2277).
       document
         .querySelectorAll<HTMLElement>('.pricing-price-strike')
-        .forEach((el) => el.classList.add('opacity-0'));
+        .forEach((el) => el.classList.add('hidden'));
     }
 
     // Calculator trigger — opens modal (handled by calculator script if mounted)

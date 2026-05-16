@@ -15,7 +15,7 @@ const navLinks = [
 ];
 ---
 
-<header class="site-header fixed top-0 left-0 right-0 z-50 bg-navy-umpire p-[16px] transition-[translate] duration-200">
+<header class="site-header fixed top-0 left-0 right-0 z-50 bg-transparent p-[16px] transition-[translate] duration-200">
   <div class="relative mx-auto max-w-360">
     <nav
       class="relative z-50 flex items-center justify-between rounded-[16px] bg-[rgba(22,29,37,0.9)] px-[24px] py-[12px] backdrop-blur-md"
@@ -94,10 +94,10 @@ const navLinks = [
       </button>
     </nav>
 
-    <!-- Mobile menu panel (DEV-2271: full viewport, DEV-2270: products dropdown inline) -->
+    <!-- Mobile menu panel (DEV-2271: full viewport, charcoal-pitch bg per DEV-2298; DEV-2270: products dropdown inline) -->
     <div
       id="mobile-menu-panel"
-      class="mobile-menu-panel pointer-events-none fixed inset-0 z-40 overflow-y-auto bg-navy-umpire opacity-0 transition-opacity duration-200 lg:hidden"
+      class="mobile-menu-panel pointer-events-none fixed inset-0 z-40 overflow-y-auto bg-charcoal-pitch opacity-0 transition-opacity duration-200 lg:hidden"
       aria-hidden="true"
     >
       <div class="flex min-h-full flex-col gap-[24px] px-[24px] pb-[40px] pt-[88px]">
@@ -106,7 +106,7 @@ const navLinks = [
           <li class="border-b border-white/10">
             <button
               type="button"
-              class="mobile-products-trigger flex w-full items-center justify-between py-[20px] text-left text-body-lg font-medium capitalize text-white"
+              class="mobile-products-trigger flex w-full items-center gap-[8px] py-[20px] text-left text-body-lg font-medium capitalize text-white"
               aria-expanded="false"
               aria-controls="mobile-products-panel"
             >
@@ -127,7 +127,7 @@ const navLinks = [
             >
               <div class="flex flex-col gap-[16px] pb-[20px]">
                 <!-- On-Demand -->
-                <div class="flex flex-col gap-[12px] rounded-[12px] bg-white/5 p-[20px]">
+                <div class="flex flex-col gap-[12px] rounded-[12px] border border-white/10 p-[20px]">
                   <div class="flex items-center gap-[12px]">
                     <img src="/images/icons/product-vod.svg" alt="" class="h-[28px] w-[28px]" aria-hidden="true" />
                     <h4 class="text-h5 text-white">On-Demand</h4>
@@ -146,7 +146,7 @@ const navLinks = [
                   </a>
                 </div>
                 <!-- Live & On-Demand -->
-                <div class="flex flex-col gap-[12px] rounded-[12px] bg-white/5 p-[20px]">
+                <div class="flex flex-col gap-[12px] rounded-[12px] border border-white/10 p-[20px]">
                   <div class="flex items-center gap-[12px]">
                     <img src="/images/icons/product-live.svg" alt="" class="h-[24px] w-[24px]" aria-hidden="true" />
                     <h4 class="text-h5 text-white">Live & On-Demand</h4>

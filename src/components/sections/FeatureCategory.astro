@@ -24,70 +24,58 @@ const bgClass = category.background === 'grey' ? 'bg-grey' : 'bg-white';
         </div>
       )}
 
-      {/* Feature accordion list — first open by default */}
+      {/* Feature row list — 3 columns per row per DEV-2291:
+          Feature name | Description | Content (bullets/image/empty).
+          On mobile the columns stack. */}
       <div class="flex flex-col">
-        {category.features.map((feature, idx) => (
-          <details
-            class="feature-accordion group border-b border-[rgba(21,38,68,0.1)]"
-            open={idx === 0}
-          >
-            <summary class="flex cursor-pointer list-none items-center justify-between gap-[16px] py-[24px]">
-              <h3 class="text-h4 text-charcoal-pitch">
-                {feature.title}
-              </h3>
-              <svg
-                class="h-6 w-6 shrink-0 text-charcoal-pitch transition-transform group-open:rotate-45"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-              </svg>
-            </summary>
+        {category.features.map((feature) => (
+          <div class="grid grid-cols-1 gap-[16px] border-b border-[rgba(21,38,68,0.1)] py-[20px] md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)_minmax(0,1.5fr)] md:items-start md:gap-13 md:py-[24px]">
+            {/* Col 1 — feature name */}
+            <h3 class="text-h4 text-charcoal-pitch">
+              {feature.title}
+            </h3>
 
-            <div class="flex flex-col gap-[24px] pb-[32px] md:flex-row md:items-start md:gap-13">
-              {/* Description column */}
-              <div class="min-w-0 flex-1 text-body text-text-primary">
-                <Fragment set:html={feature.description
-                  .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                  .replace(/\n\n/g, '<br><br>')
-                  .replace(/\n- /g, '<br>• ')
-                } />
-              </div>
-
-              {/* Checks / image column */}
-              <div class="min-w-0 flex-1">
-                {feature.checks && feature.checks.length > 0 && (
-                  <div class="flex flex-col gap-[8px]">
-                    {feature.checks.map((check) => (
-                      <div class="flex items-center gap-[16px]">
-                        <div class="flex h-[32px] w-[32px] shrink-0 items-center justify-center rounded-full bg-yellow-tennis">
-                          <svg class="h-3.5 w-3.5 text-charcoal-pitch" viewBox="0 0 16 16" fill="none">
-                            <path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                          </svg>
-                        </div>
-                        <span class="text-body text-text-primary">
-                          {check}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {feature.image && (
-                  <div class="overflow-hidden rounded-md bg-grey">
-                    <img
-                      src={feature.image}
-                      alt={feature.title}
-                      class="h-full w-full object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                )}
-              </div>
+            {/* Col 2 — description */}
+            <div class="min-w-0 text-body text-text-primary">
+              <Fragment set:html={feature.description
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n\n/g, '<br><br>')
+                .replace(/\n- /g, '<br>• ')
+              } />
             </div>
-          </details>
+
+            {/* Col 3 — content (bullets, image, or empty) */}
+            <div class="min-w-0">
+              {feature.checks && feature.checks.length > 0 && (
+                <div class="flex flex-col gap-[8px]">
+                  {feature.checks.map((check) => (
+                    <div class="flex items-center gap-[16px]">
+                      <div class="flex h-[32px] w-[32px] shrink-0 items-center justify-center rounded-full bg-yellow-tennis">
+                        <svg class="h-3.5 w-3.5 text-charcoal-pitch" viewBox="0 0 16 16" fill="none">
+                          <path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </div>
+                      <span class="text-body text-text-primary">
+                        {check}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {feature.image && (
+                <div class="flex justify-center overflow-hidden rounded-md">
+                  <img
+                    src={feature.image}
+                    alt={feature.title}
+                    class="h-auto w-full max-w-[480px] object-contain"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
         ))}
       </div>
     </div>
@@ -98,10 +86,3 @@ const bgClass = category.background === 'grey' ? 'bg-grey' : 'bg-white';
 {category.features.length === 0 && (
   <div id={category.id}></div>
 )}
-
-<style>
-  /* Hide default summary marker in webkit */
-  .feature-accordion summary::-webkit-details-marker {
-    display: none;
-  }
-</style>
