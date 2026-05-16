@@ -1,14 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { loadYaml } from '../lib/yaml-loader';
-import type { ContactPageContent, PageContent } from '../types/content';
-import CTABanner from '../components/sections/CTABanner.astro';
+import type { ContactPageContent } from '../types/content';
 
 const contact = await loadYaml<ContactPageContent>('pages/contact.yaml');
-
-// Reuse the homepage CTA banner at the bottom of the page
-const home = await loadYaml<PageContent>('pages/home.yaml');
-const ctaBanner = home.sections.find((s) => s.type === 'cta_banner');
 
 const contactWebPage = {
   '@context': 'https://schema.org',
@@ -148,7 +143,6 @@ const contactWebPage = {
     </svg>
   </div>
 
-  {ctaBanner && ctaBanner.type === 'cta_banner' && <CTABanner section={ctaBanner} />}
 </BaseLayout>
 
 <style>

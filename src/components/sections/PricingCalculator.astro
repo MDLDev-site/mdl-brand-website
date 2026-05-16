@@ -181,8 +181,9 @@ const { calculator, products } = Astro.props;
 
     {/* Output panel — shows helper text until all sliders interacted with
         (DEV-2284); recommendation tier appears once interaction is
-        complete. The Recommended badge on the matching plan card is
-        gated on the same flag (DEV-2286 — algorithm pending Alex/Dawie). */}
+        complete. Layout updated per DEV-2334 (Figma 196-15241) — the
+        recommended plan + "View plan" link sit alongside the figures.
+        For On-Demand only Bandwidth is shown (no hours) per DEV-2330. */}
     <div class="mt-[24px] flex flex-col gap-[16px] rounded-[12px] bg-white px-[24px] py-[20px] md:flex-row md:items-center md:justify-between">
       <div class="flex flex-col gap-[4px]">
         <p class="font-body text-[14px] font-semibold text-charcoal-pitch">
@@ -195,18 +196,30 @@ const { calculator, products } = Astro.props;
         >
           {calculator.outputs.consumptionEmpty ?? 'Drag all sliders to view your estimated consumption'}
         </p>
-        {/* Recommendation — hidden until all sliders touched */}
-        <p
-          class="calc-recommendation hidden font-body text-[14px] text-charcoal-pitch/70"
-          data-calc-recommendation
-        >
-          {calculator.outputs.recommendationPrefix}
-          <span class="calc-plan-name ml-[4px] font-semibold" data-calc-plan>—</span>
-        </p>
+        {/* Recommendation — hidden until all sliders touched. View Plan
+            link closes the calculator and scrolls the pricing page to
+            the recommended tier card (DEV-2334). */}
+        <div class="calc-recommendation hidden" data-calc-recommendation>
+          <p class="font-body text-[14px] text-charcoal-pitch/70">
+            {calculator.outputs.recommendationPrefix}
+            <span class="calc-plan-name ml-[4px] font-semibold" data-calc-plan>—</span>
+          </p>
+          <button
+            type="button"
+            class="calc-view-plan mt-[4px] inline-flex items-center gap-[4px] font-body text-[13px] font-medium hover:underline"
+            data-calc-view-plan
+          >
+            View plan
+            <svg class="h-[12px] w-[12px]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div class="calc-figures flex gap-[24px] opacity-40 transition-opacity md:gap-[40px]" data-calc-figures>
-        <div class="flex flex-col gap-[4px]">
+        {/* Hours figure — only relevant for Live product (DEV-2330) */}
+        <div class="calc-figure-hours flex flex-col gap-[4px]" data-calc-figure="hours">
           <div class="flex items-center gap-[6px]">
             <span class="font-body text-[12px] font-medium text-charcoal-pitch/70">
               {calculator.outputs.hoursLabel}
@@ -309,6 +322,11 @@ const { calculator, products } = Astro.props;
     color: var(--calc-accent);
   }
 
+  /* View Plan link follows the active product accent (DEV-2334) */
+  .calc-view-plan {
+    color: var(--calc-accent);
+  }
+
   /* Output panel state — figures fade in once the user has touched
      all sliders (DEV-2284) */
   .calc-figures.is-ready {
@@ -332,7 +350,7 @@ const { calculator, products } = Astro.props;
     height: 16px;
     border-radius: 999px;
     background: white;
-    border: 2px solid var(--calc-accent);
+    border: 2px solid var(--slider-accent, var(--calc-accent));
     cursor: pointer;
   }
   .calc-slider::-moz-range-thumb {
@@ -340,7 +358,7 @@ const { calculator, products } = Astro.props;
     height: 16px;
     border-radius: 999px;
     background: white;
-    border: 2px solid var(--calc-accent);
+    border: 2px solid var(--slider-accent, var(--calc-accent));
     cursor: pointer;
   }
   .calc-slider::-moz-range-track {
@@ -358,11 +376,12 @@ const { calculator, products } = Astro.props;
   type ProductId = 'on-demand' | 'live';
 
   // Plan thresholds — tier index (0=Launch, 1=Growth, 2=Scale, 3=Unlimited).
-  // NB: these are the tentative thresholds inherited from the previous
-  // calculator. Final algorithm pending input from Alex/Dawie (DEV-2286).
+  // Live thresholds updated per DEV-2330 to match the new tier figures
+  // (15/20/30 hrs, 1/3/5/10TB+ bandwidth).
+  // NB: still tentative — final algorithm pending Alex/Dawie (DEV-2286).
   const OD_BANDWIDTH_TB = [1, 5, 20, Infinity];
-  const LIVE_BANDWIDTH_TB = [2, 10, 40, Infinity];
-  const LIVE_HOURS = [10, 50, 200, Infinity];
+  const LIVE_BANDWIDTH_TB = [1, 3, 5, Infinity];
+  const LIVE_HOURS = [15, 20, 30, Infinity];
   const TIER_NAMES = ['Launch Plan', 'Growth Plan', 'Scale Plan', 'Unlimited Plan'];
 
   // 1080p HLS averages ~5 Mbps. Bandwidth (GB) per fan-hour: 2.25.
@@ -383,11 +402,46 @@ const { calculator, products } = Astro.props;
     const modal = document.querySelector<HTMLElement>('[data-calc-modal]');
     if (!modal) return;
 
+    let activeProduct: ProductId = 'on-demand';
+    // Per-product touched sets — only sliders for the active product
+    // (excluding the optional Refine sub-group which is opt-in) need
+    // to be touched before the recommendation reveals.
+    const touched: Record<ProductId, Set<string>> = {
+      'on-demand': new Set(),
+      'live': new Set(),
+    };
+
+    // Closing the calculator cancels the current calculation — sliders
+    // revert to defaults, touched sets clear, recommendation hides
+    // (DEV-2333). The calculator opens fresh on every Calculate Usage click.
+    const resetCalculator = () => {
+      touched['on-demand'].clear();
+      touched['live'].clear();
+      // Snap all sliders back to their default values
+      modal!.querySelectorAll<HTMLInputElement>('.calc-slider').forEach((s) => {
+        const def = s.getAttribute('value');
+        if (def !== null) s.value = def;
+        updateSliderFill(s);
+      });
+      // Snap product back to On-Demand
+      const tabs = modal!.querySelectorAll<HTMLButtonElement>('.pricing-calc-tab');
+      tabs.forEach((t) => t.classList.toggle('is-active', t.dataset.calcTab === 'on-demand'));
+      // Close any open Refine OD details
+      modal!.querySelectorAll<HTMLDetailsElement>('details.calc-refine-od').forEach((d) => {
+        d.open = false;
+      });
+      setActiveProduct('on-demand');
+      // Recommendation visual on plan cards also clears
+      clearRecommendation('on-demand');
+      clearRecommendation('live');
+    };
+
     const close = () => {
       modal.classList.add('hidden');
       modal.classList.remove('flex');
       modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      resetCalculator();
     };
 
     modal.querySelector('[data-calc-close]')?.addEventListener('click', close);
@@ -398,14 +452,30 @@ const { calculator, products } = Astro.props;
       if (e.key === 'Escape' && !modal.classList.contains('hidden')) close();
     });
 
-    let activeProduct: ProductId = 'on-demand';
-    // Per-product touched sets — only sliders for the active product
-    // (excluding the optional Refine sub-group which is opt-in) need
-    // to be touched before the recommendation reveals.
-    const touched: Record<ProductId, Set<string>> = {
-      'on-demand': new Set(),
-      'live': new Set(),
-    };
+    // View Plan — closes the calculator and scrolls the pricing page so
+    // the recommended plan card is in view (DEV-2334).
+    modal.querySelector('[data-calc-view-plan]')?.addEventListener('click', () => {
+      const productGrid = document.querySelector<HTMLElement>(
+        `[data-product-grid="${activeProduct}"]`
+      );
+      // Ensure the right product tab is active on the pricing page
+      const planTabs = document.querySelectorAll<HTMLButtonElement>('.pricing-product-tab');
+      planTabs.forEach((t) => t.classList.toggle('is-active', t.dataset.productTab === activeProduct));
+      document.querySelectorAll<HTMLElement>('[data-product-grid]').forEach((g) => {
+        g.classList.toggle('hidden', g.dataset.productGrid !== activeProduct);
+      });
+      const plansSection = document.querySelector<HTMLElement>('.pricing-plans-section');
+      if (plansSection) plansSection.dataset.activeProduct = activeProduct;
+      // Close the modal but keep the recommendation visual on the cards
+      // (don't reset — user wants to actually see the plan)
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      // Scroll the plans section into view
+      const target = plansSection || productGrid;
+      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
 
     function setActiveProduct(productId: ProductId) {
       activeProduct = productId;
@@ -414,6 +484,9 @@ const { calculator, products } = Astro.props;
       modal!.querySelectorAll<HTMLElement>('[data-product-sliders]').forEach((el) => {
         el.classList.toggle('hidden', el.dataset.productSliders !== productId);
       });
+      // Toggle the Hours figure visibility — only relevant for Live (DEV-2330)
+      const hoursFigure = modal!.querySelector<HTMLElement>('[data-calc-figure="hours"]');
+      hoursFigure?.classList.toggle('hidden', productId !== 'live');
       // Restyle visible sliders with new accent colour
       modal!.querySelectorAll<HTMLInputElement>('.calc-slider').forEach(updateSliderFill);
       recompute();
@@ -454,10 +527,17 @@ const { calculator, products } = Astro.props;
       const max = parseFloat(slider.max);
       const val = parseFloat(slider.value);
       const pct = ((val - min) / (max - min)) * 100;
-      const accent = activeProduct === 'live'
+      // Refine On-Demand sliders are always OD content, so they take the
+      // OD (blue) accent regardless of which product tab is active.
+      // DEV-2332 — Natalia wants OD sliders blue, not orange.
+      const isRefineOd = slider.dataset.sliderRefine === 'true';
+      const useLiveAccent = activeProduct === 'live' && !isRefineOd;
+      const accent = useLiveAccent
         ? 'var(--color-orange-basketball)'
         : 'var(--color-blue-matchday)';
       slider.style.background = `linear-gradient(to right, ${accent} 0%, ${accent} ${pct}%, rgb(255 255 255 / 0.15) ${pct}%, rgb(255 255 255 / 0.15) 100%)`;
+      // Track the slider's individual accent so its thumb border updates too
+      slider.style.setProperty('--slider-accent', accent);
     }
 
     function readSlider(id: string, scopeRefine = false): number {

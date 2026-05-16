@@ -51,7 +51,7 @@ const visibleSocials = footer.socials.filter((s) => s.visible);
       {footer.columns.map((column, idx) => (
         <div class="border-b border-white/10">
           <button
-            class="flex w-full items-center justify-between py-[16px] text-left"
+            class="flex w-full items-center gap-[8px] py-[16px] text-left"
             type="button"
             aria-expanded="false"
             data-footer-toggle={idx}
@@ -81,8 +81,9 @@ const visibleSocials = footer.socials.filter((s) => s.visible);
       ))}
     </div>
 
-    {/* Bottom bar */}
-    <div class="flex flex-col items-center gap-[24px] border-t border-white/10 pt-[32px] md:flex-row md:justify-between">
+    {/* Bottom bar — mobile drops the top border (DEV-2328) since the
+        last accordion row already has a divider */}
+    <div class="flex flex-col items-center gap-[24px] md:flex-row md:justify-between md:border-t md:border-white/10 md:pt-[32px]">
       {/* Logo + copyright */}
       <div class="flex flex-col items-center gap-[8px] md:flex-row md:gap-[12px]">
         <a href="/" class="shrink-0">

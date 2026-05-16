@@ -26,10 +26,11 @@ anchors:
 
 categories:
   - id: platform
-    heading: "YOUR STREAMING COMMAND CENTRE"
-    description: "A central hub for all your Live & On-Demand video content — built to power your channel end-to-end."
+    # DEV-2309 — heading + paragraph per Natalia's screenshot
+    heading: "ALL-IN-ONE"
+    description: "Run your live and on-demand media broadcast with ease, all from within the same platform."
     background: white
-    hideHeading: true
+    hideHeading: false
     features:
       - title: "Content Management"
         description: "Upload, organise and schedule your entire content library from a single, intuitive dashboard. Publish instantly or plan ahead with scheduled releases."
@@ -125,8 +126,9 @@ categories:
           - Custom report builder
 
   - id: fan-experience
+    # DEV-2314 — paragraph updated per Natalia
     heading: "PUTTING FANS FIRST"
-    description: "A premium end-to-end sports streaming experience across all devices — whether on the couch or on the move."
+    description: "Putting your fans first with SSO integrations, 24/7 support and in-app notifications."
     background: grey
     features:
       - title: "1080p HD Streaming"
@@ -139,8 +141,9 @@ categories:
         description: "Real-time fan support via Intercom chat — helping your fans with login issues, payment queries and playback problems, with straightforward escalation to your support team."
 
   - id: scalability
+    # DEV-2317 — paragraph updated per Natalia
     heading: "HANDLE THE BIGGEST OCCASIONS"
-    description: "Scale infinitely with enterprise-grade AWS infrastructure — from 100 viewers to 100,000 and beyond."
+    description: "Developed on best-in-class AWS infrastructure, ensuring reliability and scalability."
     background: white
     features:
       - title: "Auto-Scaling Delivery"
@@ -155,8 +158,9 @@ categories:
         description: "We never throttle your streams mid-event. If you are approaching your bandwidth limit, we alert you proactively and can upgrade your plan instantly."
 
   - id: security
-    heading: "PROTECT YOUR CONTENT"
-    description: "Industry-leading security and digital rights management — so your premium sports content stays premium."
+    # DEV-2320 — heading + paragraph updated per Natalia
+    heading: "Secure, Compliant and In Control"
+    description: "Protect your channel with enterprise-grade security across payments, media rights and data."
     background: grey
     features:
       - title: "Geographic Content Controls"

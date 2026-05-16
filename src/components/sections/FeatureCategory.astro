@@ -29,7 +29,7 @@ const bgClass = category.background === 'grey' ? 'bg-grey' : 'bg-white';
           On mobile the columns stack. */}
       <div class="flex flex-col">
         {category.features.map((feature) => (
-          <div class="grid grid-cols-1 gap-[16px] border-b border-[rgba(21,38,68,0.1)] py-[32px] md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)_minmax(0,1.5fr)] md:items-start md:gap-13">
+          <div class="grid grid-cols-1 gap-[16px] border-b border-[rgba(21,38,68,0.1)] py-[20px] md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)_minmax(0,1.5fr)] md:items-start md:gap-13 md:py-[24px]">
             {/* Col 1 — feature name */}
             <h3 class="text-h4 text-charcoal-pitch">
               {feature.title}
@@ -64,11 +64,11 @@ const bgClass = category.background === 'grey' ? 'bg-grey' : 'bg-white';
               )}
 
               {feature.image && (
-                <div class="overflow-hidden rounded-md bg-grey">
+                <div class="flex justify-center overflow-hidden rounded-md">
                   <img
                     src={feature.image}
                     alt={feature.title}
-                    class="h-full w-full object-cover"
+                    class="h-auto w-full max-w-[480px] object-contain"
                     loading="lazy"
                     decoding="async"
                   />
