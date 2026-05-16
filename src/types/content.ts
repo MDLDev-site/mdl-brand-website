@@ -145,7 +145,7 @@ export interface MailingListSection {
 
 export interface DiagonalsSection {
   type: 'diagonals';
-  variant: 'grey-to-white' | 'white-to-grey' | 'color-strips';
+  variant: 'grey-to-white' | 'white-to-grey' | 'color-strips' | 'white-to-navy';
 }
 
 export type Section =

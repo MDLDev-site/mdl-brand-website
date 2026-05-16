@@ -113,7 +113,7 @@ sections:
 
   - type: grid
     heading: PUTTING FANS FIRST
-    description: "A premium end-to-end viewing experience across all devices on your own sports OTT platform. Whether on the couch or on the move."
+    description: "A premium end-to-end viewing experience across all devices. Whether on the couch or on the move."
     features:
       - icon: hd
         title: 1080P HD Quality

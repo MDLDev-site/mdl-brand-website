@@ -79,9 +79,10 @@ products:
         vatNote: "P/M ANNUALLY EXCL. VAT"
         description: "Kickstart your live and on-demand channel with a scalable plan designed to support your first steps."
         buttonVariant: grey
+        # DEV-2330 — Live tier figures updated per Natalia
         differentiators:
-          - { label: "Live Stream Hours", value: "10 hrs p/m" }
-          - { label: "Bandwidth", value: "2TB p/m" }
+          - { label: "Live Stream Hours", value: "15 p/m" }
+          - { label: "Bandwidth", value: "1TB p/m" }
           - { label: "Storage Capacity", value: "1TB" }
         cta: { text: "Contact Sales", link: "/contact" }
       - id: growth
@@ -92,9 +93,9 @@ products:
         description: "Scale your live programming as audience and library grow."
         buttonVariant: grey
         differentiators:
-          - { label: "Live Stream Hours", value: "50 hrs p/m" }
-          - { label: "Bandwidth", value: "10TB p/m" }
-          - { label: "Storage Capacity", value: "5TB" }
+          - { label: "Live Stream Hours", value: "20 p/m" }
+          - { label: "Bandwidth", value: "3TB p/m" }
+          - { label: "Storage Capacity", value: "3TB" }
         cta: { text: "Contact Sales", link: "/contact" }
       - id: scale
         name: "Scale"
@@ -105,9 +106,9 @@ products:
         tag: { label: "Most Popular", variant: most-popular }
         buttonVariant: grey
         differentiators:
-          - { label: "Live Stream Hours", value: "200 hrs p/m" }
-          - { label: "Bandwidth", value: "40TB p/m" }
-          - { label: "Storage Capacity", value: "20TB" }
+          - { label: "Live Stream Hours", value: "30 p/m" }
+          - { label: "Bandwidth", value: "5TB p/m" }
+          - { label: "Storage Capacity", value: "5TB" }
         cta: { text: "Contact Sales", link: "/contact" }
       - id: unlimited
         name: "Unlimited"
@@ -117,9 +118,9 @@ products:
         description: "Unlimited streaming for federations, leagues and broadcasters."
         buttonVariant: product-accent
         differentiators:
-          - { label: "Live Stream Hours", value: "Unlimited" }
-          - { label: "Bandwidth", value: "Unlimited" }
-          - { label: "Storage Capacity", value: "Unlimited" }
+          - { label: "Live Stream Hours", value: "40 p/m" }
+          - { label: "Bandwidth", value: "10TB+ p/m" }
+          - { label: "Storage Capacity", value: "10TB" }
         cta: { text: "Contact Sales", link: "/contact" }
 
 # Feature comparison tables — one per product. Each row's `values` array
@@ -199,11 +200,11 @@ comparisons:
           - label: "Low-latency mode"
             values: [{ value: true }, { value: true }, { value: true }, { value: true }]
           - label: "Live stream hours"
-            values: [{ value: "10 hrs" }, { value: "50 hrs" }, { value: "200 hrs" }, { value: "Unlimited" }]
+            values: [{ value: "15 p/m" }, { value: "20 p/m" }, { value: "30 p/m" }, { value: "40 p/m" }]
           - label: "Bandwidth"
-            values: [{ value: "2TB" }, { value: "10TB" }, { value: "40TB" }, { value: "Unlimited" }]
+            values: [{ value: "1TB" }, { value: "3TB" }, { value: "5TB" }, { value: "10TB+" }]
           - label: "Storage capacity"
-            values: [{ value: "1TB" }, { value: "5TB" }, { value: "20TB" }, { value: "Unlimited" }]
+            values: [{ value: "1TB" }, { value: "3TB" }, { value: "5TB" }, { value: "10TB" }]
       - id: brandability
         heading: "Brandability"
         rows:

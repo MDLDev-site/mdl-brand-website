@@ -10,8 +10,8 @@ const { section } = Astro.props;
 
 <section class="bg-grey py-20 md:py-30" aria-label={section.heading}>
   <div class="mx-auto max-w-360">
-    {/* Header row */}
-    <div class="flex items-end justify-between px-[24px] pb-[48px] md:px-30">
+    {/* Header row — padding aligns with the carousel track (DEV-2300) */}
+    <div class="flex items-end justify-between px-[32px] pb-[48px] md:px-30">
       <h2 class="text-h1 text-charcoal-pitch">
         {section.heading}
       </h2>
@@ -39,14 +39,17 @@ const { section } = Astro.props;
     </div>
 
     <div class="relative">
-      {/* Case study cards track */}
+      {/* Case study cards track — DEV-2300 sets card dims:
+          mobile width = calc(100vw - 64px), desktop width = calc(100vw - 240px),
+          height fixed 500px on both. No white container around (DEV-2299) so
+          drop card shadows and tighten track padding. */}
       <div
-        class="customers-track flex gap-[24px] overflow-x-auto overflow-y-visible px-[24px] pt-[8px] pb-[48px] scrollbar-hide md:px-30 md:pb-[64px]"
+        class="customers-track flex gap-[24px] overflow-x-auto overflow-y-visible px-[32px] scrollbar-hide md:px-30"
         role="list"
-        style="scroll-snap-type: x mandatory; scroll-padding-left: 24px; -webkit-overflow-scrolling: touch;"
+        style="scroll-snap-type: x mandatory; scroll-padding-left: 32px; -webkit-overflow-scrolling: touch;"
       >
         {section.caseStudies.map((study) => {
-          const cardClass = 'relative flex aspect-[16/9] w-[85vw] shrink-0 flex-col overflow-hidden rounded-[16px] shadow-card-lg md:w-175';
+          const cardClass = 'customer-card relative flex shrink-0 flex-col overflow-hidden rounded-[16px]';
           const cardStyle = `scroll-snap-align: start;${study.backgroundColor ? ` background-color: ${study.backgroundColor};` : ''}`;
 
           // Background image (used in both pre-composed and overlay modes)
@@ -113,8 +116,8 @@ const { section } = Astro.props;
       </div>
     </div>
 
-    {/* Pagination dots */}
-    <div class="flex items-center justify-center gap-[8px] pt-[32px]" aria-hidden="true">
+    {/* Pagination dots — 24px below the cards (DEV-2299) */}
+    <div class="flex items-center justify-center gap-[8px] pt-[24px]" aria-hidden="true">
       {section.caseStudies.map((_, i) => (
         <div
           class:list={[
@@ -135,6 +138,20 @@ const { section } = Astro.props;
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Card dims per DEV-2300 — full viewport width minus the side padding
+     so the card sits flush within the section margins. Fixed 500px tall
+     across breakpoints. */
+  .customer-card {
+    width: calc(100vw - 64px);
+    height: 500px;
+  }
+  @media (min-width: 768px) {
+    .customer-card {
+      width: calc(100vw - 240px);
+      max-width: 1200px;
+    }
   }
 </style>
 
@@ -175,10 +192,11 @@ const { section } = Astro.props;
       });
 
       // Keep scroll-padding in sync with the responsive section padding so
-      // snapping respects the heading alignment.
+      // snapping respects the heading alignment (DEV-2300 widened the cards
+      // so the track padding bumped to 32px mobile / 120px desktop).
       const updateScrollPadding = () => {
         const isDesktop = window.matchMedia('(min-width: 768px)').matches;
-        track.style.scrollPaddingLeft = isDesktop ? '120px' : '24px';
+        track.style.scrollPaddingLeft = isDesktop ? '120px' : '32px';
       };
       updateScrollPadding();
       window.addEventListener('resize', updateScrollPadding);
