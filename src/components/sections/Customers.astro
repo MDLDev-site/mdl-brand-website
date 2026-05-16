@@ -49,30 +49,55 @@ const { section } = Astro.props;
         style="scroll-snap-type: x mandatory; scroll-padding-left: 32px; -webkit-overflow-scrolling: touch;"
       >
         {section.caseStudies.map((study) => {
-          const cardClass = 'customer-card relative flex shrink-0 flex-col overflow-hidden rounded-[16px]';
+          // Card: bg image + horizontal gradient (brand colour left -> transparent
+          // right, per Figma 202:18690) + logo + quote + button. Always rendered
+          // dynamically from CMS (preComposed retained as a fallback only).
+          const cardClass = 'customer-card group relative flex shrink-0 flex-col overflow-hidden rounded-[16px] shadow-card-lg cursor-pointer transition-transform hover:scale-[1.01]';
           const cardStyle = `scroll-snap-align: start;${study.backgroundColor ? ` background-color: ${study.backgroundColor};` : ''}`;
 
-          // Background image (used in both pre-composed and overlay modes)
           const backgroundImage = study.backgroundImage ? (
             <img
               src={study.backgroundImage}
               alt={study.preComposed ? `${study.brandName}: ${study.quote}` : ''}
-              class="absolute inset-0 h-full w-full object-cover object-top"
+              class="absolute inset-0 h-full w-full object-cover object-center"
               loading="lazy"
               decoding="async"
               aria-hidden={study.preComposed ? undefined : 'true'}
             />
           ) : null;
 
-          // Overlays only render when bg image is NOT pre-composed.
-          const overlays = !study.preComposed ? (
-            <>
+          // preComposed = legacy single-image cards (kept for back-compat).
+          // Default = dynamic overlay with bg + gradient + logo + heading + button.
+          if (study.preComposed) {
+            return (
+              <a
+                href={study.cta.link}
+                class={cardClass}
+                style={cardStyle}
+                aria-label={`${study.brandName} case study — ${study.quote}`}
+              >
+                {backgroundImage}
+              </a>
+            );
+          }
+
+          const gradientColor = study.gradientColor || '#152644';
+          return (
+            <a
+              href={study.cta.link}
+              class={cardClass}
+              style={cardStyle}
+              aria-label={`${study.brandName} case study — ${study.quote}`}
+            >
+              {backgroundImage}
+              {/* Linear gradient overlay: brand colour on the left, fading to
+                  transparent on the right. Matches Figma 202:18687/8/9. */}
               <div
                 class="absolute inset-0"
-                style={`background: linear-gradient(0deg, ${study.gradientColor || 'rgba(22,29,37,0.9)'} 0%, ${study.gradientColor}99 40%, transparent 80%);`}
+                style={`background: linear-gradient(90deg, ${gradientColor} 0%, transparent 100%);`}
                 aria-hidden="true"
               ></div>
-              <div class="relative z-10 flex h-full flex-col justify-between p-[24px] md:p-10">
+              <div class="relative z-10 flex h-full flex-col justify-between p-[32px] md:p-[40px]">
                 {study.brandLogo && (
                   <img
                     src={study.brandLogo}
@@ -82,35 +107,21 @@ const { section } = Astro.props;
                     decoding="async"
                   />
                 )}
-                <blockquote class="text-h3 text-white">
-                  {study.quote}
-                </blockquote>
+                <div class="flex flex-col gap-[24px]">
+                  <blockquote class="text-h3 max-w-110 text-white">
+                    {study.quote}
+                  </blockquote>
+                  {study.cta?.text && (
+                    <span class="inline-flex w-fit items-center gap-[8px] rounded-sm bg-white px-[24px] py-[12px] text-body-lg font-medium text-charcoal-pitch transition-colors group-hover:bg-yellow-tennis">
+                      {study.cta.text}
+                      <svg class="h-[16px] w-[16px] transition-transform group-hover:translate-x-[4px]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </span>
+                  )}
+                </div>
               </div>
-            </>
-          ) : null;
-
-          // Pre-composed cards: the entire card IS the link (Read Story is
-          // baked into the image). Wrap as <a> so any click navigates.
-          // Non-pre-composed cards: keep <article> with overlay + future CTA button.
-          return study.preComposed ? (
-            <a
-              href={study.cta.link}
-              class={`${cardClass} cursor-pointer transition-transform hover:scale-[1.01]`}
-              style={cardStyle}
-              aria-label={`${study.brandName} case study — ${study.quote}`}
-            >
-              {backgroundImage}
             </a>
-          ) : (
-            <article
-              class={cardClass}
-              role="listitem"
-              style={cardStyle}
-              aria-label={`${study.brandName} case study`}
-            >
-              {backgroundImage}
-              {overlays}
-            </article>
           );
         })}
       </div>
@@ -165,7 +176,7 @@ const { section } = Astro.props;
 
       const prevBtn = section.querySelector<HTMLButtonElement>('.customers-prev');
       const nextBtn = section.querySelector<HTMLButtonElement>('.customers-next');
-      const cards = track.querySelectorAll('article');
+      const cards = track.querySelectorAll<HTMLElement>('.customer-card');
       const dots = section.querySelectorAll('.customers-dot');
 
       function updateDots() {
