@@ -34,10 +34,12 @@ categories:
     features:
       - title: "Multi-Team"
         description: "Operate a multi-team channel (i.e. men's, women's, juniors) and ensure cross-pollination of fans from one division/league to the next and club-wide exposure."
+        image: /images/features/multi-team.png
       - title: "Concurrent Streaming"
         description: "Run multiple live streams on a single channel simultaneously. Deliver more content, cover multiple events, and give fans the freedom to choose what they watch."
       - title: "Step-by-Step Stream Setups"
         description: "Launch live streams effortlessly with our intuitive stream setup wizard, guiding you through every step of the process and ensuring all technical and quality considerations are covered, for a flawless broadcast."
+        image: /images/features/step-by-step-stream-setups.png
       - title: "Globally Accepted Ingest Formats"
         description: "Accept streams in all major formats, including HLS, SRT, and RTMP."
         checks:
@@ -46,6 +48,7 @@ categories:
           - RTMP
       - title: "Transaction Management"
         description: "A transaction management suite from which to view and manage live transactions, process full or partial refunds and more."
+        image: /images/features/transaction-management.png
       - title: "Media Management and Syndication"
         description: "Centralise, organise and enrich all audio and video content. Stored in both raw and encoded formats, media is easy to search, access, share and embed (single domain only) — whether for fans, internal teams, or syndication partners."
         checks:
@@ -55,10 +58,12 @@ categories:
           - Embed
       - title: "Customer Payouts"
         description: "MatchdayLive handles all fee payments on your behalf, managing taxes, refunds, and disputes. Receive clear monthly payouts and reports that reflect your net revenue — simplifying finance and letting you focus on growing your fan base."
+        image: /images/features/customer-payouts.png
       - title: "Self-Billed Invoicing"
         description: "Access and incorporate self-billed invoices, simplify the responsibility on your finance team, while allowing you to keep your books accurate and up to date."
       - title: "Usage Monitoring and Notifications"
         description: "Know your channel consumption across bandwidth, storage and live stream hours (if applicable) at all times and get notified in real-time when you near your plan limits."
+        image: /images/features/usage-monitoring-and-notifications.png
 
   - id: brandability
     heading: "YOUR OWN BRANDED OTT"
@@ -67,12 +72,16 @@ categories:
     features:
       - title: "Your Brand"
         description: "Seamlessly apply your brand identity across all touch-points."
+        image: /images/features/your-brand-1.png
       - title: "On Your Domain"
         description: "Make your fans feel right at home via access on your domain (e.g. fantv.yourdomain.com)"
+        image: /images/features/on-your-domain.png
       - title: "Sponsor Involvement"
         description: "Retain brand partnerships with opportunities to highlight key sponsors."
+        image: /images/features/sponsor-involvement.png
       - title: "Statement Lines"
         description: "Ensure fans are never in the dark about transactions by customising bank statement descriptions to identify your channel."
+        image: /images/features/statement-lines.png
       - title: "Drag & Drop Channel Builder"
         description: "Maximise engagement and monetisation opportunities through the strategic positioning of Playlists and Collections."
         checks:
@@ -119,6 +128,7 @@ categories:
           - Bundled
       - title: "User Groups"
         description: "Build bespoke audiences from invited and registered fans and assign access limitations to suit group requirements."
+        image: /images/features/user-groups.png
 
   - id: insights
     # DEV-2311/2312 — heading + paragraph + features per Figma 164-7994
@@ -128,12 +138,15 @@ categories:
     features:
       - title: "Commercial Insights"
         description: "Track every dollar earned across both Live & On-Demand content, providing deeper insights on fan purchasing behaviour.\n\nOptimise content planning and creation to increase earnings.\n\nSegment earnings by time of day, day of week, media types, content categories and more."
+        image: /images/features/commercial-insights.png
       - title: "Engagement Insights"
         description: "Unlock powerful real-time engagement insights to better understand your fans' interest and behaviour, as well as optimise your content."
+        image: /images/features/engagement-insights.png
       - title: "Transaction Exports"
         description: "Export your raw transaction data in clearly defined reports for internal analysis and reporting, commission calculations, audits and more."
       - title: "3rd Party Analytics Integrations"
         description: "Seamlessly integrate with third-party analytics tools to unify data, deepen insights, and enhance performance tracking."
+        image: /images/features/third-party-analytics-integrations.png
 
   - id: fan-experience
     # DEV-2314/2315 — heading + paragraph + features per Figma 164-8010
@@ -143,10 +156,13 @@ categories:
     features:
       - title: "Live Streamed Video"
         description: "Deliver every moment in real time with low-latency, smooth-quality streams that scale effortlessly. Giving fans the immersive live experience they have come to expect."
+        image: /images/features/live-streamed-video.png
       - title: "Live Streamed Audio"
         description: "Offer fans the freedom to tune in anywhere with high-quality live audio streams. Perfect for supporters who prefer to listen. It provides an accessible, cost-friendly way to stay connected to every fixture and moment."
+        image: /images/features/live-streamed-audio.png
       - title: "Instant On-Demand"
         description: "Ensure live streamed replays are available to fans instantly after the live broadcast terminates, ensuring fans never miss the action. Need to uphold rights agreements with delayed availability? No problem."
+        image: /images/features/instant-on-demand.png
       - title: "On-Demand"
         description: "Create a centralised home for your fans to easily access all of your on-demand media."
         checks:
@@ -154,10 +170,13 @@ categories:
           - Select Playlists and Collections
       - title: "Smart Playlists"
         description: "Create smart automated playlists using content inclusion rules, to organise your media, keeping it up-to-date and engaging."
+        image: /images/features/smart-playlists.png
       - title: "Collections"
         description: "Use Collections to create and showcase multiple playlists in one place, giving fans seamless access to a rich, personalised content library."
+        image: /images/features/collections.png
       - title: "Optimised for Mobile"
         description: "Deliver a seamless viewing and listening experience on any device. MatchdayLive is built mobile-first, ensuring fans enjoy high-quality streams and on-demand content wherever they are."
+        image: /images/features/optimised-for-mobile.png
       - title: "Best in Class Player"
         description: "Give fans complete control with a powerful, intuitive video player. Features like picture-in-picture, casting, adaptive bitrate, and instant scrubbing ensure smooth, flexible viewing without interruptions."
         checks:
@@ -175,6 +194,7 @@ categories:
         description: "Keep fans informed in real time with instant push notifications during live streams. Quickly share updates or close alerts, reducing support queries and protecting your brand reputation."
       - title: "Real-Time Fan Support"
         description: "Provide fans with 24/7 in-app support, instantly resolving common queries via an intelligent knowledge base. When needed, embedded live support connects fans to your first responder, with seamless escalation to MatchdayLive Fan Support for more involved issues."
+        image: /images/features/real-time-fan-support.png
 
   - id: scalability
     # DEV-2317/2318 — heading + paragraph + features per Figma 164-8082
@@ -184,12 +204,15 @@ categories:
     features:
       - title: "Scale Infinitely"
         description: "Built on enterprise-grade infrastructure, **MatchdayLive** grows effortlessly with your audience. From local matches to global tournaments, deliver a flawless experience without compromising speed, stability, or quality."
+        image: /images/features/scale-infinitely.png
       - title: "Global Content Delivery"
         description: "Seamless access anywhere in the world. Our CDN-powered infrastructure delivers content from the closest servers to where your fan is based, ensuring fast, reliable, and high-quality playback every time."
+        image: /images/features/global-content-delivery.png
       - title: "No Size Restrictions"
         description: "Grow without limits. Whether you have hundreds or millions of fans, our platform supports any audience size while maintaining a top-quality experience."
       - title: "Encoder Compatibility"
         description: "Work with the encoders you already use. **MatchdayLive** supports both hardware and software encoders, ingesting streams in widely used formats for flexible, reliable broadcasting."
+        image: /images/features/encoder-compatibility.png
 
   - id: security
     # DEV-2320/2321 — heading + paragraph + features per Figma 164-8097
@@ -199,8 +222,10 @@ categories:
     features:
       - title: "Secure Payments"
         description: "Enjoy seamless and secure transaction processing through a globally recognised and industry-leading PCI DSS-compliant payment platform, Stripe."
+        image: /images/features/stripe-secure-payments.png
       - title: "Digital Rights Management (DRM)"
         description: "Protect your content with built-in DRM and geographic restrictions. Ensure rights agreements are upheld while controlling where and how your media can be accessed."
+        image: /images/features/drm.png
       - title: "Private Content Access"
         description: "Create private live streams or on-demand content, with visibility of the media limited to only those with assigned access."
         checks:
