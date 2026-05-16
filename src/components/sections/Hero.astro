@@ -101,20 +101,22 @@ const { section, logoBanner } = Astro.props;
         {logoBanner.heading}
       </h4>
 
-      <ul class="flex flex-wrap items-center justify-center gap-x-[16px] gap-y-[24px] md:gap-10" role="list">
+      {/* Mobile: 4-per-row with larger logos so they read at a proper size
+          (DEV-2221). Desktop: keep the inline strip. */}
+      <ul class="flex flex-wrap items-center justify-center gap-y-[24px] md:gap-10" role="list">
         {logoBanner.logos.map((logo) => (
-          <li class="flex items-center justify-center">
+          <li class="flex basis-1/4 items-center justify-center px-[8px] md:basis-auto md:px-0">
             {logo.src ? (
               <img
                 src={logo.src}
                 alt={logo.alt}
-                class="h-10 w-auto max-w-20 object-contain md:h-15 md:max-w-30"
+                class="h-14 w-auto max-w-full object-contain md:h-15 md:max-w-30"
                 loading="lazy"
                 decoding="async"
               />
             ) : (
               <div
-                class="flex h-10 w-10 items-center justify-center rounded-sm bg-charcoal-pitch/10 md:h-15 md:w-15"
+                class="flex h-14 w-14 items-center justify-center rounded-sm bg-charcoal-pitch/10 md:h-15 md:w-15"
                 role="img"
                 aria-label={logo.alt}
               >

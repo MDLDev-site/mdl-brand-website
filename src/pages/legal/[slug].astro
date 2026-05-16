@@ -53,16 +53,18 @@ const articleSchema = {
     <script is:inline type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   </Fragment>
 
-  {/* Hero — white bg, left-aligned heading per DEV-2293/2296 */}
-  <section class="bg-white px-[24px] pb-20 pt-35 md:pb-30 md:pt-45 md:px-30">
+  {/* Hero — white bg, left-aligned heading per DEV-2293/2296.
+      Bottom padding tightened (DEV-2296 round 6) so the heading sits
+      closer to the first paragraph in the body section. */}
+  <section class="bg-white px-[24px] pb-[16px] pt-35 md:pb-[24px] md:pt-45 md:px-30">
     <div class="mx-auto flex max-w-200 flex-col gap-[16px]">
       <h1 class="text-h1 text-charcoal-pitch">{document.title}</h1>
       <p class="text-body text-text-primary/60">Last updated: {document.lastUpdated}</p>
     </div>
   </section>
 
-  {/* Body */}
-  <section class="bg-white px-[24px] py-20 md:px-30 md:py-30">
+  {/* Body — top padding also tightened (DEV-2296 round 6) */}
+  <section class="bg-white px-[24px] pb-20 pt-[24px] md:px-30 md:pb-30 md:pt-[32px]">
     <article class="legal-article mx-auto flex max-w-200 flex-col gap-[40px]">
       {document.intro && (
         <p class="text-body-lg text-text-primary">{document.intro}</p>
