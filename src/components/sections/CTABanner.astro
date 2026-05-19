@@ -35,30 +35,19 @@ const { section } = Astro.props;
       </div>
     </div>
 
-    {/* Right: decorative image area with geometric overlay */}
+    {/* Right: composited image (player + shapes baked in per DEV-2306,
+        Figma 201:20567). Decorative SVG shapes removed because they're
+        now part of the source image. */}
     <div class="relative hidden flex-1 overflow-hidden md:block">
       {section.backgroundImage ? (
-        <>
-          {/* Blue blob shape — behind the player */}
-          <svg class="absolute -right-10 top-[10%] h-[90%] w-[90%]" viewBox="0 0 629 758" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M450.782 719.129C420.01 799.204 326.431 810.55 282.339 739.551L18.6569 314.962C-25.4351 243.963 13.0296 143.869 87.8933 134.792L535.598 80.5108C610.462 71.434 665.577 160.182 634.805 240.257L450.782 719.129Z" fill="var(--color-blue-matchday)" />
-          </svg>
-
-          {/* Orange ellipse — bottom right, peeking behind the blue */}
-          <svg class="absolute bottom-[-20%] right-[-10%] h-[60%] w-[70%]" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <ellipse cx="200" cy="200" rx="200" ry="180" fill="var(--color-orange-basketball)" />
-          </svg>
-
-          {/* Player image — on top */}
-          <img
-            src={section.backgroundImage}
-            alt=""
-            class="relative z-1 h-full w-full object-contain object-bottom-right"
-            loading="lazy"
-            decoding="async"
-            aria-hidden="true"
-          />
-        </>
+        <img
+          src={section.backgroundImage}
+          alt=""
+          class="relative h-full w-full object-contain object-bottom-right"
+          loading="lazy"
+          decoding="async"
+          aria-hidden="true"
+        />
       ) : (
         <div
           class="flex h-full min-h-100 items-center justify-center bg-white/5"

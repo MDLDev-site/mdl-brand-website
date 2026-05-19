@@ -26,10 +26,12 @@ const bgClass = category.background === 'grey' ? 'bg-grey' : 'bg-white';
 
       {/* Feature row list — 3 columns per row per DEV-2291:
           Feature name | Description | Content (bullets/image/empty).
-          On mobile the columns stack. */}
+          On mobile the columns stack. Mobile spacing tightened per
+          DEV-2303/2341 — 16px top/bottom on each row gives the 32px
+          between features Natalia requested. */}
       <div class="flex flex-col">
         {category.features.map((feature) => (
-          <div class="grid grid-cols-1 gap-[16px] border-b border-[rgba(21,38,68,0.1)] py-[20px] md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)_minmax(0,1.5fr)] md:items-start md:gap-13 md:py-[24px]">
+          <div class="grid grid-cols-1 gap-[12px] border-b border-[rgba(21,38,68,0.1)] py-[16px] md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)_minmax(0,1.5fr)] md:items-start md:gap-13 md:py-[20px]">
             {/* Col 1 — feature name */}
             <h3 class="text-h4 text-charcoal-pitch">
               {feature.title}
@@ -65,10 +67,13 @@ const bgClass = category.background === 'grey' ? 'bg-grey' : 'bg-white';
 
               {feature.image && (
                 <div class="flex justify-center overflow-hidden rounded-md">
+                  {/* Image enlarged and centred per DEV-2304 — let it fill
+                      the column up to a wider cap so it carries the row
+                      visually. */}
                   <img
                     src={feature.image}
                     alt={feature.title}
-                    class="h-auto w-full max-w-[480px] object-contain"
+                    class="h-auto w-full object-contain object-center"
                     loading="lazy"
                     decoding="async"
                   />

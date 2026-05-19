@@ -46,9 +46,20 @@ const cookitApiBase = import.meta.env.PUBLIC_COOKIT_API_BASE as string | undefin
     <meta name="twitter:description" content={description ?? ''} />
     {ogImageURL && <meta name="twitter:image" content={ogImageURL} />}
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts (Inter only — Barlow Condensed is self-hosted per DES-89) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Preload the heading font so the first text paint doesn't FOUT
+         to a system fallback (DES-89). Medium 500 is what every heading
+         utility resolves to. -->
+    <link
+      rel="preload"
+      href="/fonts/Barlow_Condensed/BarlowCondensed-Medium.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
 
     <title>{title}</title>
 

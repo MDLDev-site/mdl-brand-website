@@ -129,6 +129,9 @@ categories:
       - title: "User Groups"
         description: "Build bespoke audiences from invited and registered fans and assign access limitations to suit group requirements."
         image: /images/features/user-groups.png
+      # DEV-2340 — new monetisation feature, Figma Website-Working 2309-38315
+      - title: "Localised Currency"
+        description: "Configure pricing in supported local currencies tailored to your region."
 
   - id: insights
     # DEV-2311/2312 — heading + paragraph + features per Figma 164-7994

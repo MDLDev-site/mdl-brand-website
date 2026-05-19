@@ -41,10 +41,13 @@ const { section } = Astro.props;
     <div class="relative">
       {/* Case study cards track — DEV-2300 sets card dims:
           mobile width = calc(100vw - 64px), desktop width = calc(100vw - 240px),
-          height fixed 500px on both. No white container around (DEV-2299) so
-          drop card shadows and tighten track padding. */}
+          height fixed 500px on both.
+          DEV-2337 — extra vertical padding inside the track so the card
+          dropshadow isn't clipped by the auto-scroll overflow box.
+          Larger horizontal gap so the right-side shadow has room to
+          breathe between adjacent cards. */}
       <div
-        class="customers-track flex gap-[24px] overflow-x-auto overflow-y-visible px-[32px] scrollbar-hide md:px-30"
+        class="customers-track flex touch-pan-x gap-[32px] overflow-x-auto px-[32px] py-[16px] scrollbar-hide md:px-30"
         role="list"
         style="scroll-snap-type: x mandatory; scroll-padding-left: 32px; -webkit-overflow-scrolling: touch;"
       >
@@ -107,18 +110,13 @@ const { section } = Astro.props;
                     decoding="async"
                   />
                 )}
+                {/* Button hidden until case studies launch (DEV-2230/2301) —
+                  CTA data retained on the wrapping <a> so the entire card
+                  remains clickable / linkable from the CMS. */}
                 <div class="flex flex-col gap-[24px]">
                   <blockquote class="text-h3 max-w-110 text-white">
                     {study.quote}
                   </blockquote>
-                  {study.cta?.text && (
-                    <span class="inline-flex w-fit items-center gap-[8px] rounded-sm bg-white px-[24px] py-[12px] text-body-lg font-medium text-charcoal-pitch transition-colors group-hover:bg-yellow-tennis">
-                      {study.cta.text}
-                      <svg class="h-[16px] w-[16px] transition-transform group-hover:translate-x-[4px]" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                    </span>
-                  )}
                 </div>
               </div>
             </a>
@@ -182,7 +180,7 @@ const { section } = Astro.props;
       function updateDots() {
         const scrollLeft = track.scrollLeft;
         const cardWidth = (cards[0] as HTMLElement)?.offsetWidth || 700;
-        const activeIndex = Math.round(scrollLeft / (cardWidth + 24));
+        const activeIndex = Math.round(scrollLeft / (cardWidth + 32));
         dots.forEach((dot, i) => {
           if (i === activeIndex) {
             dot.classList.add('w-[32px]', 'bg-charcoal-pitch');
@@ -212,7 +210,9 @@ const { section } = Astro.props;
       updateScrollPadding();
       window.addEventListener('resize', updateScrollPadding);
 
-      const scrollAmount = ((cards[0] as HTMLElement)?.offsetWidth || 700) + 24;
+      // Scroll step matches card width + gap (kept in sync with the
+      // 32px gap set on .customers-track per DEV-2337).
+      const scrollAmount = ((cards[0] as HTMLElement)?.offsetWidth || 700) + 32;
 
       prevBtn?.addEventListener('click', () => {
         track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });

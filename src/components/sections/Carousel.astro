@@ -38,9 +38,12 @@ const { section } = Astro.props;
       </div>
     </div>
 
-    {/* Cards track */}
+    {/* Cards track — DEV-2338: touch-action pan-x restricts the
+        scroll-snap container to horizontal panning so vertical drags
+        bubble back to the page. Without it mobile users get stuck on
+        the carousel until they tap outside. */}
     <div
-      class="carousel-track flex gap-[24px] overflow-x-auto overflow-y-visible px-[24px] pt-[8px] pb-[48px] scrollbar-hide md:px-30 md:pb-[64px]"
+      class="carousel-track flex touch-pan-x gap-[24px] overflow-x-auto overflow-y-visible px-[24px] pt-[8px] pb-[48px] scrollbar-hide md:px-30 md:pb-[64px]"
       role="list"
       style="scroll-snap-type: x mandatory; scroll-padding-left: 24px; -webkit-overflow-scrolling: touch;"
       data-md-scroll-padding="120"

@@ -23,27 +23,30 @@ function findProduct(productId: string) {
           class={`pricing-comparison ${idx === 0 ? '' : 'hidden'}`}
           data-comparison={comparison.productId}
         >
-          {/* Tier label row — non-sticky now that PricingPlansSection
-              keeps full plan cards visible above the comparison. We
-              keep the labels here so the table reads correctly on its
-              own (e.g. when JS is off or sticky context fails). */}
-          <div class="mb-[24px] border-b border-charcoal-pitch/10 pb-[12px]">
-            <div class="grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] gap-[8px] md:gap-[16px]">
-              <div></div>
-              {product.tiers.map((tier) => (
-                <div class="flex flex-col items-center gap-[4px] text-center">
-                  <span class="font-subheading text-[10px] font-semibold uppercase tracking-[0.2px] text-charcoal-pitch md:text-[12px]">
-                    {tier.name}
-                  </span>
-                  <span
-                    class="pricing-price font-heading text-[16px] font-medium leading-none text-charcoal-pitch md:text-[20px]"
-                    data-monthly={tier.monthlyPrice}
-                    data-annual={tier.annualPrice}
-                  >
-                    {tier.monthlyPrice}
-                  </span>
-                </div>
-              ))}
+          {/* Tier label strip — STICKY at top of viewport once the
+              user scrolls into the comparison rows (designer ask,
+              May 19). Keeps the tier name + price visible against the
+              feature columns. `top-[80px]` clears the fixed site
+              header so the strip is fully readable when stuck. */}
+          <div class="sticky top-[80px] z-30 -mx-[24px] mb-[24px] border-b border-charcoal-pitch/10 bg-white/95 px-[24px] py-[12px] shadow-[0_2px_10px_rgba(0,0,0,0.06)] backdrop-blur-md md:-mx-30 md:px-30">
+            <div class="mx-auto max-w-360">
+              <div class="grid grid-cols-[minmax(0,2fr)_repeat(4,minmax(0,1fr))] gap-[8px] md:gap-[16px]">
+                <div></div>
+                {product.tiers.map((tier) => (
+                  <div class="flex flex-col items-center gap-[4px] text-center">
+                    <span class="font-subheading text-[10px] font-semibold uppercase tracking-[0.2px] text-charcoal-pitch md:text-[12px]">
+                      {tier.name}
+                    </span>
+                    <span
+                      class="pricing-price font-heading text-[16px] font-medium leading-none text-charcoal-pitch md:text-[20px]"
+                      data-monthly={tier.monthlyPrice}
+                      data-annual={tier.annualPrice}
+                    >
+                      {tier.monthlyPrice}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
