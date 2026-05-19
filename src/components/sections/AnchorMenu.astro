@@ -12,6 +12,7 @@ const { anchors } = Astro.props;
   class="anchor-menu sticky top-0 z-40 bg-navy-umpire shadow-[0px_4px_13px_0px_rgba(22,29,37,0.1),0px_3px_38px_0px_rgba(0,0,0,0.05)] lg:z-50"
   aria-label="Feature sections"
   data-anchor-menu
+  data-sticky-mode="down"
 >
   <div class="mx-auto flex max-w-360 items-stretch">
     {/* Scrollable anchors on mobile, flex on desktop */}
@@ -64,6 +65,14 @@ const { anchors } = Astro.props;
     border-color: var(--color-yellow-tennis) !important;
     color: var(--color-yellow-tennis);
   }
+
+  /* Directional sticky (desktop). The anchor menu stays sticky as the
+     user scrolls DOWN; once they scroll UP we drop it back to static so
+     the main header can take over the top of the viewport and the user
+     doesn't have to scroll all the way to the top to reach other pages. */
+  .anchor-menu[data-sticky-mode="up"] {
+    position: static;
+  }
 </style>
 
 <script>
@@ -112,12 +121,15 @@ const { anchors } = Astro.props;
     window.addEventListener('scroll', updateActive, { passive: true });
     updateActive();
 
-    // Hide the main header when the anchor menu is stuck at the top of
-    // the viewport — DESKTOP ONLY. On mobile/tablet the header carries
-    // the hamburger trigger; hiding it leaves users stranded with no
-    // way to open the nav drawer (DEV-2343). Below lg we instead let
-    // the anchor menu offset itself below the header (sticky-top sits
-    // at the header height) so both stay visible.
+    // Header / anchor-menu interaction.
+    // - Mobile (<lg): header always visible, anchor menu sticky-offsets
+    //   below the header so the hamburger stays reachable (DEV-2343).
+    // - Desktop (>=lg): DIRECTIONAL sticky. Scroll DOWN past the anchor
+    //   menu and it sticks at the top while the header slides up out of
+    //   the way (current behaviour). Scroll UP and we DROP the anchor
+    //   menu's sticky behaviour and bring the header back into view, so
+    //   the user can reach other pages without scrolling all the way
+    //   back to the top.
     const anchorMenu = document.querySelector<HTMLElement>('[data-anchor-menu]');
     const siteHeader = document.querySelector<HTMLElement>('.site-header');
     if (anchorMenu && siteHeader) {
@@ -132,22 +144,51 @@ const { anchors } = Astro.props;
         anchorMenu.style.top = `${headerH}px`;
       };
 
-      const updateHeaderVisibility = () => {
+      // Track scroll position + direction. A small threshold avoids
+      // flicker on momentum-scroll jitter.
+      let lastY = window.scrollY;
+      let lastDirection: 'up' | 'down' = 'down';
+      const DIRECTION_THRESHOLD = 6;
+
+      const update = () => {
         if (!isDesktop()) {
-          // Mobile: never slide the header out — leave it visible.
+          // Mobile path: header always shown, sticky mode irrelevant.
           siteHeader.classList.remove('-translate-y-full');
+          anchorMenu.dataset.stickyMode = 'down';
+          lastY = window.scrollY;
           return;
         }
-        const isStuck = anchorMenu.getBoundingClientRect().top <= 0;
-        siteHeader.classList.toggle('-translate-y-full', isStuck);
+
+        const y = window.scrollY;
+        const delta = y - lastY;
+        if (Math.abs(delta) > DIRECTION_THRESHOLD) {
+          lastDirection = delta > 0 ? 'down' : 'up';
+          lastY = y;
+        }
+
+        // Where the anchor menu naturally sits in the document.
+        const anchorNaturalTop = anchorMenu.offsetTop;
+        const scrolledPastAnchor = y >= anchorNaturalTop;
+
+        if (lastDirection === 'down') {
+          // Scrolling DOWN — current behaviour.
+          anchorMenu.dataset.stickyMode = 'down';
+          siteHeader.classList.toggle('-translate-y-full', scrolledPastAnchor);
+        } else {
+          // Scrolling UP — drop anchor sticky so the header takes over
+          // the top of the viewport. The anchor menu falls back to its
+          // natural document position and scrolls away normally.
+          anchorMenu.dataset.stickyMode = 'up';
+          siteHeader.classList.remove('-translate-y-full');
+        }
       };
 
       applyMobileOffset();
-      updateHeaderVisibility();
-      window.addEventListener('scroll', updateHeaderVisibility, { passive: true });
+      update();
+      window.addEventListener('scroll', update, { passive: true });
       window.addEventListener('resize', () => {
         applyMobileOffset();
-        updateHeaderVisibility();
+        update();
       });
     }
 
