@@ -9,17 +9,23 @@ const notFound = await loadYaml<NotFoundPageContent>('pages/404.yaml');
 <BaseLayout title={notFound.page.title} description={notFound.page.description} noindex={true}>
   <section class="bg-charcoal-pitch px-[24px] pb-20 pt-35 md:pb-30 md:pt-45 md:px-30">
     <div class="mx-auto flex max-w-200 flex-col items-center gap-[40px] text-center">
-      {notFound.imagePath && (
-        <img
-          src={notFound.imagePath}
-          alt={notFound.imageAlt ?? ''}
-          class="h-auto w-full max-w-150"
-          loading="eager"
-          decoding="async"
-        />
+      {notFound.imagePath ? (
+        <>
+          {/* DES-90 — the glitch image IS the visual heading. Decorative
+              alt (the sr-only H1 below carries the accessible name) so
+              screen readers don't read "404" twice. */}
+          <img
+            src={notFound.imagePath}
+            alt=""
+            class="h-auto w-full max-w-150"
+            loading="eager"
+            decoding="async"
+          />
+          <h1 class="sr-only">{notFound.heading}</h1>
+        </>
+      ) : (
+        <h1 class="text-h1 text-white">{notFound.heading}</h1>
       )}
-
-      <h1 class="text-h1 text-white">{notFound.heading}</h1>
 
       <p class="max-w-130 text-body-lg text-white/80">
         {notFound.description}
