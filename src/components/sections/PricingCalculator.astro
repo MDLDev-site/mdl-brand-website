@@ -179,16 +179,68 @@ const { calculator, products } = Astro.props;
       );
     })}
 
-    {/* Output panel — shows helper text until all sliders interacted with
-        (DEV-2284); recommendation tier appears once interaction is
-        complete. Layout updated per DEV-2334 (Figma 196-15241) — the
-        recommended plan + "View plan" link sit alongside the figures.
-        For On-Demand only Bandwidth is shown (no hours) per DEV-2330. */}
+    {/* Output panel — figures on the LEFT, recommended plan on the RIGHT
+        per DEV-2284 (Natalia QA May 19). Until all required sliders are
+        touched, the figures fade and the right side shows the empty-state
+        helper text. For On-Demand only Bandwidth is shown (no hours)
+        per DEV-2330. */}
     <div class="mt-[24px] flex flex-col gap-[16px] rounded-[12px] bg-white px-[24px] py-[20px] md:flex-row md:items-center md:justify-between">
-      <div class="flex flex-col gap-[4px]">
+      {/* LEFT — estimated consumption figures */}
+      <div class="flex flex-col gap-[8px]">
         <p class="font-body text-[14px] font-semibold text-charcoal-pitch">
           {calculator.outputs.consumptionLabel}
         </p>
+        <div class="calc-figures flex gap-[24px] opacity-40 transition-opacity md:gap-[40px]" data-calc-figures>
+          {/* Hours figure — only relevant for Live product (DEV-2330) */}
+          <div class="calc-figure-hours flex flex-col gap-[4px]" data-calc-figure="hours">
+            <div class="flex items-center gap-[6px]">
+              <span class="font-body text-[12px] font-medium text-charcoal-pitch/70">
+                {calculator.outputs.hoursLabel}
+              </span>
+              <button
+                type="button"
+                class="calc-tooltip-trigger flex h-[14px] w-[14px] items-center justify-center text-charcoal-pitch/40 hover:text-charcoal-pitch"
+                data-tooltip={calculator.outputs.hoursTooltip}
+                aria-label="More info"
+              >
+                <svg class="h-[12px] w-[12px]" viewBox="0 0 16 16" fill="none">
+                  <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2" />
+                  <path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                  <circle cx="8" cy="5" r="0.6" fill="currentColor" />
+                </svg>
+              </button>
+            </div>
+            <p class="font-heading text-[24px] font-medium leading-none text-charcoal-pitch">
+              <span data-calc-hours>—</span> <span class="text-[14px]">hrs</span>
+            </p>
+          </div>
+          <div class="flex flex-col gap-[4px]">
+            <div class="flex items-center gap-[6px]">
+              <span class="font-body text-[12px] font-medium text-charcoal-pitch/70">
+                {calculator.outputs.bandwidthLabel}
+              </span>
+              <button
+                type="button"
+                class="calc-tooltip-trigger flex h-[14px] w-[14px] items-center justify-center text-charcoal-pitch/40 hover:text-charcoal-pitch"
+                data-tooltip={calculator.outputs.bandwidthTooltip}
+                aria-label="More info"
+              >
+                <svg class="h-[12px] w-[12px]" viewBox="0 0 16 16" fill="none">
+                  <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2" />
+                  <path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                  <circle cx="8" cy="5" r="0.6" fill="currentColor" />
+                </svg>
+              </button>
+            </div>
+            <p class="font-heading text-[24px] font-medium leading-none text-charcoal-pitch">
+              <span data-calc-bandwidth>—</span> <span class="text-[14px]">TB</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* RIGHT — recommended plan + View plan link */}
+      <div class="flex flex-col gap-[4px] md:items-end md:text-right">
         {/* Empty state — visible until all sliders touched */}
         <p
           class="calc-empty-state font-body text-[12px] font-medium leading-[1.4] text-charcoal-pitch/60"
@@ -206,7 +258,7 @@ const { calculator, products } = Astro.props;
           </p>
           <button
             type="button"
-            class="calc-view-plan mt-[4px] inline-flex items-center gap-[4px] font-body text-[13px] font-medium hover:underline"
+            class="calc-view-plan mt-[4px] inline-flex items-center gap-[4px] font-body text-[13px] font-medium hover:underline md:ml-auto"
             data-calc-view-plan
           >
             View plan
@@ -214,54 +266,6 @@ const { calculator, products } = Astro.props;
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
-        </div>
-      </div>
-
-      <div class="calc-figures flex gap-[24px] opacity-40 transition-opacity md:gap-[40px]" data-calc-figures>
-        {/* Hours figure — only relevant for Live product (DEV-2330) */}
-        <div class="calc-figure-hours flex flex-col gap-[4px]" data-calc-figure="hours">
-          <div class="flex items-center gap-[6px]">
-            <span class="font-body text-[12px] font-medium text-charcoal-pitch/70">
-              {calculator.outputs.hoursLabel}
-            </span>
-            <button
-              type="button"
-              class="calc-tooltip-trigger flex h-[14px] w-[14px] items-center justify-center text-charcoal-pitch/40 hover:text-charcoal-pitch"
-              data-tooltip={calculator.outputs.hoursTooltip}
-              aria-label="More info"
-            >
-              <svg class="h-[12px] w-[12px]" viewBox="0 0 16 16" fill="none">
-                <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2" />
-                <path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
-                <circle cx="8" cy="5" r="0.6" fill="currentColor" />
-              </svg>
-            </button>
-          </div>
-          <p class="font-heading text-[24px] font-medium leading-none text-charcoal-pitch">
-            <span data-calc-hours>—</span> <span class="text-[14px]">hrs</span>
-          </p>
-        </div>
-        <div class="flex flex-col gap-[4px]">
-          <div class="flex items-center gap-[6px]">
-            <span class="font-body text-[12px] font-medium text-charcoal-pitch/70">
-              {calculator.outputs.bandwidthLabel}
-            </span>
-            <button
-              type="button"
-              class="calc-tooltip-trigger flex h-[14px] w-[14px] items-center justify-center text-charcoal-pitch/40 hover:text-charcoal-pitch"
-              data-tooltip={calculator.outputs.bandwidthTooltip}
-              aria-label="More info"
-            >
-              <svg class="h-[12px] w-[12px]" viewBox="0 0 16 16" fill="none">
-                <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2" />
-                <path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
-                <circle cx="8" cy="5" r="0.6" fill="currentColor" />
-              </svg>
-            </button>
-          </div>
-          <p class="font-heading text-[24px] font-medium leading-none text-charcoal-pitch">
-            <span data-calc-bandwidth>—</span> <span class="text-[14px]">TB</span>
-          </p>
         </div>
       </div>
     </div>

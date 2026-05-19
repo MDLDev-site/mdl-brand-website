@@ -10,11 +10,12 @@ interface Props {
 const { hero, products } = Astro.props;
 ---
 
-{/* Sticky wrapper — sticks below the nav (88px) and stays as the user
-    scrolls past into the comparison table (parent in pricing.astro
-    extends the sticky context). */}
+{/* Not sticky — too tall for shorter viewports per designer feedback
+    (May 19). The PricingComparisonTable's compact tier-label strip
+    is the new sticky anchor so the comparison rows always know what
+    column maps to which tier. */}
 <section
-  class="pricing-plans-section sticky top-[88px] z-20 bg-charcoal-pitch shadow-[0px_4px_20px_0px_rgba(0,0,0,0.4)]"
+  class="pricing-plans-section bg-charcoal-pitch"
   data-active-product="on-demand"
 >
   <div class="mx-auto flex max-w-300 flex-col gap-[24px] px-[24px] py-[24px] md:gap-[32px] md:px-[64px] md:py-[32px]">
@@ -129,15 +130,8 @@ const { hero, products } = Astro.props;
     background-color: var(--color-blue-matchday);
   }
 
-  /* When sticky and scrolled, compress the section to give comparison
-     more room. .is-condensed is set by JS via IntersectionObserver. */
-  .pricing-plans-section.is-condensed .pricing-product-tab {
-    padding-top: 8px;
-    padding-bottom: 8px;
-  }
-  .pricing-plans-section.is-condensed .product-tab-desc {
-    display: none;
-  }
+  /* (Removed the .is-condensed compression styles — section is no
+     longer sticky as of May 19 designer feedback.) */
 </style>
 
 <script>
@@ -210,22 +204,8 @@ const { hero, products } = Astro.props;
       });
     });
 
-    // Detect when the plans section becomes "stuck" (sticky position
-    // engaged) and condense the layout to give content below more room.
-    const section = document.querySelector<HTMLElement>('.pricing-plans-section');
-    if (section) {
-      // Sentinel placed just before the section to detect when it sticks
-      const sentinel = document.createElement('div');
-      sentinel.style.cssText = 'position:absolute;top:-1px;left:0;right:0;height:1px;pointer-events:none;';
-      section.parentElement?.insertBefore(sentinel, section);
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          section.classList.toggle('is-condensed', !entry.isIntersecting);
-        },
-        { threshold: 0, rootMargin: '-88px 0px 0px 0px' }
-      );
-      observer.observe(sentinel);
-    }
+    // (Removed the IntersectionObserver that compressed the section
+    // while sticky — no longer sticky per May 19 designer feedback.)
   }
 
   document.addEventListener('astro:page-load', initPricingPlansSection);

@@ -1,5 +1,39 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500&family=Barlow+Semi+Condensed:wght@500;600&family=Inter:wght@400;500;600&display=swap');
+
+/* Inter (body) — still loaded from Google Fonts.
+   Barlow Condensed (headings) — self-hosted from /public/fonts so the
+   actual file Natalia signed off in Figma is the one delivered, not a
+   Google Fonts variant that subtly differs. DES-89. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  src: url('/fonts/Barlow_Condensed/BarlowCondensed-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  src: url('/fonts/Barlow_Condensed/BarlowCondensed-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  src: url('/fonts/Barlow_Condensed/BarlowCondensed-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  src: url('/fonts/Barlow_Condensed/BarlowCondensed-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 @theme {
   /* Brand Colors */
@@ -35,9 +69,13 @@
   --color-primary-600: #173cba;
   --color-primary-700: #01188a;
 
-  /* Typography - Headings: Barlow Condensed */
+  /* Typography — DES-89.
+     Per Figma node 219:13470 + Natalia's note, every heading uses the
+     same Barlow Condensed Medium family. The legacy --font-subheading
+     alias is kept (mapped to Barlow Condensed) so existing components
+     and legal pages that reference it don't drift to a fallback. */
   --font-heading: "Barlow Condensed", sans-serif;
-  --font-subheading: "Barlow Semi Condensed", sans-serif;
+  --font-subheading: "Barlow Condensed", sans-serif;
   --font-body: "Inter", sans-serif;
 
   /* Spacing */
@@ -97,11 +135,10 @@ body {
   }
 }
 
-/* H2 — UPPERCASE
- * Mobile: Barlow Semi Condensed 30px / 110% / -3%
- * Desktop: Barlow Condensed 60px / 90% / -3% */
+/* H2 — Barlow Condensed Medium, UPPERCASE
+ * Mobile: 30px / 110% / -3%   Desktop: 60px / 90% / -3% (DES-89) */
 .text-h2 {
-  font-family: var(--font-subheading);
+  font-family: var(--font-heading);
   font-weight: 500;
   font-size: 30px;
   line-height: 1.1;
@@ -110,7 +147,6 @@ body {
 }
 @media (min-width: 768px) {
   .text-h2 {
-    font-family: var(--font-heading);
     font-size: 60px;
     line-height: 0.9;
   }
@@ -132,10 +168,10 @@ body {
   }
 }
 
-/* H4 — Barlow Semi Condensed Medium, UPPERCASE
+/* H4 — Barlow Condensed Medium, UPPERCASE (DES-89)
  * Mobile: 24px / 100% / -3%   Desktop: 32px / 100% / -3% */
 .text-h4 {
-  font-family: var(--font-subheading);
+  font-family: var(--font-heading);
   font-weight: 500;
   font-size: 24px;
   line-height: 1;
@@ -148,10 +184,10 @@ body {
   }
 }
 
-/* H5 — Barlow Semi Condensed Medium, UPPERCASE
+/* H5 — Barlow Condensed Medium, UPPERCASE (DES-89)
  * 18px / 145% / 0 (no responsive variant) */
 .text-h5 {
-  font-family: var(--font-subheading);
+  font-family: var(--font-heading);
   font-weight: 500;
   font-size: 18px;
   line-height: 1.45;

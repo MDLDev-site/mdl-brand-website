@@ -9,18 +9,19 @@ const { anchors } = Astro.props;
 ---
 
 <nav
-  class="anchor-menu sticky top-0 z-50 bg-navy-umpire shadow-[0px_4px_13px_0px_rgba(22,29,37,0.1),0px_3px_38px_0px_rgba(0,0,0,0.05)]"
+  class="anchor-menu sticky top-0 z-40 bg-navy-umpire shadow-[0px_4px_13px_0px_rgba(22,29,37,0.1),0px_3px_38px_0px_rgba(0,0,0,0.05)] lg:z-50"
   aria-label="Feature sections"
   data-anchor-menu
 >
   <div class="mx-auto flex max-w-360 items-stretch">
     {/* Scrollable anchors on mobile, flex on desktop */}
     <div class="flex flex-1 items-stretch overflow-x-auto scrollbar-hide">
-      {anchors.map((anchor) => (
+      {anchors.map((anchor, i) => (
         <a
           href={`#${anchor.id}`}
-          class="anchor-link flex shrink-0 items-center justify-center border-b-4 border-grey px-[12px] py-[16px] font-subheading text-[14px] font-medium uppercase leading-none tracking-[-0.48px] text-white whitespace-nowrap transition-all hover:border-yellow-tennis hover:text-yellow-tennis md:flex-1 md:border-b-8 md:px-[8px] md:py-[24px] md:text-[18px] md:tracking-[-0.6px] lg:text-[20px]"
+          class="anchor-link flex shrink-0 cursor-pointer items-center justify-center border-b-4 border-grey px-[12px] py-[16px] font-subheading text-[14px] font-medium uppercase leading-none tracking-[-0.48px] text-white whitespace-nowrap transition-colors md:flex-1 md:border-b-8 md:px-[8px] md:py-[24px] md:text-[18px] md:tracking-[-0.6px] lg:text-[20px]"
           data-anchor={anchor.id}
+          data-active={i === 0 ? 'true' : undefined}
         >
           {anchor.label}
         </a>
@@ -46,6 +47,18 @@ const { anchors } = Astro.props;
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+  /* DEV-2345 — suppress the default browser focus ring on anchor links so
+     they don't flash with outlines while the menu is mounting. Keyboard
+     users still get the active-state colour change. */
+  .anchor-link {
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .anchor-link:focus,
+  .anchor-link:focus-visible {
+    outline: none;
+    box-shadow: none;
   }
   .anchor-link[data-active="true"] {
     border-color: var(--color-yellow-tennis) !important;
@@ -78,6 +91,14 @@ const { anchors } = Astro.props;
         }
       });
 
+      // DEV-2345 — when no section is currently in view (eg. page just
+      // loaded above the first section), fall back to the first anchor
+      // so the menu never renders with every link in its inactive grey
+      // border state.
+      if (!activeId && anchors.length > 0) {
+        activeId = anchors[0]!.dataset.anchor || '';
+      }
+
       anchors.forEach((anchor) => {
         const id = anchor.dataset.anchor;
         if (id === activeId) {
@@ -91,16 +112,43 @@ const { anchors } = Astro.props;
     window.addEventListener('scroll', updateActive, { passive: true });
     updateActive();
 
-    // Hide the main header when the anchor menu is stuck at the top of the viewport
+    // Hide the main header when the anchor menu is stuck at the top of
+    // the viewport — DESKTOP ONLY. On mobile/tablet the header carries
+    // the hamburger trigger; hiding it leaves users stranded with no
+    // way to open the nav drawer (DEV-2343). Below lg we instead let
+    // the anchor menu offset itself below the header (sticky-top sits
+    // at the header height) so both stay visible.
     const anchorMenu = document.querySelector<HTMLElement>('[data-anchor-menu]');
     const siteHeader = document.querySelector<HTMLElement>('.site-header');
     if (anchorMenu && siteHeader) {
+      const isDesktop = () => window.matchMedia('(min-width: 1024px)').matches;
+
+      const applyMobileOffset = () => {
+        if (isDesktop()) {
+          anchorMenu.style.top = '0px';
+          return;
+        }
+        const headerH = siteHeader.getBoundingClientRect().height;
+        anchorMenu.style.top = `${headerH}px`;
+      };
+
       const updateHeaderVisibility = () => {
+        if (!isDesktop()) {
+          // Mobile: never slide the header out — leave it visible.
+          siteHeader.classList.remove('-translate-y-full');
+          return;
+        }
         const isStuck = anchorMenu.getBoundingClientRect().top <= 0;
         siteHeader.classList.toggle('-translate-y-full', isStuck);
       };
-      window.addEventListener('scroll', updateHeaderVisibility, { passive: true });
+
+      applyMobileOffset();
       updateHeaderVisibility();
+      window.addEventListener('scroll', updateHeaderVisibility, { passive: true });
+      window.addEventListener('resize', () => {
+        applyMobileOffset();
+        updateHeaderVisibility();
+      });
     }
 
     // Smooth scroll on click

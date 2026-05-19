@@ -15,7 +15,10 @@ const navLinks = [
 ];
 ---
 
-<header class="site-header fixed top-0 left-0 right-0 z-50 bg-transparent p-[16px] transition-[translate] duration-200">
+{/* Header slides up when the anchor menu (features page) becomes sticky.
+    The mobile menu drawer lives OUTSIDE this element — see below — so the
+    transform here doesn't drag the drawer off-screen (DEV-2342/2343). */}
+<header class="site-header fixed top-0 left-0 right-0 z-50 bg-transparent p-[16px] transition-[translate] duration-150">
   <div class="relative mx-auto max-w-360">
     <nav
       class="relative z-50 flex items-center justify-between rounded-[16px] bg-[rgba(22,29,37,0.9)] px-[24px] py-[12px] backdrop-blur-md"
@@ -94,7 +97,9 @@ const navLinks = [
       </button>
     </nav>
 
-    <!-- Mobile menu panel (DEV-2271: full viewport, charcoal-pitch bg per DEV-2298; DEV-2270: products dropdown inline) -->
+    <!-- Mobile menu panel (DEV-2271 + DEV-2298 + DEV-2342/2343).
+         Header never gets a translate on mobile (see AnchorMenu.astro),
+         so the fixed drawer below is safe to nest here. -->
     <div
       id="mobile-menu-panel"
       class="mobile-menu-panel pointer-events-none fixed inset-0 z-40 overflow-y-auto bg-charcoal-pitch opacity-0 transition-opacity duration-200 lg:hidden"
@@ -180,13 +185,9 @@ const navLinks = [
           </li>
         </ul>
 
+        {/* Sign in is intentionally hidden on mobile (DEV-2346) — keep
+            Book a call as the single primary CTA in the drawer. */}
         <div class="mt-auto flex flex-col gap-[12px] pt-[24px]">
-          <a
-            href="/sign-in"
-            class="rounded-sm border border-white px-[24px] py-[12px] text-center text-body-lg font-medium tracking-[-0.32px] text-white transition-colors hover:bg-white/10"
-          >
-            Sign in
-          </a>
           <a
             href="/contact"
             class="rounded-sm bg-blue-matchday px-[24px] py-[12px] text-center text-body-lg font-medium tracking-[-0.32px] text-white transition-colors hover:bg-blue-matchday/90"
